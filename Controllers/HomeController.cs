@@ -15,7 +15,7 @@ namespace taka.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "hoang ham";
+            ViewBag.Message = "abc";
 
             return View();
         }
