@@ -19,37 +19,37 @@
         <tr>
 
             <th>
-                @Html.DisplayNameFor(model => model.Title)
+                Title
             </th>
             <th>
-                @Html.DisplayName("Author")
+                Author
             </th>
             <th>
-                @Html.DisplayName("Category")
+                Category
             </th>
             <th>
-                @Html.DisplayName("Language")
+                Language
             </th>
             <th>
-                @Html.DisplayName("Publisher")
+                Publisher
             </th>
             <th>
-                @Html.DisplayName("Type")
+                Type
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Price)
+                Price
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Page)
+                Page
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Year)
+                Year
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Quantity)
+                Quantity
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                Description
             </th>
             <th></th>
         </tr>
@@ -58,45 +58,45 @@
         {
             <tr>
 
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Author.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Category.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Language.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Publisher.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Type.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Page)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Year)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Quantity)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-            </td>
-        </tr>
+                <td>
+                    @item.Title
+                </td>
+                <td>
+                    @item.Author.Name
+                </td>
+                <td>
+                    @item.Category.Name
+                </td>
+                <td>
+                    @item.Language.Name
+                </td>
+                <td>
+                    @item.Publisher.Name
+                </td>
+                <td>
+                    @item.Type.Name
+                </td>
+                <td>
+                    @item.Price
+                </td>
+                <td>
+                    @item.Page
+                </td>
+                <td>
+                    @item.Year
+                </td>
+                <td>
+                    @item.Quantity
+                </td>
+                <td>
+                    @item.Description
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                </td>
+            </tr>
         }
 
     </table>

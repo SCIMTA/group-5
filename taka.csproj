@@ -133,7 +133,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\DAO\BookDAO.cs" />
+    <Compile Include="Models\DatabaseInteractive\BookUtils.cs" />
     <Compile Include="Models\Enitities\Address.cs" />
     <Compile Include="Models\Enitities\Author.cs" />
     <Compile Include="Models\Enitities\Book.cs" />
