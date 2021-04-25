@@ -7,12 +7,18 @@ using taka.Models.Enitities;
 
 namespace taka.Models.DAO
 {
-    public class BookDAO
+    public class BookUtils
     {
         Taka db;
-        public BookDAO()
+        public BookUtils()
         {
             db = new Taka();
+        }
+
+
+        public Taka getDatabase()
+        {
+            return db;
         }
 
         public int InsertBook(string title, decimal price, int page, int year, int quantity, string description,

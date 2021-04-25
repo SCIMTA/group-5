@@ -10,28 +10,29 @@ namespace taka.Controllers
 {
     public class BookController : Controller
     {
-        private Taka db = new Taka();
+        private BookUtils bookUtils = new BookUtils();
+
         // GET: Book
         public ActionResult Index()
         {
-            //BookDAO dao = new BookDAO();
-            //IQueryable<Book> lst = dao.ListBook();
-            var lst = db.Books.ToList();
-            return View(lst);
+            return View(bookUtils.Books.ToList());
         }
 
         public ActionResult Add()
         {
+            Taka db = bookUtils.getDatabase();
+            ViewBag.listCategories = db.Categories.ToList(); ;
+            ViewBag.listPublishers = db.Publishers.ToList();
+            ViewBag.listLanguages = db.Languages.ToList();
+            ViewBag.listAuthors = db.Authors.ToList();
+            ViewBag.listTypes = db.Types.ToList();
             return View();
         }
 
         [HttpPost]
         public ActionResult Add(Book book)
         {
-            BookDAO dao = new BookDAO();
-            //var categorylist = db.Categories.ToList();
-            //ViewBag.idCategory = new SelectList(categorylist, "ID", "Name");
-            dao.InsertBook(book.Title, (decimal)book.Price, (int)book.Page, (int)book.Year, (int)book.Quantity, book.Description,
+            bookUtils.InsertBook(book.Title, (decimal)book.Price, (int)book.Page, (int)book.Year, (int)book.Quantity, book.Description,
                                 ViewBag.idCategory, (int)book.idType, (int)book.idPublisher, (int)book.idLanguage, (int)book.idAuthor);
 
             return RedirectToAction("Index");
@@ -39,18 +40,14 @@ namespace taka.Controllers
 
         public ActionResult Edit(int ID)
         {
-            BookDAO dao = new BookDAO();
-
-            Book book = dao.FindBookById(ID);
-
+            Book book = bookUtils.FindBookById(ID);
             return View(book);
         }
 
         [HttpPost]
         public ActionResult Edit(Book book)
         {
-            BookDAO dao = new BookDAO();
-            dao.UpdateBook(book);
+            bookUtils.UpdateBook(book);
             return RedirectToAction("Index");
         }
     }
