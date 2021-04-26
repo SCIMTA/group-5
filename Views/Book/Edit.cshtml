@@ -66,41 +66,41 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.idCategory, "idCategory", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.idCategory, "Chọn danh mục", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("idCategory", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("idCategory", new SelectList(ViewBag.listCategories, "ID", "Name"), htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.idCategory, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.idType, "idType", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.idType, "Chọn loại", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("idType", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("idType", new SelectList(ViewBag.listTypes, "ID", "Name"), htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.idType, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.idPublisher, "idPublisher", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.idPublisher, "Chọn nhà xuất bản", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("idPublisher", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("idPublisher", new SelectList(ViewBag.listPublishers, "ID", "Name"), htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.idPublisher, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.idLanguage, "idLanguage", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.idLanguage, "Chọn ngôn ngữ", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("idLanguage", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("idLanguage", new SelectList(ViewBag.listLanguages, "ID", "Name"), htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.idLanguage, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.idAuthor, "idAuthor", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.idAuthor, "Chọn tác giả", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("idAuthor", null, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("idAuthor", new SelectList(ViewBag.listAuthors, "ID", "Name"), htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.idAuthor, "", new { @class = "text-danger" })
             </div>
         </div>
