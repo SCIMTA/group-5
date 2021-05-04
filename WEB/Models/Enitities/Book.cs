@@ -25,9 +25,11 @@ namespace taka.Models.Enitities
 
         public decimal? Price { get; set; }
 
-        public int? Page { get; set; }
+        [StringLength(50)]
+        public string Page { get; set; }
 
-        public int? Year { get; set; }
+        [StringLength(50)]
+        public string Date { get; set; }
 
         public int? Quantity { get; set; }
 
@@ -42,6 +44,8 @@ namespace taka.Models.Enitities
         public int? idLanguage { get; set; }
 
         public int? idAuthor { get; set; }
+        [StringLength(100)]
+        public string KeySearch { get; set; }
 
         public virtual Author Author { get; set; }
 

@@ -5,10 +5,10 @@ using System.Linq;
 
 namespace taka.Models.Enitities
 {
-    public partial class Taka : DbContext
+    public partial class TakaDBContext : DbContext
     {
-        public Taka()
-            : base("name=Taka")
+        public TakaDBContext()
+            : base("name=TakaDBContext")
         {
         }
 

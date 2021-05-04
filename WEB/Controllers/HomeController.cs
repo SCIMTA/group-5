@@ -1,29 +1,98 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using taka.Models.DatabaseInteractive;
+using taka.Models.Enitities;
+using taka.Utils;
 
 namespace taka.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+
+        TakaDB dB = new TakaDB();
+
+        public ActionResult Index(int page = 1, string text = "", int cate = 0, int sort = 0)
+        {
+            ViewBag.ListCate = dB.GetCategories();
+            ViewBag.Cate = cate;
+            ViewBag.Sort = sort;
+            ViewBag.CurrentPage = page;
+            if (cate != 0)
+            {
+                ViewBag.TextCate = dB.findTextCategory(cate);
+            }
+            if (sort != 0)
+            {
+                ViewBag.TextSort = sort == 1 ? "Giá thấp nhất" : "Giá cao nhất";
+            }
+            ListBook listBook = dB.GetListBook(page, text, cate, sort);
+            ViewBag.ListPage = HelperFunctions.getNumPage(page, listBook.pages);
+            ViewBag.maxPage = listBook.pages;
+            ViewBag.TextSearch = text;
+            return View(listBook.books);
+        }
+
+        [HttpPost]
+        public ActionResult Login(string username, string password, string callbackUrl)
+        {
+            return Redirect(callbackUrl);
+        }
+
+        public ActionResult Logout()
+        {
+            Session["isLogin"] = null;
+            return RedirectToAction("Index", "Home");
+        }
+
+        public ActionResult Detail(int id = -1)
+        {
+            return RedirectToAction("Error", "Home");
+        }
+
+        public ActionResult Edit(int id = -1)
         {
             return View();
         }
 
-        public ActionResult About()
+        [HttpPost]
+        public ActionResult EditBook(int MA_DAU_SACH,
+            HttpPostedFileBase BIA_SACH,
+            string TEN_DAU_SACH,
+            int MA_THE_LOAI,
+            int MA_NHA_XUAT_BAN,
+            int MA_TAC_GIA,
+            int GIA_TRI,
+            int SO_TRANG,
+            int TONG_SO_LUONG,
+            int SO_LUONG_CON_LAI,
+            string MO_TA_SACH)
         {
-            ViewBag.Message = "abc";
+            return View();
+        }
+
+
+        public ActionResult Delete(int id = -1)
+        {
+            return View();
+        }
+
+
+        [HttpPost]
+        public ActionResult DeleteBook(int id = -1)
+        {
+            return View();
+        }
+
+
+        public ActionResult Add()
+        {
 
             return View();
         }
 
-        public ActionResult Contact()
+        public ActionResult Error()
         {
-            ViewBag.Message = "Your contact page.";
-
             return View();
         }
     }

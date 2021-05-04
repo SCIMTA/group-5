@@ -1,0 +1,27 @@
+﻿<div style="background-color:#ee4d2d" class="row mb-3">
+    <div class="container">
+        <nav class="nav float-right">
+            @if (Session["isLogin"] == null)
+            {
+                <button type="button" class="btn btn-light mt-1" data-toggle="modal" data-target="#modalLogin" style="color:#ee4d2d;">
+                    <b>Đăng nhập</b>
+                </button>
+            }
+            else
+            {
+                <button type="button" class="btn btn-light mt-1" data-toggle="modal" data-target="#modalUser" style="color:#ee4d2d;">
+                    <b>Xin chào @Session["UserInfoName"]</b>
+                </button>
+            }
+        </nav>
+    </div>
+    <form action="/Home" class="input-group container pt-4 pb-4">
+        <a href="/">
+            <img style="position:absolute;top:25%;height:45%;left:-5%" src="https://salt.tikicdn.com/ts/upload/ae/f5/15/2228f38cf84d1b8451bb49e2c4537081.png" />
+        </a>
+        <input name="text" type="text" class="form-control" placeholder="Đắc nhân tâm" aria-describedby="basic-addon2" value="@ViewBag.TextSearch" />
+        <button class="btn btn-solid-primary btn-light" style="color:white;background-color:#ee4d2d;" type="submit">
+            <ion-icon style="font-size:15px" name="search"></ion-icon>
+        </button>
+    </form>
+</div>
