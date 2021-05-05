@@ -1,21 +1,21 @@
-﻿@model Base.Models.DAU_SACH
+﻿@model  taka.Models.Enitities.Book
 
 @{
-    ViewBag.Title = Model.TEN_DAU_SACH;
+    ViewBag.Title = Model.Title;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <form class="form-horizontal" method="post" action="/Home/EditBook" enctype="multipart/form-data">
     <h4>Cập nhật thông tin</h4>
     <hr />
-    <input class="form-control" name="MA_DAU_SACH" value="@Model.MA_DAU_SACH" hidden />
+    <input class="form-control" name="MA_DAU_SACH" value="@Model.ID" hidden />
     <div class="row col">
         <div class="form-group col-4" style="text-align:center">
             <p>
                 <h5>Ảnh bìa sách</h5>
             </p>
             <label for="file-input">
-                <img src="@Model.BIA_SACH" onmouseover="onFocusImg()" onmouseout="onBlurImg()" id="imgBiaSach" style="max-width:100%;" />
+                <img src="@Model.Images.First().Url" onmouseover="onFocusImg()" onmouseout="onBlurImg()" id="imgBiaSach" style="max-width:100%;" />
             </label>
             <input id="file-input" name="BIA_SACH" type="file" hidden />
         </div>
@@ -25,80 +25,70 @@
                 <label>Tên đầu sách</label>
                 <input type="text"
                        class="form-control"
-                       name="TEN_DAU_SACH"
-                       id="TEN_DAU_SACH"
-                       value="@Model.TEN_DAU_SACH"
+                       name="Title"
+                       id="Title"
+                       value="@Model.Title"
                        required
                        oninput="setCustomValidity('')"
-                       oninvalid="this.setCustomValidity('Vui lòng nhập đủ thông tin')">
+                       oninvalid="this.setCustomValidity('Vui lòng nhập đủ thông tin')" />
             </div>
             <div class="form-group">
                 <label>Giá tiền</label>
                 <input type="number"
                        class="form-control"
-                       name="GIA_TRI"
-                       id="GIA_TRI"
-                       value="@Model.GIA_TRI"
+                       name="Price"
+                       id="Price"
+                       value="@Model.Price"
                        required
                        oninput="setCustomValidity('')"
-                       oninvalid="this.setCustomValidity('Vui lòng nhập đủ thông tin')">
+                       oninvalid="this.setCustomValidity('Vui lòng nhập đủ thông tin')" />
             </div>
             <div class="form-group">
                 <label>Thể loại</label>
-                @Html.DropDownList("MA_THE_LOAI", new SelectList(ViewBag.listCategories, "MA_THE_LOAI", "TEN_THE_LOAI"), htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.MA_THE_LOAI, "", new { @class = "text-danger" })
+                @Html.DropDownList("ID", new SelectList(ViewBag.listCategories, "ID", "Name"), htmlAttributes: new { @class = "form-control" })
             </div>
             <div class="form-group">
                 <label>Tác giả</label>
-                @Html.DropDownList("MA_TAC_GIA", new SelectList(ViewBag.listAuthors, "MA_TAC_GIA", "TEN_TAC_GIA"), htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.MA_TAC_GIA, "", new { @class = "text-danger" })
+                @Html.DropDownList("ID", new SelectList(ViewBag.listAuthors, "ID", "Name"), htmlAttributes: new { @class = "form-control" })
             </div>
             <div class="form-group">
                 <label>Nhà xuất bản</label>
-                @Html.DropDownList("MA_NHA_XUAT_BAN", new SelectList(ViewBag.listPublishers, "MA_NHA_XUAT_BAN", "TEN_NHA_XUAT_BAN"), htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.MA_NHA_XUAT_BAN, "", new { @class = "text-danger" })
+                @Html.DropDownList("ID", new SelectList(ViewBag.listPublishers, "ID", "Name"), htmlAttributes: new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <label>Ngôn ngữ</label>
+                @Html.DropDownList("ID", new SelectList(ViewBag.listLanguages, "ID", "Name"), htmlAttributes: new { @class = "form-control" })
             </div>
             <div class="form-group">
                 <label>Số trang</label>
                 <input type="number"
                        class="form-control"
-                       name="SO_TRANG"
-                       id="SO_TRANG"
-                       value="@Model.SO_TRANG"
+                       name="Page"
+                       id="Page"
+                       value="@Model.Page"
                        required
                        oninput="setCustomValidity('')"
-                       oninvalid="this.setCustomValidity('Vui lòng nhập đủ thông tin')">
+                       oninvalid="this.setCustomValidity('Vui lòng nhập đủ thông tin')" />
             </div>
 
             <div class="form-group">
                 <label>Tổng số lượng</label>
                 <input type="number"
                        class="form-control"
-                       name="TONG_SO_LUONG"
-                       id="TONG_SO_LUONG"
-                       value="@Model.TONG_SO_LUONG"
+                       name="Quantity"
+                       id="Quantity"
+                       value="@Model.Quantity"
                        required
                        oninput="setCustomValidity('')"
-                       oninvalid="this.setCustomValidity('Vui lòng nhập đủ thông tin')">
-            </div>
-            <div class="form-group">
-                <label>Số lượng còn trong kho</label>
-                <input type="number"
-                       class="form-control"
-                       name="SO_LUONG_CON_LAI"
-                       id="SO_LUONG_CON_LAI"
-                       value="@Model.SO_LUONG_CON_LAI"
-                       required
-                       oninput="setCustomValidity('')"
-                       oninvalid="this.setCustomValidity('Vui lòng nhập đủ thông tin')">
+                       oninvalid="this.setCustomValidity('Vui lòng nhập đủ thông tin')" />
             </div>
             <div class="form-group">
                 <label>Mô tả sách</label>
                 <textarea type="text"
                           class="form-control"
-                          name="MO_TA_SACH"
-                          id="MO_TA_SACH"
-                          rows="15">@Model.MO_TA_SACH</textarea>
+                          name="Description"
+                          id="Description"
+                          rows="15">@Model.Description</textarea>
             </div>
 
             <button type="submit" class="btn btn-light col p-3" style="background-color:#ee4d2d;color:white;">Cập nhật thông tin</button>

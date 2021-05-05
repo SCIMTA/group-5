@@ -1,17 +1,16 @@
 ﻿<div class="modal" tabindex="-1" role="dialog" id="modalDelete">
     <div class="modal-dialog" role="document">
-        <form class="modal-content" method="post" action="/Home/DeleteBook">
+        <form class="modal-content" method="post" action="/Home/Delete">
             <div class="modal-header">
                 <h5 class="modal-title">Xoá đầu sách</h5>
                 <button type="button" class="close" data-dismiss="modal" onclick="" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div hidden id="deleteModalMessageHidden">@TempData["deleteModalMessageHidden"]</div>
             <div class="modal-body" id="message">
-                Xoá đầu sách <b>@Model.TEN_DAU_SACH</b> khỏi hệ thống ?
+                Xoá đầu sách <b>@Model.Title</b> khỏi hệ thống ?
             </div>
-            <input name="id" value="@Model.MA_DAU_SACH" hidden />
+            <input name="id" value="@Model.ID" hidden />
             <div class="modal-footer">
                 <button type="submit" class="btn btn-danger">Xoá</button>
                 <button type="button" style="color:white;background-color:#ee4d2d" data-toggle="modal" data-target="#modalDelete" class="btn">Huỷ</button>

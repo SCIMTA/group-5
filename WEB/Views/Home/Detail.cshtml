@@ -1,28 +1,37 @@
 ﻿@model  taka.Models.Enitities.Book
 
 @{
-    ViewBag.Title = Model.TEN_DAU_SACH;
+    ViewBag.Title = Model.Title;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @RenderPage("~/Views/Shared/ModalDelete.cshtml")
 
 <p>
     <div class="row">
-        <a href="/Home?cate=@Model.MA_THE_LOAI" style="color:dimgray">
-            @Model.THE_LOAI.TEN_THE_LOAI
+        <a href="/Home?cate=@Model.idCategory" style="color:dimgray">
+            @Model.Category.Name
         </a>
-        <div class="ml-1"> > @Model.TEN_DAU_SACH</div>
+        <div class="ml-1"> > @Model.Title</div>
     </div>
 </p>
 <hr />
 <div class="row">
-    <img class="col" src="@Model.BIA_SACH" style="max-width:45%" />
-    <div class="col">
+    <div class="col-7 row">
+        <div class="col-3" style="overflow-x:hidden;overflow-y:auto;height:650px;">
+            @foreach (var img in Model.Images.ToList())
+            {
+                <img onmouseout="onMoveOutMouseOfImageItem();" onmousemove="onMoveMouseToImageItem('@img.Url','image_item_@img.ID');" id="image_item_@img.ID" src="@img.Url" style="width:100px;height:100px; object-fit:cover;" class="col ml-3 mt-1" />
+            }
+        </div>
+        <img class="col-9" src="@Model.Images.First().Url" style="object-fit:contain" id="main_image" />
+
+    </div>
+    <div class="col-5">
         <h2>
-            @Model.TEN_DAU_SACH
+            @Model.Title
         </h2>
         <h1 style="color:#ee4d2d">
-            @String.Format(new System.Globalization.CultureInfo("vi-VN"), "{0:N0}", Model.GIA_TRI) đ
+            @String.Format(new System.Globalization.CultureInfo("vi-VN"), "{0:N0}", Model.Price) đ
         </h1>
         <hr />
         <p>
@@ -32,30 +41,42 @@
             <tbody>
                 <tr>
                     <th>Nhà xuất bản</th>
-                    <td>@Model.NHA_XUAT_BAN.TEN_NHA_XUAT_BAN</td>
+                    <td>@Model.Publisher.Name</td>
                 </tr>
                 <tr>
                     <th>Tác giả</th>
-                    <td>@Model.TAC_GIA.TEN_TAC_GIA</td>
+                    <td>@Model.Author.Name</td>
                 </tr>
                 <tr>
                     <th>Thể loại</th>
-                    <td>@Model.THE_LOAI.TEN_THE_LOAI</td>
+                    <td>@Model.Category.Name</td>
                 </tr>
                 <tr>
                     <th>Số trang</th>
-                    <td>@Model.SO_TRANG</td>
+                    <td>@Model.Page</td>
                 </tr>
                 <tr>
-                    <th>Số lượng còn lại</th>
-                    <td>@Model.SO_LUONG_CON_LAI / @Model.TONG_SO_LUONG</td>
+                    <th>Số lượng</th>
+                    <td>@Model.Quantity</td>
+                </tr>
+                <tr>
+                    <th>Hình thức</th>
+                    <td>@Model.Type.Name</td>
+                </tr>
+                <tr>
+                    <th>Ngôn ngữ</th>
+                    <td>@Model.Language.Name</td>
+                </tr>
+                <tr>
+                    <th>Ngày nhập</th>
+                    <td>@Model.Date</td>
                 </tr>
             </tbody>
         </table>
         <hr />
         <div class="row col">
-            <a href="/Home/Edit?id=@Model.MA_DAU_SACH" class="btn col p-3 m-3" style="background-color:white;color:#ee4d2d; border:3; border-color:#ee4d2d">Cập nhật thông tin</a>
-            <a href="/Home/Delete?id=@Model.MA_DAU_SACH" class="btn col p-3 m-3" style="background-color:#ee4d2d;color:white; border:3; border-color:#ee4d2d">Xoá</a>
+            <a href="/Home/Edit?id=@Model.ID" class="btn col p-3 m-3" style="background-color:white;color:#ee4d2d; border:3; border-color:#ee4d2d">Cập nhật thông tin</a>
+            <button type="button" onclick="showDeleteModal()" class="btn col p-3 m-3" style="background-color:#ee4d2d; color:white; border:3; border-color:#ee4d2d">Xoá</button>
         </div>
     </div>
 </div>
@@ -67,16 +88,35 @@
 </p>
 <div class="p-3">
     <p>
-        @Model.MO_TA_SACH
+        @Model.Description
     </p>
 </div>
+
 <script>
-    if (document.getElementById("deleteModalMessageHidden").textContent.trim().length > 0) {
-        setTimeout(() => {
-            $("#modalDelete").modal('show');
-        }, 300)
-    }
+    let selectImgId = -1;
     const hideDeleteModal = () => {
         $("#modalDelete").modal('hide');
     }
+
+    const showDeleteModal = () => {
+        $("#modalDelete").modal('show');
+    }
+
+    const onMoveMouseToImageItem = (url, id) => {
+        let oldUrl = $("#main_image")[0].src;
+        if (oldUrl != url)
+            $("#main_image")[0].src = url;
+        if (selectImgId != id) {
+            $('#' + id).css('border', '1px solid #ee4d2d')
+            selectImgId = id
+        }
+    }
+
+    const onMoveOutMouseOfImageItem = () => {
+        if (selectImgId != -1) {
+            $('#' + selectImgId).css('border', '0px solid #ee4d2d')
+            selectImgId = -1
+        }
+    }
+
 </script>

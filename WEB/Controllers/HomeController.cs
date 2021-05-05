@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using taka.Models.DatabaseInteractive;
@@ -47,12 +48,27 @@ namespace taka.Controllers
 
         public ActionResult Detail(int id = -1)
         {
-            return RedirectToAction("Error", "Home");
+            try
+            {
+                if (id == -1)
+                    throw new Exception("Not found");
+                var item = dB.GetBookDetail(id);
+                return View(item);
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+
         }
 
         public ActionResult Edit(int id = -1)
         {
-            return View();
+            ViewBag.listCategories = dB.GetCategories();
+            ViewBag.listAuthors = dB.GetAuthors();
+            ViewBag.listPublishers = dB.GetPublishers();
+            ViewBag.listLanguages = dB.GetLanguages();
+            return Detail(id);
         }
 
         [HttpPost]
@@ -71,19 +87,21 @@ namespace taka.Controllers
             return View();
         }
 
-
+        [HttpPost]
         public ActionResult Delete(int id = -1)
         {
-            return View();
+            try
+            {
+                if (id == -1)
+                    throw new Exception("Not found");
+                return RedirectToAction("Index", "Home");
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("Error", "Home");
+            }
+
         }
-
-
-        [HttpPost]
-        public ActionResult DeleteBook(int id = -1)
-        {
-            return View();
-        }
-
 
         public ActionResult Add()
         {

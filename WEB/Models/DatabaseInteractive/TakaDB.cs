@@ -55,9 +55,26 @@ namespace taka.Models.DatabaseInteractive
             return takaDB.Categories.ToList();
         }
 
+        public List<Author> GetAuthors()
+        {
+            return takaDB.Authors.ToList();
+        }
+        public List<Publisher> GetPublishers()
+        {
+            return takaDB.Publishers.ToList();
+        }
+        public List<Language> GetLanguages()
+        {
+            return takaDB.Languages.ToList();
+        }
         public string findTextCategory(int id)
         {
             return takaDB.Categories.Where(x => x.ID == id).First().Name;
+        }
+
+        public Book GetBookDetail(int id)
+        {
+            return takaDB.Books.Where(x => x.ID == id).First();
         }
     }
 }
