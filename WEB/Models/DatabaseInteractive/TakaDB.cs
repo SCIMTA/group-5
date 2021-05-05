@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using taka.Models.Enitities;
 using taka.Utils;
@@ -76,5 +77,37 @@ namespace taka.Models.DatabaseInteractive
         {
             return takaDB.Books.Where(x => x.ID == id).First();
         }
+
+        public User Register(string phone, string password, string email = "", string gender = "", string fullname = "", string birthday = "")
+        {
+            if (takaDB.Users.Where(x => x.Phone == phone).Count() > 0)
+                return null;
+            User user = new User();
+            user.Phone = phone.Replace("+84", "0");
+            user.Password = HelperFunctions.sha256(password);
+            user.Email = email;
+            user.Fullname = fullname;
+            user.Gender = gender;
+            user.Birthday = birthday.Length == 0 ? DateTime.Now.ToShortDateString() : birthday;
+            takaDB.Users.Add(user);
+            takaDB.SaveChanges();
+            return user;
+        }
+
+        public User Login(string phone, string password)
+        {
+            string hashpass = HelperFunctions.sha256(password);
+            var user = takaDB.Users.Where(x => x.Phone == phone && x.Password == hashpass);
+            if (user.Count() > 0)
+                return user.First();
+            return null;
+        }
+
+        public bool DeleteBook(int id)
+        {
+            return true;
+        }
+
+
     }
 }

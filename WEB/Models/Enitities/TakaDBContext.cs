@@ -20,6 +20,7 @@ namespace taka.Models.Enitities
         public virtual DbSet<Image> Images { get; set; }
         public virtual DbSet<Language> Languages { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
+        public virtual DbSet<OrderDetail> OrderDetails { get; set; }
         public virtual DbSet<Publisher> Publishers { get; set; }
         public virtual DbSet<Rate> Rates { get; set; }
         public virtual DbSet<Type> Types { get; set; }
@@ -51,14 +52,15 @@ namespace taka.Models.Enitities
                 .HasForeignKey(e => e.idBook);
 
             modelBuilder.Entity<Book>()
+                .HasMany(e => e.OrderDetails)
+                .WithRequired(e => e.Book)
+                .HasForeignKey(e => e.idBook)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Book>()
                 .HasMany(e => e.Rates)
                 .WithOptional(e => e.Book)
                 .HasForeignKey(e => e.idBook);
-
-            modelBuilder.Entity<Book>()
-                .HasMany(e => e.Orders)
-                .WithMany(e => e.Books)
-                .Map(m => m.ToTable("OrderDetail").MapLeftKey("idBook").MapRightKey("idOrder"));
 
             modelBuilder.Entity<Category>()
                 .HasMany(e => e.Books)
@@ -77,6 +79,12 @@ namespace taka.Models.Enitities
             modelBuilder.Entity<Order>()
                 .Property(e => e.TotalPrice)
                 .HasPrecision(18, 0);
+
+            modelBuilder.Entity<Order>()
+                .HasMany(e => e.OrderDetails)
+                .WithRequired(e => e.Order)
+                .HasForeignKey(e => e.idOrder)
+                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Publisher>()
                 .HasMany(e => e.Books)

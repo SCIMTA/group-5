@@ -12,7 +12,7 @@ namespace taka.Models.Enitities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Order()
         {
-            Books = new HashSet<Book>();
+            OrderDetails = new HashSet<OrderDetail>();
         }
 
         public int ID { get; set; }
@@ -31,6 +31,6 @@ namespace taka.Models.Enitities
         public string PaymentStatus { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Book> Books { get; set; }
+        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
     }
 }

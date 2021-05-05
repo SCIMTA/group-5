@@ -35,14 +35,40 @@ namespace taka.Controllers
         }
 
         [HttpPost]
-        public ActionResult Login(string username, string password, string callbackUrl)
+        public ActionResult Login(string phone, string password, string callbackUrl)
         {
+
+            User user = dB.Login(phone, password);
+            if (user != null)
+            {
+                Session["isLogin"] = true;
+                Session["UserInfo"] = user;
+            }
+            else
+            {
+                TempData["Message"] = "Sai tài khoản hoặc mật khẩu";
+                TempData["RequireLogin"] = true;
+            }
+            return Redirect(callbackUrl);
+        }
+
+        [HttpPost]
+        public ActionResult Register(string phone, string password, string email, string gender, string fullname, string birthday, string callbackUrl)
+        {
+            User user = dB.Register(phone, password,email,gender,fullname,birthday);
+
+            if (user != null)
+            {
+                Session["isLogin"] = true;
+                Session["UserInfo"] = user;
+            }
             return Redirect(callbackUrl);
         }
 
         public ActionResult Logout()
         {
             Session["isLogin"] = null;
+            Session["UserInfo"] = null;
             return RedirectToAction("Index", "Home");
         }
 

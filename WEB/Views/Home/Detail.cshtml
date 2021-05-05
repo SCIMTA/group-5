@@ -75,7 +75,7 @@
         </table>
         <hr />
         <div class="row col">
-            <a href="/Home/Edit?id=@Model.ID" class="btn col p-3 m-3" style="background-color:white;color:#ee4d2d; border:3; border-color:#ee4d2d">Cập nhật thông tin</a>
+            <button type="button" onclick="updateBook()" class="btn col p-3 m-3" style="background-color:white;color:#ee4d2d; border:3; border-color:#ee4d2d">Cập nhật thông tin</button>
             <button type="button" onclick="showDeleteModal()" class="btn col p-3 m-3" style="background-color:#ee4d2d; color:white; border:3; border-color:#ee4d2d">Xoá</button>
         </div>
     </div>
@@ -93,30 +93,45 @@
 </div>
 
 <script>
+
+        const updateBook = () => {
+            window.location.href = '/Home/Edit?id=@Model.ID';
+        }
+        const showDeleteModal = () => {
+            $("#modalDelete").modal('show');
+        }
+</script>
+
+@if (Session["isLogin"] == null)
+{
+    TempData["RequireLogin"] = true;
+    <script>
+        let showDeleteModal = () => {
+            document
+                .getElementById("message").textContent = "Vui lòng đăng nhập";
+            showMessage()
+        }
+        let updateBook = () => {
+            showDeleteModal();
+        }
+
+    </script>
+}
+<script>
     let selectImgId = -1;
-    const hideDeleteModal = () => {
-        $("#modalDelete").modal('hide');
-    }
-
-    const showDeleteModal = () => {
-        $("#modalDelete").modal('show');
-    }
-
     const onMoveMouseToImageItem = (url, id) => {
         let oldUrl = $("#main_image")[0].src;
         if (oldUrl != url)
             $("#main_image")[0].src = url;
         if (selectImgId != id) {
-            $('#' + id).css('border', '1px solid #ee4d2d')
+            $('#' + id).css('border', '2px solid #ee4d2d')
             selectImgId = id
         }
     }
-
     const onMoveOutMouseOfImageItem = () => {
         if (selectImgId != -1) {
-            $('#' + selectImgId).css('border', '0px solid #ee4d2d')
+            $('#' + selectImgId).css('border', '0px')
             selectImgId = -1
         }
     }
-
 </script>

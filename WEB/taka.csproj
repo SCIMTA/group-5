@@ -144,6 +144,7 @@
     <Compile Include="Models\Enitities\Image.cs" />
     <Compile Include="Models\Enitities\Language.cs" />
     <Compile Include="Models\Enitities\Order.cs" />
+    <Compile Include="Models\Enitities\OrderDetail.cs" />
     <Compile Include="Models\Enitities\Publisher.cs" />
     <Compile Include="Models\Enitities\Rate.cs" />
     <Compile Include="Models\Enitities\TakaDBContext.cs" />
@@ -195,6 +196,7 @@
     <Content Include="Views\Home\Edit.cshtml" />
     <Content Include="Views\Home\Add.cshtml" />
     <Content Include="Views\Home\Detail.cshtml" />
+    <Content Include="Views\Shared\ModalRegister.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -8,19 +8,23 @@
 <form class="form-horizontal" method="post" action="/Home/EditBook" enctype="multipart/form-data">
     <h4>Cập nhật thông tin</h4>
     <hr />
+    <p>
+        <h5>Ảnh bìa sách</h5>
+    </p>
+    <div class="" style="overflow-x:auto;height:320px;flex-direction:row;display:flex">
+        @foreach (var img in Model.Images.ToList())
+        {
+            <div class="m-3" style="border:1px solid #ee4d2d">
+                <label for="file-input-@img.ID">
+                    <img src="@img.Url" onmouseover="onFocusImg('@img.ID')" onmouseout="onBlurImg()" id="imgBiaSach_@img.ID" style="height:250px;width:250px;object-fit:contain;text-align:center;" />
+                </label>
+                <input id="file-input-@img.ID" name="BIA_SACH" type="file" hidden />
+            </div>
+        }
+    </div>
     <input class="form-control" name="MA_DAU_SACH" value="@Model.ID" hidden />
-    <div class="row col">
-        <div class="form-group col-4" style="text-align:center">
-            <p>
-                <h5>Ảnh bìa sách</h5>
-            </p>
-            <label for="file-input">
-                <img src="@Model.Images.First().Url" onmouseover="onFocusImg()" onmouseout="onBlurImg()" id="imgBiaSach" style="max-width:100%;" />
-            </label>
-            <input id="file-input" name="BIA_SACH" type="file" hidden />
-        </div>
-
-        <div class="col-8">
+    <div class="col">
+        <div class="col">
             <div class="form-group">
                 <label>Tên đầu sách</label>
                 <input type="text"
@@ -45,19 +49,19 @@
             </div>
             <div class="form-group">
                 <label>Thể loại</label>
-                @Html.DropDownList("ID", new SelectList(ViewBag.listCategories, "ID", "Name"), htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("idCategory", new SelectList(ViewBag.listCategories, "ID", "Name"), htmlAttributes: new { @class = "form-control" })
             </div>
             <div class="form-group">
                 <label>Tác giả</label>
-                @Html.DropDownList("ID", new SelectList(ViewBag.listAuthors, "ID", "Name"), htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("idAuthor", new SelectList(ViewBag.listAuthors, "ID", "Name"), htmlAttributes: new { @class = "form-control" })
             </div>
             <div class="form-group">
                 <label>Nhà xuất bản</label>
-                @Html.DropDownList("ID", new SelectList(ViewBag.listPublishers, "ID", "Name"), htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("idPublisher", new SelectList(ViewBag.listPublishers, "ID", "Name"), htmlAttributes: new { @class = "form-control" })
             </div>
             <div class="form-group">
                 <label>Ngôn ngữ</label>
-                @Html.DropDownList("ID", new SelectList(ViewBag.listLanguages, "ID", "Name"), htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("iDLanguage", new SelectList(ViewBag.listLanguages, "ID", "Name"), htmlAttributes: new { @class = "form-control" })
             </div>
             <div class="form-group">
                 <label>Số trang</label>
@@ -97,24 +101,35 @@
     </div>
 
 
+
+
 </form>
 <script>
-    const onFocusImg = () => {
-        $("#imgBiaSach").css('opacity', 0.3);
+    let oldId = -1
+    const onFocusImg = (id) => {
+        $("#imgBiaSach_" + id).css('opacity', 0.3);
+        oldId = id
     }
     const onBlurImg = () => {
-        $("#imgBiaSach").css('opacity', 1);
+        $("#imgBiaSach_" + oldId).css('opacity', 1);
     }
 
-    $('document').ready(function () {
-        $("#file-input").change(function () {
-            if (this.files && this.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    $('#imgBiaSach').attr('src', e.target.result);
-                }
-                reader.readAsDataURL(this.files[0]);
-            }
-        });
-    });
+  
 </script>
+
+@foreach (var img in Model.Images.ToList())
+{
+    <script>
+        $('document').ready(function () {
+            $("#file-input-@img.ID").change(function () {
+                if (this.files && this.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $('#imgBiaSach_@img.ID').attr('src', e.target.result);
+                    }
+                    reader.readAsDataURL(this.files[0]);
+                }
+            });
+        });
+    </script>
+}

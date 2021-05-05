@@ -22,7 +22,7 @@ namespace taka.Models.Enitities
         [StringLength(20)]
         public string Phone { get; set; }
 
-        [StringLength(20)]
+        [StringLength(280)]
         public string Password { get; set; }
 
         [StringLength(50)]
@@ -34,8 +34,8 @@ namespace taka.Models.Enitities
         [StringLength(10)]
         public string Gender { get; set; }
 
-        [Column(TypeName = "date")]
-        public DateTime? Birthday { get; set; }
+        [StringLength(50)]
+        public string Birthday { get; set; }
 
         public int? is_ban { get; set; }
 

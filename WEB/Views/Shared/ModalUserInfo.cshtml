@@ -1,5 +1,9 @@
-﻿@if (Session["isLogin"] != null)
+﻿
+
+
+@if (Session["isLogin"] != null)
 {
+    taka.Models.Enitities.User userInfo = (taka.Models.Enitities.User)@Session["UserInfo"];
     <div class="modal" tabindex="-1" role="dialog" id="modalUser">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -13,15 +17,23 @@
                     <table class="table">
                         <tr>
                             <th>Họ Tên</th>
-                            <td>@Session["UserInfoName"]</td>
+                            <td>@userInfo.Fullname</td>
                         </tr>
                         <tr>
                             <th>Ngày sinh</th>
-                            <td>@Session["UserInfoDate"]</td>
+                            <td>@userInfo.Birthday</td>
+                        </tr>
+                        <tr>
+                            <th>Email</th>
+                            <td>@userInfo.Email</td>
                         </tr>
                         <tr>
                             <th>Số điện thoại</th>
-                            <td>@Session["UserInfoPhone"]</td>
+                            <td>@userInfo.Phone</td>
+                        </tr>
+                        <tr>
+                            <th>Giới tính</th>
+                            <td>@userInfo.Gender</td>
                         </tr>
                     </table>
                 </div>
