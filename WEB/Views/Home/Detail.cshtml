@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = Model.Title;
     Layout = "~/Views/Shared/_Layout.cshtml";
+    taka.Models.Enitities.User userInfo = (taka.Models.Enitities.User)@Session["UserInfo"];
 }
 @RenderPage("~/Views/Shared/ModalDelete.cshtml")
 
@@ -75,8 +76,16 @@
         </table>
         <hr />
         <div class="row col">
-            <button type="button" onclick="updateBook()" class="btn col p-3 m-3" style="background-color:white;color:#ee4d2d; border:3; border-color:#ee4d2d">Cập nhật thông tin</button>
-            <button type="button" onclick="showDeleteModal()" class="btn col p-3 m-3" style="background-color:#ee4d2d; color:white; border:3; border-color:#ee4d2d">Xoá</button>
+            @if (userInfo != null && userInfo.Phone.Equals("admin"))
+            {
+                <button type="button" onclick="updateBook()" class="btn col p-3 m-3" style="background-color:white;color:#ee4d2d; border:3; border-color:#ee4d2d">Cập nhật thông tin</button>
+                <button type="button" onclick="showDeleteModal()" class="btn col p-3 m-3" style="background-color:#ee4d2d; color:white; border:3; border-color:#ee4d2d">Xoá</button>
+            }
+            else
+            {
+                <button type="button" onclick="addToCart()" class="btn col p-3 m-3" style="background-color:white;color:#ee4d2d; border:3; border-color:#ee4d2d">Thêm vào giỏ hàng</button>
+                <button type="button" onclick="buyNow()" class="btn col p-3 m-3" style="background-color:#ee4d2d; color:white; border:3; border-color:#ee4d2d">Mua ngay</button>
+            }
         </div>
     </div>
 </div>
@@ -92,29 +101,42 @@
     </p>
 </div>
 
-<script>
-
-        const updateBook = () => {
-            window.location.href = '/Home/Edit?id=@Model.ID';
+@if (userInfo != null && userInfo.Phone.Equals("admin"))
+{
+    <script>
+    let updateBook = () => {
+            window.location.href = '/Admin/Edit?id=@Model.ID';
         }
-        const showDeleteModal = () => {
+    let showDeleteModal = () => {
             $("#modalDelete").modal('show');
         }
-</script>
+    </script>
+}
 
-@if (Session["isLogin"] == null)
+@if (userInfo == null)
 {
     TempData["RequireLogin"] = true;
     <script>
-        let showDeleteModal = () => {
+        let addToCart = () => {
             document
                 .getElementById("message").textContent = "Vui lòng đăng nhập";
             showMessage()
         }
-        let updateBook = () => {
-            showDeleteModal();
+        let buyNow = () => {
+            addToCart();
         }
+    </script>
+}
 
+@if (userInfo != null && !userInfo.Phone.Equals("admin"))
+{
+    <script>
+        let addToCart = () => {
+            alert("thêm vào giỏ")
+        }
+        let buyNow = () => {
+            alert("mua ngay")
+        }
     </script>
 }
 <script>
