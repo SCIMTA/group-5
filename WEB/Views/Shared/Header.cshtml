@@ -1,8 +1,12 @@
-﻿<div style="background-color:#ee4d2d" class="row">
+﻿@{
+    taka.Models.Enitities.User userInfo = (taka.Models.Enitities.User)@Session["UserInfo"];
+}
+
+<div style="background-color:#ee4d2d" class="row">
     <img src="https://cdn0.fahasa.com/media/wysiwyg/Thang-05-2021/BigSale1_header.png" style="width:100%" />
     <div class="container">
         <nav class="nav float-right">
-            @if (Session["isLogin"] == null)
+            @if (userInfo == null)
             {
                 <button type="button" class="btn btn-light m-1" data-toggle="modal" data-target="#modalLogin" style="color:#ee4d2d;">
                     <b>Đăng nhập</b>
@@ -12,10 +16,14 @@
                     <b>Đăng ký</b>
                 </button>
             }
-            else
+            @if (userInfo != null && userInfo.Phone.Equals("admin"))
             {
-                taka.Models.Enitities.User userInfo = (taka.Models.Enitities.User)@Session["UserInfo"];
-
+                <a href="/Admin/Add" class="btn btn-light m-1" style="color:#ee4d2d;">
+                    <b>Thêm đầu sách</b>
+                </a>
+            }
+            @if (userInfo != null)
+            {
                 <button type="button" class="btn btn-light m-1" data-toggle="modal" data-target="#modalUser" style="color:#ee4d2d;">
                     <b>Xin chào @userInfo.Fullname</b>
                 </button>

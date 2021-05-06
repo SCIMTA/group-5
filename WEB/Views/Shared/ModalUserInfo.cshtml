@@ -1,9 +1,8 @@
-﻿
-
-
-@if (Session["isLogin"] != null)
-{
+﻿@{
     taka.Models.Enitities.User userInfo = (taka.Models.Enitities.User)@Session["UserInfo"];
+}
+@if (userInfo != null)
+{
     <div class="modal" tabindex="-1" role="dialog" id="modalUser">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -44,3 +43,4 @@
         </div>
     </div>
 }
+

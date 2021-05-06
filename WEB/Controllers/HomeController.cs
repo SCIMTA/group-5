@@ -41,7 +41,6 @@ namespace taka.Controllers
             User user = dB.Login(phone, password);
             if (user != null)
             {
-                Session["isLogin"] = true;
                 Session["UserInfo"] = user;
             }
             else
@@ -59,7 +58,6 @@ namespace taka.Controllers
 
             if (user != null)
             {
-                Session["isLogin"] = true;
                 Session["UserInfo"] = user;
             }
             return Redirect(callbackUrl);
@@ -67,7 +65,6 @@ namespace taka.Controllers
 
         public ActionResult Logout()
         {
-            Session["isLogin"] = null;
             Session["UserInfo"] = null;
             return RedirectToAction("Index", "Home");
         }

@@ -69,9 +69,11 @@ namespace taka.Controllers
 
         public ActionResult Add()
         {
+            ViewBag.listCategories = dB.GetCategories();
+            ViewBag.listAuthors = dB.GetAuthors();
+            ViewBag.listPublishers = dB.GetPublishers();
+            ViewBag.listLanguages = dB.GetLanguages();
             return View();
         }
-
-
     }
 }
