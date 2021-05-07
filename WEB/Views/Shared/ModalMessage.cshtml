@@ -8,9 +8,9 @@
                 </button>
             </div>
             <div class="modal-body" id="message">
-                @TempData["Message"]
+                @TempData[taka.Utils.C.TEMPDATA.Message]
             </div>
-            @if (TempData["RequireLogin"] != null)
+            @if (TempData[taka.Utils.C.TEMPDATA.RequireLogin] != null)
             {
                 <div class="modal-footer">
                     <button onclick="loginNow()" type="button" style="color:white;background-color:#ee4d2d" data-toggle="modal" data-target="#modalLogin" class="btn">Đăng nhập</button>

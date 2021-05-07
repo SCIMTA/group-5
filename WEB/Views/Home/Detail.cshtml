@@ -3,18 +3,17 @@
 @{
     ViewBag.Title = Model.Title;
     Layout = "~/Views/Shared/_Layout.cshtml";
-    taka.Models.Enitities.User userInfo = (taka.Models.Enitities.User)@Session["UserInfo"];
+    taka.Models.Enitities.User userInfo = (taka.Models.Enitities.User)@Session[taka.Utils.C.SESSION.UserInfo];
 }
 @RenderPage("~/Views/Shared/ModalDelete.cshtml")
 
-<p>
-    <div class="row">
-        <a href="/Home?cate=@Model.idCategory" style="color:dimgray">
-            @Model.Category.Name
-        </a>
-        <div class="ml-1"> > @Model.Title</div>
-    </div>
-</p>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/Home?cate=@Model.idCategory">@Model.Category.Name</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@Model.Title</li>
+    </ol>
+</nav>
+
 <hr />
 <div class="row">
     <div class="col-7 row">
@@ -115,7 +114,7 @@
 
 @if (userInfo == null)
 {
-    TempData["RequireLogin"] = true;
+    TempData[taka.Utils.C.TEMPDATA.RequireLogin] = true;
     <script>
         let addToCart = () => {
             document

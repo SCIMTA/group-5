@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = Model.Title;
+    ViewBag.MessageForValid = "Vui lòng nhập đủ thông tin";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
     List<taka.Models.Enitities.Image> images = new List<taka.Models.Enitities.Image>();
@@ -45,7 +46,7 @@
                        value="@Model.Title"
                        required
                        oninput="setCustomValidity('')"
-                       oninvalid="this.setCustomValidity('Vui lòng nhập đủ thông tin')" />
+                       oninvalid="this.setCustomValidity('@ViewBag.MessageForValid')" />
             </div>
             <div class="form-group">
                 <label>Giá tiền</label>
@@ -56,7 +57,7 @@
                        value="@Model.Price"
                        required
                        oninput="setCustomValidity('')"
-                       oninvalid="this.setCustomValidity('Vui lòng nhập đủ thông tin')" />
+                       oninvalid="this.setCustomValidity('@ViewBag.MessageForValid')" />
             </div>
             <div class="form-group">
                 <label>Thể loại</label>
@@ -83,7 +84,7 @@
                        value="@Model.Page"
                        required
                        oninput="setCustomValidity('')"
-                       oninvalid="this.setCustomValidity('Vui lòng nhập đủ thông tin')" />
+                       oninvalid="this.setCustomValidity('@ViewBag.MessageForValid')" />
             </div>
 
             <div class="form-group">
@@ -95,7 +96,7 @@
                        value="@Model.Quantity"
                        required
                        oninput="setCustomValidity('')"
-                       oninvalid="this.setCustomValidity('Vui lòng nhập đủ thông tin')" />
+                       oninvalid="this.setCustomValidity('@ViewBag.MessageForValid')" />
             </div>
             <div class="form-group">
                 <label>Mô tả sách</label>

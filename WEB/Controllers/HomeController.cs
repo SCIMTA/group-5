@@ -41,12 +41,12 @@ namespace taka.Controllers
             User user = dB.Login(phone, password);
             if (user != null)
             {
-                Session["UserInfo"] = user;
+                Session[C.SESSION.UserInfo] = user;
             }
             else
             {
-                TempData["Message"] = "Sai tài khoản hoặc mật khẩu";
-                TempData["RequireLogin"] = true;
+                TempData[C.TEMPDATA.Message] = "Sai tài khoản hoặc mật khẩu";
+                TempData[C.TEMPDATA.RequireLogin] = true;
             }
             return Redirect(callbackUrl);
         }
@@ -58,14 +58,14 @@ namespace taka.Controllers
 
             if (user != null)
             {
-                Session["UserInfo"] = user;
+                Session[C.SESSION.UserInfo] = user;
             }
             return Redirect(callbackUrl);
         }
 
         public ActionResult Logout()
         {
-            Session["UserInfo"] = null;
+            Session[C.SESSION.UserInfo] = null;
             return RedirectToAction("Index", "Home");
         }
 
@@ -78,7 +78,7 @@ namespace taka.Controllers
                 var item = dB.GetBookDetail(id);
                 return View(item);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return RedirectToAction("Error", "Home");
             }

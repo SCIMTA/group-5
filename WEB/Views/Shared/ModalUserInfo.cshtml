@@ -1,5 +1,5 @@
 ﻿@{
-    taka.Models.Enitities.User userInfo = (taka.Models.Enitities.User)@Session["UserInfo"];
+    taka.Models.Enitities.User userInfo = (taka.Models.Enitities.User)@Session[taka.Utils.C.SESSION.UserInfo];
 }
 @if (userInfo != null)
 {

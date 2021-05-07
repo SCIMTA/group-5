@@ -4,15 +4,19 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using taka.Models.DatabaseInteractive;
+using taka.Models.Enitities;
+using taka.Utils;
 
 namespace taka.Controllers
 {
     public class AdminController : Controller
     {
+
         TakaDB dB = new TakaDB();
         // GET: Admin
         public ActionResult Index()
         {
+            bool isLogin = Session[C.SESSION.UserInfo] != null;
             return View();
         }
         public ActionResult Edit(int id = -1)
@@ -75,5 +79,11 @@ namespace taka.Controllers
             ViewBag.listLanguages = dB.GetLanguages();
             return View();
         }
+
+        public ActionResult Manager()
+        {
+            return View();
+        }
+
     }
 }

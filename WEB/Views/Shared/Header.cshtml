@@ -21,8 +21,13 @@
                 <a href="/Admin/Add" class="btn btn-light m-1" style="color:#ee4d2d;">
                     <b>Thêm đầu sách</b>
                 </a>
+
+                <a href="/Admin/Manager" class="btn btn-light m-1" style="color:#ee4d2d;">
+                    <b>Quản lý hệ thống</b>
+                </a>
+
             }
-            @if (userInfo != null)
+            @if (userInfo != null && !userInfo.Phone.Equals("admin"))
             {
                 <button type="button" class="btn btn-light m-1" data-toggle="modal" data-target="#modalUser" style="color:#ee4d2d;">
                     <b>Xin chào @userInfo.Fullname</b>

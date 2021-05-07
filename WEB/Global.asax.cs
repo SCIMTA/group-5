@@ -17,5 +17,14 @@ namespace taka
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
         }
+        void Session_Start(object sender, EventArgs erg)
+        {
+            Application.Lock();
+            if (Application["Views"] == null)
+                Application["Views"] = 1;
+            else
+                Application["Views"] = (int)Application["Views"] + 1;
+            Application.UnLock();
+        }
     }
 }
