@@ -25,6 +25,7 @@ namespace taka.Controllers
             ViewBag.listAuthors = dB.GetAuthors();
             ViewBag.listPublishers = dB.GetPublishers();
             ViewBag.listLanguages = dB.GetLanguages();
+            ViewBag.listTypes = dB.GetTypes();
             try
             {
                 if (id == -1)
@@ -74,16 +75,121 @@ namespace taka.Controllers
         public ActionResult Add()
         {
             ViewBag.listCategories = dB.GetCategories();
-            ViewBag.listAuthors = dB.GetAuthors();
             ViewBag.listPublishers = dB.GetPublishers();
+            ViewBag.listAuthors = dB.GetAuthors();
             ViewBag.listLanguages = dB.GetLanguages();
+            ViewBag.listTypes = dB.GetTypes();
             return View();
         }
 
-        public ActionResult Manager()
+        public ActionResult Manager(string tab = "statistic",string text="")
         {
+            ViewBag.listUsers = dB.GetUsers();
+            ViewBag.listCategories = dB.GetCategories();
+            ViewBag.listPublishers = dB.GetPublishers();
+            ViewBag.listAuthors = dB.GetAuthors();
+            ViewBag.listTypes = dB.GetTypes();
+            ViewBag.listLanguages = dB.GetLanguages();
+            ViewBag.tab = tab;
             return View();
         }
 
+        public ActionResult UpdateUser(string phone,string email,string fullname,string gender,string birthday)
+        {
+            dB.UpdateUser(phone, email, fullname, gender, birthday);
+            return RedirectToAction("Manager", "Admin", new { tab="user" });
+        }
+
+        public ActionResult UpdateCategory(int id, string name)
+        {
+            dB.UpdateCategory(id,name);
+            return RedirectToAction("Manager", "Admin", new { tab = "category" });
+        }
+
+        public ActionResult AddCategory(string name)
+        {
+            dB.AddCategory(name);
+            return RedirectToAction("Manager", "Admin", new { tab = "category" });
+        }
+
+        public ActionResult RemoveCategory(int id)
+        {
+            dB.RemoveCategory(id);
+            return RedirectToAction("Manager", "Admin", new { tab = "category" });
+        }
+
+        public ActionResult UpdateLanguage(int id, string name)
+        {
+            dB.UpdateLanguage(id, name);
+            return RedirectToAction("Manager", "Admin", new { tab = "language" });
+        }
+
+        public ActionResult AddLanguage(string name)
+        {
+            dB.AddLanguage(name);
+            return RedirectToAction("Manager", "Admin", new { tab = "language" });
+        }
+
+        public ActionResult RemoveLanguage(int id)
+        {
+            dB.RemoveLanguage(id);
+            return RedirectToAction("Manager", "Admin", new { tab = "language" });
+        }
+
+        public ActionResult UpdatePublisher(int id, string name)
+        {
+            dB.UpdatePublisher(id, name);
+            return RedirectToAction("Manager", "Admin", new { tab = "publisher" });
+        }
+
+        public ActionResult AddPublisher(string name)
+        {
+            dB.AddPublisher(name);
+            return RedirectToAction("Manager", "Admin", new { tab = "publisher" });
+        }
+
+        public ActionResult RemovePublisher(int id)
+        {
+            dB.RemovePublisher(id);
+            return RedirectToAction("Manager", "Admin", new { tab = "publisher" });
+        }
+
+
+        public ActionResult UpdateAuthor(int id, string name)
+        {
+            dB.UpdateAuthor(id, name);
+            return RedirectToAction("Manager", "Admin", new { tab = "author" });
+        }
+
+        public ActionResult AddAuthor(string name)
+        {
+            dB.AddAuthor(name);
+            return RedirectToAction("Manager", "Admin", new { tab = "author" });
+        }
+
+        public ActionResult RemoveAuthor(int id)
+        {
+            dB.RemoveAuthor(id);
+            return RedirectToAction("Manager", "Admin", new { tab = "author" });
+        }
+
+
+        public ActionResult UpdateType(int id, string name)
+        {
+            dB.UpdateType(id, name);
+            return RedirectToAction("Manager", "Admin", new { tab = "type" });
+        }
+
+        public ActionResult AddType(string name)
+        {
+            dB.AddType(name);
+            return RedirectToAction("Manager", "Admin", new { tab = "type" });
+        }
+
+        public ActionResult RemoveType(int id)
+        {
+            dB.RemoveType(id);
+            return RedirectToAction("Manager", "Admin", new { tab = "type" });
+        }
     }
 }

@@ -68,6 +68,17 @@ namespace taka.Models.DatabaseInteractive
         {
             return takaDB.Languages.ToList();
         }
+
+        public List<Enitities.Type> GetTypes()
+        {
+            return takaDB.Types.ToList();
+        }
+
+        public List<User> GetUsers()
+        {
+            return takaDB.Users.Where(x => !x.Phone.Equals("admin")).ToList();
+        }
+
         public string findTextCategory(int id)
         {
             return takaDB.Categories.Where(x => x.ID == id).First().Name;
@@ -93,6 +104,187 @@ namespace taka.Models.DatabaseInteractive
             takaDB.SaveChanges();
             return user;
         }
+
+        public void UpdateUser(string phone, string email, string fullname, string gender, string birthday)
+        {
+            User user = takaDB.Users.Where(x => x.Phone == phone).First();
+            if (user == null)
+                return;
+            user.Email = email;
+            user.Fullname = fullname;
+            user.Gender = gender;
+            user.Birthday = birthday.Length == 0 ? DateTime.Now.ToShortDateString() : birthday;
+            takaDB.SaveChanges();
+        }
+
+        public void UpdateCategory(int id, string name)
+        {
+            Category cate = takaDB.Categories.Where(x => x.ID == id).First();
+            if (cate == null)
+                return;
+            cate.Name = name;
+            takaDB.SaveChanges();
+        }
+
+        public void AddCategory(string name)
+        {
+            if (takaDB.Categories.Where(e => e.Name.Equals(name)).Count() > 0)
+                return;
+            Category cate = new Category();
+            cate.Name = name;
+            takaDB.Categories.Add(cate);
+            takaDB.SaveChanges();
+        }
+
+        public void RemoveCategory(int id)
+        {
+            try
+            {
+                Category cate = takaDB.Categories.Where(x => x.ID == id).First();
+                takaDB.Categories.Remove(cate);
+                takaDB.SaveChanges();
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+
+        public void UpdateLanguage(int id, string name)
+        {
+            Language lang = takaDB.Languages.Where(x => x.ID == id).First();
+            if (lang == null)
+                return;
+            lang.Name = name;
+            takaDB.SaveChanges();
+        }
+
+        public void AddLanguage(string name)
+        {
+            if (takaDB.Languages.Where(e => e.Name.Equals(name)).Count() > 0)
+                return;
+            Language lang = new Language();
+            lang.Name = name;
+            takaDB.Languages.Add(lang);
+            takaDB.SaveChanges();
+        }
+
+        public void RemoveLanguage(int id)
+        {
+            try
+            {
+                Language lang = takaDB.Languages.Where(x => x.ID == id).First();
+                takaDB.Languages.Remove(lang);
+                takaDB.SaveChanges();
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+
+        public void UpdatePublisher(int id, string name)
+        {
+            Publisher pub = takaDB.Publishers.Where(x => x.ID == id).First();
+            if (pub == null)
+                return;
+            pub.Name = name;
+            takaDB.SaveChanges();
+        }
+
+        public void AddPublisher(string name)
+        {
+            if (takaDB.Publishers.Where(e => e.Name.Equals(name)).Count() > 0)
+                return;
+            Publisher pub = new Publisher();
+            pub.Name = name;
+            takaDB.Publishers.Add(pub);
+            takaDB.SaveChanges();
+        }
+
+        public void RemovePublisher(int id)
+        {
+            try
+            {
+                Publisher pub = takaDB.Publishers.Where(x => x.ID == id).First();
+                takaDB.Publishers.Remove(pub);
+                takaDB.SaveChanges();
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+
+
+
+        public void UpdateAuthor(int id, string name)
+        {
+            Author author = takaDB.Authors.Where(x => x.ID == id).First();
+            if (author == null)
+                return;
+            author.Name = name;
+            takaDB.SaveChanges();
+        }
+
+        public void AddAuthor(string name)
+        {
+            if (takaDB.Publishers.Where(e => e.Name.Equals(name)).Count() > 0)
+                return;
+            Author author = new Author();
+            author.Name = name;
+            takaDB.Authors.Add(author);
+            takaDB.SaveChanges();
+        }
+
+        public void RemoveAuthor(int id)
+        {
+            try
+            {
+                Author author = takaDB.Authors.Where(x => x.ID == id).First();
+                takaDB.Authors.Remove(author);
+                takaDB.SaveChanges();
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+
+
+        public void UpdateType(int id, string name)
+        {
+            Enitities.Type type = takaDB.Types.Where(x => x.ID == id).First();
+            if (type == null)
+                return;
+            type.Name = name;
+            takaDB.SaveChanges();
+        }
+
+        public void AddType(string name)
+        {
+            if (takaDB.Types.Where(e => e.Name.Equals(name)).Count() > 0)
+                return;
+            Enitities.Type author = new Enitities.Type();
+            author.Name = name;
+            takaDB.Types.Add(author);
+            takaDB.SaveChanges();
+        }
+
+        public void RemoveType(int id)
+        {
+            try
+            {
+                Enitities.Type author = takaDB.Types.Where(x => x.ID == id).First();
+                takaDB.Types.Remove(author);
+                takaDB.SaveChanges();
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+
 
         public User Login(string phone, string password)
         {

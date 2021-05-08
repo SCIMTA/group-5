@@ -1,23 +1,22 @@
-﻿
-@{
-    ViewBag.Title = "Manager";
+﻿@{
+    ViewBag.Title = "Quản lý hệ thống";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="row">
     <div class="col-3">
         <div class="list-group" id="list-tab" role="tablist">
-            <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#statistic" role="tab">Thống kê</a>
-            <a class="list-group-item list-group-item-action" id="list-home-list" data-toggle="list" href="#user" role="tab">Người dùng</a>
-            <a class="list-group-item list-group-item-action" id="list-home-list" data-toggle="list" href="#category" role="tab">Danh mục</a>
-            <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#publisher" role="tab">Nhà xuất bản</a>
-            <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#author" role="tab">Tác giả</a>
-            <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#type" role="tab">Hình thức</a>
-            <a class="list-group-item list-group-item-action" id="list-settings-list" data-toggle="list" href="#language" role="tab">Ngôn ngữ</a>
+            <a class="list-group-item list-group-item-action" id="tab_statistic" data-toggle="list" href="#statistic" role="tab">Thống kê</a>
+            <a class="list-group-item list-group-item-action" id="tab_user" data-toggle="list" href="#user" role="tab">Người dùng</a>
+            <a class="list-group-item list-group-item-action" id="tab_category" data-toggle="list" href="#category" role="tab">Danh mục</a>
+            <a class="list-group-item list-group-item-action" id="tab_publisher" data-toggle="list" href="#publisher" role="tab">Nhà xuất bản</a>
+            <a class="list-group-item list-group-item-action" id="tab_author" data-toggle="list" href="#author" role="tab">Tác giả</a>
+            <a class="list-group-item list-group-item-action" id="tab_type" data-toggle="list" href="#type" role="tab">Hình thức</a>
+            <a class="list-group-item list-group-item-action" id="tab_language" data-toggle="list" href="#language" role="tab">Ngôn ngữ</a>
         </div>
     </div>
     <div class="col-9">
         <div class="tab-content" id="nav-tabContent">
-            <div class="tab-pane fade show active" id="statistic" role="tabpanel">@RenderPage("~/Views/Admin/Shared/Statistic.cshtml")</div>
+            <div class="tab-pane fade" id="statistic" role="tabpanel">@RenderPage("~/Views/Admin/Shared/Statistic.cshtml")</div>
             <div class="tab-pane fade" id="user" role="tabpanel">@RenderPage("~/Views/Admin/Shared/User.cshtml")</div>
             <div class="tab-pane fade" id="category" role="tabpanel">@RenderPage("~/Views/Admin/Shared/Category.cshtml")</div>
             <div class="tab-pane fade" id="publisher" role="tabpanel">@RenderPage("~/Views/Admin/Shared/Publisher.cshtml")</div>
@@ -26,4 +25,9 @@
             <div class="tab-pane fade" id="language" role="tabpanel">@RenderPage("~/Views/Admin/Shared/Language.cshtml")</div>
         </div>
     </div>
+    <script>
+        $("#tab_@ViewBag.tab").addClass("active")
+        $("#@ViewBag.tab").addClass(["show","active"])
+    </script>
 </div>
+
