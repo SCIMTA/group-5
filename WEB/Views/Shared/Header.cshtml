@@ -25,7 +25,7 @@
                 <a href="/Admin/Manager" class="btn btn-light m-1" style="color:#ee4d2d;">
                     <b>Quản lý hệ thống</b>
                 </a>
-                <a href="/Home/Logout" class="btn btn-danger m-1">
+                <a href="/Home/Logout" class="btn btn-danger m-1" style="border:2px solid #ffffff">
                     <b>Đăng xuất</b>
                 </a>
 
@@ -39,12 +39,14 @@
         </nav>
     </div>
     <form action="/Home" class="input-group container pt-4 pb-4">
-        <a href="/">
-            <img style="position:absolute;top:25%;height:45%;left:-5%" src="https://salt.tikicdn.com/ts/upload/ae/f5/15/2228f38cf84d1b8451bb49e2c4537081.png" />
+        <a href="/" class="col-1">
+            <img style="width:100%;max-height:40px" src="https://salt.tikicdn.com/ts/upload/ae/f5/15/2228f38cf84d1b8451bb49e2c4537081.png" />
         </a>
-        <input name="text" type="text" class="form-control" placeholder="Đắc nhân tâm" aria-describedby="basic-addon2" value="@ViewBag.TextSearch" />
-        <button class="btn btn-solid-primary btn-light" style="color:white;background-color:#ee4d2d;" type="submit">
-            <ion-icon style="font-size:15px" name="search"></ion-icon>
-        </button>
+        <div class="col-11 input-group">
+            <input name="text" type="text" class="form-control" placeholder="Đắc nhân tâm" value="@ViewBag.TextSearch" />
+            <button class="btn btn-solid-primary btn-light" style="color:white;background-color:#ee4d2d;" type="submit">
+                <ion-icon style="font-size:15px" name="search"></ion-icon>
+            </button>
+        </div>
     </form>
 </div>
