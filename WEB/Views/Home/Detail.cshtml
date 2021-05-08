@@ -77,13 +77,19 @@
         <div class="row col">
             @if (userInfo != null && userInfo.Phone.Equals("admin"))
             {
-                <button type="button" onclick="updateBook()" class="btn col p-3 m-3" style="background-color:white;color:#ee4d2d; border:3; border-color:#ee4d2d">Cập nhật thông tin</button>
-                <button type="button" onclick="showDeleteModal()" class="btn col p-3 m-3" style="background-color:#ee4d2d; color:white; border:3; border-color:#ee4d2d">Xoá</button>
+                <button type="button" onclick="updateBook()" onmousemove="onMouseMoveOutline('outline-btn')" onmouseout="onMouseOutOutline('outline-btn')" id="outline-btn" class="btn col p-3 m-3" style="background-color:white;color:#ee4d2d; border:3; border-color:#ee4d2d">Cập nhật thông tin</button>
+                <button type="button" onclick="showDeleteModal()" onmousemove="onMouseMoveColorFilled('colorfilled-btn')" onmouseout="onMouseOutColorFilled('colorfilled-btn')" id="colorfilled-btn" class="btn col p-3 m-3" style="background-color:#ee4d2d; color:white; border:3; border-color:#ee4d2d">Xoá</button>
             }
             else
             {
-                <button type="button" onclick="addToCart()" class="btn col p-3 m-3" style="background-color:white;color:#ee4d2d; border:3; border-color:#ee4d2d">Thêm vào giỏ hàng</button>
-                <button type="button" onclick="buyNow()" class="btn col p-3 m-3" style="background-color:#ee4d2d; color:white; border:3; border-color:#ee4d2d">Mua ngay</button>
+                <div class="number-input md-number-input">
+                    Số lượng:
+
+                    <input class="quantity" min="0" name="quantity" value="1" type="number" id="quantity-input">
+
+                </div>
+                <button type="button" onclick="addToCart()" onmousemove="onMouseMoveOutline('outline-btn')" onmouseout="onMouseOutOutline('outline-btn')" id="outline-btn" class="btn col p-3 m-3" style="background-color:white;color:#ee4d2d; border:3; border-color:#ee4d2d">Thêm vào giỏ hàng</button>
+                <button type="button" onclick="buyNow()" onmousemove="onMouseMoveColorFilled('colorfilled-btn')" onmouseout="onMouseOutColorFilled('colorfilled-btn')" id="colorfilled-btn" class="btn col p-3 m-3" style="background-color:#ee4d2d; color:white; border:3; border-color:#ee4d2d">Mua ngay</button>
             }
         </div>
     </div>
@@ -131,8 +137,11 @@
 {
     <script>
         let addToCart = () => {
-            alert("thêm vào giỏ")
-        }
+            alert("thêm vào giỏ");
+            const quant = $("#quantity-input").val();
+            window.location.href = "/User/AddToCart?idBook=@Model.ID&idUser=@userInfo.ID&quantity=" + quant; 
+
+                }
         let buyNow = () => {
             alert("mua ngay")
         }
@@ -155,4 +164,25 @@
             selectImgId = -1
         }
     }
+    const onMouseMoveOutline = (id) => {
+        $('#' + id).css('background-color', '#ebd059')
+        $('#' + id).css('border-color', '#ebd059')
+        $('#' + id).css('color', 'white')
+    }
+    const onMouseOutOutline = (id) => {
+        $('#' + id).css('background-color', 'white')
+        $('#' + id).css('color', '#ee4d2d')
+        $('#' + id).css('border-color', '#ee4d2d')
+
+    }
+    const onMouseMoveColorFilled = (id) => {
+        $('#' + id).css('background-color', '#c42708')
+        $('#' + id).css('border-color', '#c42708')
+    }
+    const onMouseOutColorFilled = (id) => {
+        $('#' + id).css('background-color', '#ee4d2d')
+        $('#' + id).css('border-color', '#ee4d2d')
+
+    }
+
 </script>

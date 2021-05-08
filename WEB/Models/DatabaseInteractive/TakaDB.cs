@@ -295,6 +295,24 @@ namespace taka.Models.DatabaseInteractive
             return null;
         }
 
+        public void AddCart(int idBook, int idUser, int quantity=1)
+        {
+            var find_cart = takaDB.Carts.Where(x => x.idBook == idBook && x.idUser == idUser);
+            if (find_cart.Count() > 0)
+            {
+                find_cart.First().Quantity+= quantity;
+            }
+            else
+            {
+                Cart cart = new Cart();
+                cart.idBook = idBook;
+                cart.idUser = idUser;
+                cart.Quantity = quantity;
+                takaDB.Carts.Add(cart);
+            }
+            takaDB.SaveChanges();
+        }
+
         public bool DeleteBook(int id)
         {
             return true;
