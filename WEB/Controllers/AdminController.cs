@@ -72,6 +72,25 @@ namespace taka.Controllers
 
         }
 
+
+        [HttpPost]
+        public ActionResult AddBook(
+            IEnumerable<HttpPostedFileBase> Images,
+            string Title,
+            int Price,
+            int idCategory,
+            int idAuthor,
+            int idPublisher,
+            int iDLanguage,
+            int iDType,
+            int Page,
+            int Quantity,
+            string Description)
+        {
+            //Request.Files.AllKeys;
+            return RedirectToAction("Add", "Admin",new { value = Images.Count()});
+        }
+
         public ActionResult Add()
         {
             ViewBag.listCategories = dB.GetCategories();
@@ -82,7 +101,7 @@ namespace taka.Controllers
             return View();
         }
 
-        public ActionResult Manager(string tab = "statistic",string text="")
+        public ActionResult Manager(string tab = "statistic", string text = "")
         {
             ViewBag.listUsers = dB.GetUsers();
             ViewBag.listCategories = dB.GetCategories();
@@ -94,15 +113,15 @@ namespace taka.Controllers
             return View();
         }
 
-        public ActionResult UpdateUser(string phone,string email,string fullname,string gender,string birthday)
+        public ActionResult UpdateUser(string phone, string email, string fullname, string gender, string birthday)
         {
             dB.UpdateUser(phone, email, fullname, gender, birthday);
-            return RedirectToAction("Manager", "Admin", new { tab="user" });
+            return RedirectToAction("Manager", "Admin", new { tab = "user" });
         }
 
         public ActionResult UpdateCategory(int id, string name)
         {
-            dB.UpdateCategory(id,name);
+            dB.UpdateCategory(id, name);
             return RedirectToAction("Manager", "Admin", new { tab = "category" });
         }
 
