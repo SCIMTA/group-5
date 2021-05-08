@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -13,7 +14,7 @@ namespace taka.Controllers
 
         TakaDB dB = new TakaDB();
 
-        public ActionResult Index(int page = 1, string text = "", int cate = 0, int sort = 0)
+        public ActionResult List(int page = 1, string text = "", int cate = 0, int sort = 0)
         {
             ViewBag.ListCate = dB.GetCategories();
             ViewBag.Cate = cate;
@@ -33,6 +34,12 @@ namespace taka.Controllers
             ViewBag.TextSearch = text;
             return View(listBook.books);
         }
+
+        public ActionResult Index()
+        {
+            return View(dB.GetHomePage());
+        }
+
 
         [HttpPost]
         public ActionResult Login(string phone, string password, string callbackUrl)

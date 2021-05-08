@@ -1,0 +1,102 @@
+﻿@model IEnumerable<taka.Models.Enitities.Book>
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Tiki phiên bản giới hạn";
+
+}
+
+<div>
+    <div class="row">
+        <div class="dropdown ml-3">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                @if (ViewBag.Cate == 0)
+                {
+                    <i>Thể loại</i>
+                }
+                else
+                {
+                    <b>@ViewBag.TextCate</b>
+                }
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                @foreach (var cate in ViewBag.ListCate)
+                {
+                    <a class="dropdown-item" href="/Home/List?page=1&text=@ViewBag.TextSearch&cate=@cate.ID&sort=@ViewBag.Sort">@cate.Name</a>
+                }
+            </div>
+        </div>
+
+        <div class="dropdown ml-3">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                @if (ViewBag.Sort == 0)
+                {
+                    <i> Sắp xếp theo</i>
+                }
+                else
+                {
+                    <b>@ViewBag.TextSort</b>
+                }
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="/Home/List?page=1&text=@ViewBag.TextSearch&cate=@ViewBag.Cate&sort=1">Giá thấp nhất</a>
+                <a class="dropdown-item" href="/Home/List?page=1&text=@ViewBag.TextSearch&cate=@ViewBag.Cate&sort=2">Giá cao nhất</a>
+            </div>
+        </div>
+        @if (ViewBag.Cate != 0 || ViewBag.Sort != 0)
+        {
+            <a href="/Home/List?page=1&text=@ViewBag.TextSearch" class="btn">
+                <ion-icon style="font-size:25px;text-align:center" name="close-circle-outline"></ion-icon>
+            </a>
+        }
+    </div>
+    <p class="mt-3">
+        Trang @ViewBag.CurrentPage/@ViewBag.maxPage
+    </p>
+    @for (int i = 0; i < 4; i++)
+    {
+        <div class="row" style="margin-bottom:30px">
+            @for (int j = 0; j < 5; j++)
+            {
+                try
+                {
+                    var item = @Model.ToArray()[i * 5 + j];
+                    <a class="col" href="/Home/List/Detail?id=@item.ID" style="max-width:20%; text-align:center; -webkit-text-size-adjust: 100%; font-size: .875rem; font-family: Helvetica Neue,Helvetica,Arial,文泉驛正黑,WenQuanYi Zen Hei,Hiragino Sans GB,儷黑 Pro,LiHei Pro,Heiti TC,微軟正黑體,Microsoft JhengHei UI,Microsoft JhengHei,sans-serif; line-height: 1.2; visibility: visible; -webkit-box-direction: normal; background-color: transparent; text-decoration: none;">
+                        <div>
+                            <p>
+                                <img src="@item.Images.First().Url" style="width:100% ;height:200px" />
+                            </p>
+                            <div style="font-family: Helvetica Neue,Helvetica,Arial; -webkit-line-clamp: 2;">
+                                @item.Title
+                            </div>
+                            <div style="-webkit-text-size-adjust: 100%; font-family: Helvetica Neue,Helvetica,Arial,文泉驛正黑,WenQuanYi Zen Hei,Hiragino Sans GB,儷黑 Pro,LiHei Pro,Heiti TC,微軟正黑體,Microsoft JhengHei UI,Microsoft JhengHei,sans-serif; visibility: visible; cursor: pointer; user-select: none; -webkit-box-direction: normal; line-height: 1.5rem; white-space: nowrap; font-size: 18px; color: #ee4d2d;">
+                                @String.Format(new System.Globalization.CultureInfo("vi-VN"), "{0:N0}", item.Price) đ
+                            </div>
+                        </div>
+                    </a>
+                }
+                catch (Exception e)
+                {
+                }
+            }
+        </div>
+    }
+    <div class="row" style="width: 35%; margin: auto;">
+
+        @foreach (int i in ViewBag.ListPage)
+        {
+            if (i == ViewBag.CurrentPage)
+            {
+                <div class="col" style="text-align:center;margin-bottom:30px;background:#ee4d2d;color:white;border-radius:5px;padding:10px;margin-left:5px;margin-right:5px">
+                    @(ViewBag.CurrentPage)
+                </div>
+            }
+            else
+            {
+                <a href="/Home/List?page=@i&text=@ViewBag.TextSearch&cate=@ViewBag.Cate&sort=@ViewBag.Sort" class="col" style="text-align:center;margin-bottom:30px;padding:10px;background-color:lightgray;color:black;margin-left:5px;margin-right:5px;border-radius:5px;">
+                    @i
+                </a>
+            }
+        }
+    </div>
+</div>
