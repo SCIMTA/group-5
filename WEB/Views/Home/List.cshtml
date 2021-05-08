@@ -45,7 +45,7 @@
         </div>
         @if (ViewBag.Cate != 0 || ViewBag.Sort != 0)
         {
-            <a href="/Home/List?page=1&text=@ViewBag.TextSearch" class="btn">
+            <a href="/Home/List?page=1&text=@ViewBag.TextSearch&cate=@ViewBag.Cate" class="btn">
                 <ion-icon style="font-size:25px;text-align:center" name="close-circle-outline"></ion-icon>
             </a>
         }
