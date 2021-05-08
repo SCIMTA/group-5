@@ -6,29 +6,6 @@
 
 }
 
-<div class="row">
-    <div class="col-3">
-        <a href="#">
-            <img src="https://cdn0.fahasa.com/media/wysiwyg/Thang-05-2021/VNPAY1_310x210.png" style="width:100%;object-fit:cover">
-        </a>
-    </div>
-    <div class="col-3">
-        <a href="#">
-            <img src="https://cdn0.fahasa.com/media/wysiwyg/Thang-05-2021/CouponNgon_310x210.jpg" style="width:100%;object-fit:cover">
-        </a>
-    </div>
-    <div class="col-3">
-        <a href="#">
-            <img src="https://cdn0.fahasa.com/media/wysiwyg/Thang-04-2021/DCVP__310x210.png" style="width:100%;object-fit:cover">
-        </a>
-    </div>
-    <div class="col-3">
-        <a href="#">
-            <img src="https://cdn0.fahasa.com/media/wysiwyg/Thang-05-2021/310 x 210.jpg" style="width:100%;object-fit:cover">
-        </a>
-    </div>
-</div>
-
 <div>
     <div class="row">
         <div class="dropdown ml-3">
@@ -45,7 +22,7 @@
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 @foreach (var cate in ViewBag.ListCate)
                 {
-                    <a class="dropdown-item" href="/Home?page=1&text=@ViewBag.TextSearch&cate=@cate.ID&sort=@ViewBag.Sort">@cate.Name</a>
+                    <a class="dropdown-item" href="/Home/List?page=1&text=@ViewBag.TextSearch&cate=@cate.ID&sort=@ViewBag.Sort">@cate.Name</a>
                 }
             </div>
         </div>
@@ -62,13 +39,13 @@
                 }
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="/Home?page=1&text=@ViewBag.TextSearch&cate=@ViewBag.Cate&sort=1">Giá thấp nhất</a>
-                <a class="dropdown-item" href="/Home?page=1&text=@ViewBag.TextSearch&cate=@ViewBag.Cate&sort=2">Giá cao nhất</a>
+                <a class="dropdown-item" href="/Home/List?page=1&text=@ViewBag.TextSearch&cate=@ViewBag.Cate&sort=1">Giá thấp nhất</a>
+                <a class="dropdown-item" href="/Home/List?page=1&text=@ViewBag.TextSearch&cate=@ViewBag.Cate&sort=2">Giá cao nhất</a>
             </div>
         </div>
         @if (ViewBag.Cate != 0 || ViewBag.Sort != 0)
         {
-            <a href="/Home?page=1&text=@ViewBag.TextSearch" class="btn">
+            <a href="/Home/List?page=1&text=@ViewBag.TextSearch" class="btn">
                 <ion-icon style="font-size:25px;text-align:center" name="close-circle-outline"></ion-icon>
             </a>
         }
@@ -84,7 +61,7 @@
                 try
                 {
                     var item = @Model.ToArray()[i * 5 + j];
-                    <a class="col" href="/Home/Detail?id=@item.ID" style="max-width:20%; text-align:center; -webkit-text-size-adjust: 100%; font-size: .875rem; font-family: Helvetica Neue,Helvetica,Arial,文泉驛正黑,WenQuanYi Zen Hei,Hiragino Sans GB,儷黑 Pro,LiHei Pro,Heiti TC,微軟正黑體,Microsoft JhengHei UI,Microsoft JhengHei,sans-serif; line-height: 1.2; visibility: visible; -webkit-box-direction: normal; background-color: transparent; text-decoration: none;">
+                    <a class="col" href="/Home/List/Detail?id=@item.ID" style="max-width:20%; text-align:center; -webkit-text-size-adjust: 100%; font-size: .875rem; font-family: Helvetica Neue,Helvetica,Arial,文泉驛正黑,WenQuanYi Zen Hei,Hiragino Sans GB,儷黑 Pro,LiHei Pro,Heiti TC,微軟正黑體,Microsoft JhengHei UI,Microsoft JhengHei,sans-serif; line-height: 1.2; visibility: visible; -webkit-box-direction: normal; background-color: transparent; text-decoration: none;">
                         <div>
                             <p>
                                 <img src="@item.Images.First().Url" style="width:100% ;height:200px" />
@@ -116,7 +93,7 @@
             }
             else
             {
-                <a href="/Home?page=@i&text=@ViewBag.TextSearch&cate=@ViewBag.Cate&sort=@ViewBag.Sort" class="col" style="text-align:center;margin-bottom:30px;padding:10px;background-color:lightgray;color:black;margin-left:5px;margin-right:5px;border-radius:5px;">
+                <a href="/Home/List?page=@i&text=@ViewBag.TextSearch&cate=@ViewBag.Cate&sort=@ViewBag.Sort" class="col" style="text-align:center;margin-bottom:30px;padding:10px;background-color:lightgray;color:black;margin-left:5px;margin-right:5px;border-radius:5px;">
                     @i
                 </a>
             }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -36,7 +37,7 @@ namespace taka.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            return View(dB.GetHomePage());
         }
 
 

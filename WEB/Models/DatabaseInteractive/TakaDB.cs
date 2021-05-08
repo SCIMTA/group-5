@@ -9,6 +9,7 @@ namespace taka.Models.DatabaseInteractive
     public class ListBook
     {
         public int pages { get; set; }
+        public Category cate { get; set; }
 
         public List<Book> books { get; set; }
 
@@ -50,6 +51,21 @@ namespace taka.Models.DatabaseInteractive
             int maxPage = listItem.Count() / 20 + 1;
             return new ListBook(maxPage, listItem.Skip((page - 1) * pageSize).Take(pageSize).ToList());
         }
+
+        public List<ListBook> GetHomePage()
+        {
+            int pageSize = 10;
+            var listItem = takaDB.Books;
+            List<ListBook> list = new List<ListBook>();
+            foreach (var cate in GetCategories())
+            {
+                ListBook listBook =new ListBook(0, listItem.Where(m => m.idCategory == cate.ID).OrderBy(m => m.ID).Take(pageSize).ToList());
+                listBook.cate = cate;
+                list.Add(listBook);
+            }
+            return list;
+        }
+
 
         public List<Category> GetCategories()
         {
