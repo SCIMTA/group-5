@@ -14,11 +14,13 @@ namespace taka.Controllers
 
         TakaDB dB = new TakaDB();
 
-        public ActionResult List(int page = 1, string text = "", int cate = 0, int sort = 0)
+        public ActionResult List(int page = 1, string text = "", int cate = 0, int sort = 0, int pageSize = 16)
         {
             ViewBag.ListCate = dB.GetCategories();
             ViewBag.Cate = cate;
             ViewBag.Sort = sort;
+            ViewBag.TextSort = "Mới nhất";
+            ViewBag.PageSize = 16;
             ViewBag.CurrentPage = page;
             if (cate != 0)
             {
@@ -28,7 +30,11 @@ namespace taka.Controllers
             {
                 ViewBag.TextSort = sort == 1 ? "Giá thấp nhất" : "Giá cao nhất";
             }
-            ListBook listBook = dB.GetListBook(page, text, cate, sort);
+            if (pageSize != 16 && pageSize % 16 == 0 && pageSize <= 64)
+            {
+                ViewBag.PageSize = pageSize;
+            }
+            ListBook listBook = dB.GetListBook(page, text, cate, sort, pageSize);
             ViewBag.ListPage = HelperFunctions.getNumPage(page, listBook.pages);
             ViewBag.maxPage = listBook.pages;
             ViewBag.TextSearch = text;

@@ -28,9 +28,8 @@ namespace taka.Models.DatabaseInteractive
             takaDB = new TakaDBContext();
         }
 
-        public ListBook GetListBook(int page = 1, string text = "", int cate = 0, int sort = 0)
+        public ListBook GetListBook(int page = 1, string text = "", int cate = 0, int sort = 0, int pageSize = 16)
         {
-            int pageSize = 16;
             var removeUnicode = HelperFunctions.RemoveUnicode(text);
             var listItem = takaDB.Books.Where(m => m.KeySearch.Contains(removeUnicode));
             if (cate != 0)
@@ -59,7 +58,7 @@ namespace taka.Models.DatabaseInteractive
             List<ListBook> list = new List<ListBook>();
             foreach (var cate in GetCategories())
             {
-                ListBook listBook =new ListBook(0, listItem.Where(m => m.idCategory == cate.ID).OrderBy(m => m.ID).Take(pageSize).ToList());
+                ListBook listBook = new ListBook(0, listItem.Where(m => m.idCategory == cate.ID).OrderBy(m => m.ID).Take(pageSize).ToList());
                 listBook.cate = cate;
                 list.Add(listBook);
             }
@@ -311,12 +310,12 @@ namespace taka.Models.DatabaseInteractive
             return null;
         }
 
-        public void AddCart(int idBook, int idUser, int quantity=1)
+        public void AddCart(int idBook, int idUser, int quantity = 1)
         {
             var find_cart = takaDB.Carts.Where(x => x.idBook == idBook && x.idUser == idUser);
             if (find_cart.Count() > 0)
             {
-                find_cart.First().Quantity+= quantity;
+                find_cart.First().Quantity += quantity;
             }
             else
             {
