@@ -21,7 +21,37 @@
                 }
                 else
                 {
-                    <a class="list-group-item" style="border:0px;padding:10px;color:dimgray" href="/Home/List?page=1&text=@ViewBag.TextSearch&cate=@cate.ID&sort=@ViewBag.Sort&pageSize=@ViewBag.PageSize">@cate.Name</a>
+                    <a class="list-group-item" style="border:0px;padding:10px;color:dimgray" href="/Home/List?page=1&text=@ViewBag.TextSearch&cate=@cate.ID&sort=@ViewBag.Sort&pageSize=@ViewBag.PageSize&type=@ViewBag.Type&language=@ViewBag.Language">@cate.Name</a>
+                }
+            }
+            <br />
+            <h5>
+                HÌNH THỨC
+            </h5>
+            @foreach (var e in ViewBag.ListType)
+            {
+                if (e.ID == ViewBag.Type)
+                {
+                    <div class="list-group-item" style="border:0px;padding:10px"><b style="color:#ee4d2d">@e.Name</b></div>
+                }
+                else
+                {
+                    <a class="list-group-item" style="border:0px;padding:10px;color:dimgray" href="/Home/List?page=1&text=@ViewBag.TextSearch&cate=@ViewBag.Cate&sort=@ViewBag.Sort&pageSize=@ViewBag.PageSize&type=@e.ID&language=@ViewBag.Language">@e.Name</a>
+                }
+            }
+            <br />
+            <h5>
+                Ngôn ngữ
+            </h5>
+            @foreach (var e in ViewBag.ListLanguage)
+            {
+                if (e.ID == ViewBag.Language)
+                {
+                    <div class="list-group-item" style="border:0px;padding:10px"><b style="color:#ee4d2d">@e.Name</b></div>
+                }
+                else
+                {
+                    <a class="list-group-item" style="border:0px;padding:10px;color:dimgray" href="/Home/List?page=1&text=@ViewBag.TextSearch&cate=@ViewBag.Cate&sort=@ViewBag.Sort&pageSize=@ViewBag.PageSize&type=@ViewBag.Type&language=@e.ID">@e.Name</a>
                 }
             }
         </div>
@@ -35,9 +65,9 @@
                     <span>@ViewBag.TextSort</span>
                 </button>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="/Home/List?page=1&text=@ViewBag.TextSearch&cate=@ViewBag.Cate&pageSize=@ViewBag.PageSize&sort=0">Mới nhất</a>
-                    <a class="dropdown-item" href="/Home/List?page=1&text=@ViewBag.TextSearch&cate=@ViewBag.Cate&pageSize=@ViewBag.PageSize&sort=1">Giá thấp nhất</a>
-                    <a class="dropdown-item" href="/Home/List?page=1&text=@ViewBag.TextSearch&cate=@ViewBag.Cate&pageSize=@ViewBag.PageSize&sort=2">Giá cao nhất</a>
+                    <a class="dropdown-item" href="/Home/List?page=1&text=@ViewBag.TextSearch&cate=@ViewBag.Cate&sort=0&pageSize=@ViewBag.PageSize&type=@ViewBag.Type&language=@ViewBag.Language">Mới nhất</a>
+                    <a class="dropdown-item" href="/Home/List?page=1&text=@ViewBag.TextSearch&cate=@ViewBag.Cate&sort=1&pageSize=@ViewBag.PageSize&type=@ViewBag.Type&language=@ViewBag.Language">Giá thấp nhất</a>
+                    <a class="dropdown-item" href="/Home/List?page=1&text=@ViewBag.TextSearch&cate=@ViewBag.Cate&sort=2&pageSize=@ViewBag.PageSize&type=@ViewBag.Type&language=@ViewBag.Language">Giá cao nhất</a>
                 </div>
             </div>
 
@@ -46,9 +76,9 @@
                     <span>@ViewBag.PageSize sản phẩm</span>
                 </button>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="/Home/List?page=1&text=@ViewBag.TextSearch&cate=@ViewBag.Cate&sort=@ViewBag.Sort&pageSize=16">16 sản phẩm</a>
-                    <a class="dropdown-item" href="/Home/List?page=1&text=@ViewBag.TextSearch&cate=@ViewBag.Cate&sort=@ViewBag.Sort&pageSize=32">32 sản phẩm</a>
-                    <a class="dropdown-item" href="/Home/List?page=1&text=@ViewBag.TextSearch&cate=@ViewBag.Cate&sort=@ViewBag.Sort&pageSize=64">64 sản phẩm</a>
+                    <a class="dropdown-item" href="/Home/List?page=1&text=@ViewBag.TextSearch&cate=@ViewBag.Cate&sort=@ViewBag.Sort&pageSize=16&type=@ViewBag.Type&language=@ViewBag.Language">16 sản phẩm</a>
+                    <a class="dropdown-item" href="/Home/List?page=1&text=@ViewBag.TextSearch&cate=@ViewBag.Cate&sort=@ViewBag.Sort&pageSize=32&type=@ViewBag.Type&language=@ViewBag.Language">32 sản phẩm</a>
+                    <a class="dropdown-item" href="/Home/List?page=1&text=@ViewBag.TextSearch&cate=@ViewBag.Cate&sort=@ViewBag.Sort&pageSize=64&type=@ViewBag.Type&language=@ViewBag.Language">64 sản phẩm</a>
                 </div>
             </div>
 
@@ -129,7 +159,7 @@
                     }
                     else
                     {
-                        <a href="/Home/List?page=@i&text=@ViewBag.TextSearch&cate=@ViewBag.Cate&sort=@ViewBag.Sort&pageSize=@ViewBag.PageSize" class="col" style="text-align:center;margin-bottom:30px;padding:10px;background-color:lightgray;color:black;margin-left:5px;margin-right:5px;border-radius:5px;">
+                        <a href="/Home/List?page=@i&text=@ViewBag.TextSearch&cate=@ViewBag.Cate&sort=@ViewBag.Sort&pageSize=@ViewBag.PageSize&type=@ViewBag.Type&language=@ViewBag.Language" class="col" style="text-align:center;margin-bottom:30px;padding:10px;background-color:lightgray;color:black;margin-left:5px;margin-right:5px;border-radius:5px;">
                             @i
                         </a>
                     }

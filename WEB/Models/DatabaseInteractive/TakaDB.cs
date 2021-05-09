@@ -28,14 +28,18 @@ namespace taka.Models.DatabaseInteractive
             takaDB = new TakaDBContext();
         }
 
-        public ListBook GetListBook(int page = 1, string text = "", int cate = 0, int sort = 0, int pageSize = 16)
+        public ListBook GetListBook(int page = 1, string text = "", int cate = 0, int sort = 0, int pageSize = 16, int type = 0, int language = 0)
         {
             var removeUnicode = HelperFunctions.RemoveUnicode(text);
             var listItem = takaDB.Books.Where(m => m.KeySearch.Contains(removeUnicode));
             if (cate != 0)
-            {
                 listItem = listItem.Where(m => m.idCategory == cate);
-            }
+
+            if (type != 0)
+                listItem = listItem.Where(m => m.idType == type);
+
+            if (language != 0)
+                listItem = listItem.Where(m => m.idLanguage == language);
 
             if (sort != 0)
             {
