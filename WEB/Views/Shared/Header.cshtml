@@ -2,7 +2,7 @@
     taka.Models.Enitities.User userInfo = (taka.Models.Enitities.User)Session["UserInfo"];
 }
 
-<div style="background-color:#ee4d2d" class="row">
+<div style="background-color:#ee4d2d">
     <img src="https://cdn0.fahasa.com/media/wysiwyg/Thang-05-2021/BigSale1_header.png" style="width:100%" />
     <div class="container">
         <nav class="nav float-right">
@@ -32,20 +32,20 @@
             }
             @if (userInfo != null && !userInfo.Phone.Equals("admin"))
             {
-        
-        <a href="/User/ShoppingCart?idUser=@userInfo.ID"><ion-icon class="btn btn-light m-1" style="height:25px; margin-top:10px; color:#ee4d2d" name="cart-outline"></ion-icon></a>
-        
+
+                <a href="/User/ShoppingCart?idUser=@userInfo.ID"><ion-icon class="btn btn-light m-1" style="height:25px; margin-top:10px; color:#ee4d2d" name="cart-outline"></ion-icon></a>
+
                 <button type="button" class="btn btn-light m-1" data-toggle="modal" data-target="#modalUser" style="color:#ee4d2d;">
                     <b>Xin chào @userInfo.Fullname</b>
                 </button>
             }
         </nav>
     </div>
-    <form action="/Home/List" class="input-group container pt-4 pb-4">
-        <a href="/" class="col-1">
-            <img style="width:100%;max-height:40px" src="https://salt.tikicdn.com/ts/upload/ae/f5/15/2228f38cf84d1b8451bb49e2c4537081.png" />
+    <form action="/Home/List" class="input-group container pt-4 pb-4 mt-5">
+        <a href="/" class="col-2" style="margin-top:-5px;margin-right:35px">
+            <img style="width:100%;min-height:40px;max-height:40px;object-fit:contain" src="https://salt.tikicdn.com/ts/upload/ae/f5/15/2228f38cf84d1b8451bb49e2c4537081.png" />
         </a>
-        <div class="col-11 input-group">
+        <div class="col-9 input-group">
             <input name="text" type="text" class="form-control" placeholder="Đắc nhân tâm" value="@ViewBag.TextSearch" />
             <button class="btn btn-solid-primary btn-light" style="color:white;background-color:#ee4d2d;" type="submit">
                 <ion-icon style="font-size:15px" name="search"></ion-icon>
