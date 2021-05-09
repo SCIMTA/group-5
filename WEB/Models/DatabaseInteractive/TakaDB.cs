@@ -328,12 +328,22 @@ namespace taka.Models.DatabaseInteractive
             }
             takaDB.SaveChanges();
         }
-
+        public List<Cart> getListCarts(int idUser)
+        {
+            var listCarts = takaDB.Carts.Where(x => x.idUser == idUser).ToList();
+            return listCarts;
+        }
+        public void deleteCartItem(int idUser, int idBook)
+        {
+            Enitities.Cart deleteItem = takaDB.Carts.Where(x => x.idUser == idUser && x.idBook == idBook).First();
+            takaDB.Carts.Remove(deleteItem);
+            takaDB.SaveChanges();
+        }
         public bool DeleteBook(int id)
         {
             return true;
         }
-
+        
 
     }
 }

@@ -20,5 +20,21 @@ namespace taka.Controllers
             db.AddCart(idBook, idUser, quantity);
             return RedirectToAction("Index", "Home");
         }
+        public ActionResult BuyNow(int [] id)
+        {
+            ViewBag.count = id.Length;
+
+            return View();
+        }
+        public ActionResult ShoppingCart(int idUser)
+        {
+            List<Models.Enitities.Cart> listCarts = db.getListCarts(idUser);
+            return View(listCarts);
+        }
+        public ActionResult DeleteCartItem(int idUser, int idBook)
+        {
+            db.deleteCartItem(idUser, idBook);
+            return RedirectToAction("ShoppingCart", "User", new { idUser = idUser});
+        }
     }
 }

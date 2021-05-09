@@ -82,12 +82,16 @@
             }
             else
             {
-                <div class="number-input md-number-input">
-                    Số lượng:
-
-                    <input class="quantity" min="0" name="quantity" value="1" type="number" id="quantity-input">
-
-                </div>
+        <div class="number-input md-number-input">
+            Số lượng:
+            <a class="btn btn-outline-light" onclick="this.parentNode.querySelector('input[type=number]').stepDown()" style="border:none;">
+                <ion-icon name="remove-outline"></ion-icon>
+            </a>
+            <input class="quantity" min="0" name="quantity" value="1" type="number" id="quantity-input">
+            <a class="btn btn-outline-light" onclick="this.parentNode.querySelector('input[type=number]').stepUp()" style="border:none;">
+                <ion-icon name="add-outline"></ion-icon>
+            </a>
+        </div>
                 <button type="button" onclick="addToCart()" onmousemove="onMouseMoveOutline('outline-btn')" onmouseout="onMouseOutOutline('outline-btn')" id="outline-btn" class="btn col p-3 m-3" style="background-color:white;color:#ee4d2d; border:3; border-color:#ee4d2d">Thêm vào giỏ hàng</button>
                 <button type="button" onclick="buyNow()" onmousemove="onMouseMoveColorFilled('colorfilled-btn')" onmouseout="onMouseOutColorFilled('colorfilled-btn')" id="colorfilled-btn" class="btn col p-3 m-3" style="background-color:#ee4d2d; color:white; border:3; border-color:#ee4d2d">Mua ngay</button>
             }
@@ -143,7 +147,8 @@
 
                 }
         let buyNow = () => {
-            alert("mua ngay")
+            alert("mua ngay");
+            window.location.href = "/User/BuyNow?idUser=@userInfo.ID";
         }
     </script>
 }
