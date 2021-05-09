@@ -30,7 +30,7 @@ namespace taka.Models.DatabaseInteractive
 
         public ListBook GetListBook(int page = 1, string text = "", int cate = 0, int sort = 0)
         {
-            int pageSize = 20;
+            int pageSize = 16;
             var removeUnicode = HelperFunctions.RemoveUnicode(text);
             var listItem = takaDB.Books.Where(m => m.KeySearch.Contains(removeUnicode));
             if (cate != 0)
@@ -48,7 +48,7 @@ namespace taka.Models.DatabaseInteractive
             else
                 listItem = listItem.OrderBy(m => m.ID);
 
-            int maxPage = listItem.Count() / 20 + 1;
+            int maxPage = listItem.Count() / pageSize + 1;
             return new ListBook(maxPage, listItem.Skip((page - 1) * pageSize).Take(pageSize).ToList());
         }
 
