@@ -1,0 +1,53 @@
+alter trigger dbo.[valueRatePoint]
+    on dbo.[Rate]
+    after insert , update , delete
+    as
+    begin
+
+        --         insert
+        if (Select Count(*) From inserted) > 0 and (Select Count(*) From deleted) = 0
+            begin
+
+                update dbo.[Book]
+                set dbo.[Book].[RateCount] = (select count(Rate) from dbo.[Rate] where idBook = Inserted.idBook)
+                from [inserted]
+                where dbo.[Book].[ID] = [inserted].idBook
+
+
+                update dbo.[Book]
+                set dbo.[Book].[RatePoint] = ((select sum(Rate) from dbo.[Rate] where idBook = Inserted.idBook) /
+                                              RateCount)
+                from [inserted]
+                where dbo.[Book].[ID] = [inserted].idBook
+
+
+            end
+-- delete
+        if (Select Count(*) From inserted) = 0 and (Select Count(*) From deleted) > 0
+            begin
+
+                update dbo.[Book]
+                set dbo.[Book].[RateCount] = (select count(Rate) from dbo.[Rate] where idBook = deleted.idBook)
+                from [deleted]
+                where dbo.[Book].[ID] = [deleted].idBook
+
+
+                update dbo.[Book]
+                set dbo.[Book].[RatePoint] = ((select sum(Rate) from dbo.[Rate] where idBook = deleted.idBook) /
+                                              RateCount)
+                from [deleted]
+                where dbo.[Book].[ID] = [deleted].idBook
+
+
+            end
+-- update
+        if (Select Count(*) From inserted) > 0 and (Select Count(*) From deleted) > 0
+            begin
+                update dbo.[Book]
+                set dbo.[Book].[RatePoint] = ((select sum(Rate) from dbo.[Rate] where idBook = Inserted.idBook) /
+                                              RateCount)
+                from [inserted]
+                where dbo.[Book].[ID] = [inserted].idBook
+            end
+
+    end

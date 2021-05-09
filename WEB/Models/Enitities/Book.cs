@@ -48,6 +48,9 @@ namespace taka.Models.Enitities
         [StringLength(100)]
         public string KeySearch { get; set; }
 
+        public int? RatePoint { get; set; }
+        public int? RateCount { get; set; }
+
         public virtual Author Author { get; set; }
 
         public virtual Category Category { get; set; }
