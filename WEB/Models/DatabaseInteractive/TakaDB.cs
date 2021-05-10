@@ -1,6 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using RestSharp;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Web;
 using taka.Models.Enitities;
 using taka.Utils;
 
@@ -346,7 +350,66 @@ namespace taka.Models.DatabaseInteractive
         {
             return true;
         }
-        
+
+
+        public Book AddBook(IEnumerable<HttpPostedFileBase> Images, string Title,
+            int Price,
+            int idCategory,
+            int idAuthor,
+            int idPublisher,
+            int idLanguage,
+            int idType,
+            string Page,
+            int Quantity,
+            string Description)
+        {
+
+
+
+            Book book = new Book();
+            book.Title = Title;
+            book.Price = Price;
+            book.idCategory = idCategory;
+            book.idAuthor = idAuthor;
+            book.idPublisher = idPublisher;
+            book.idLanguage = idLanguage;
+            book.idType = idType;
+            book.Page = Page;
+            book.Quantity = Quantity;
+            book.Description = Description;
+            takaDB.Books.Add(book);
+            takaDB.SaveChanges();
+            if (Images != null && Images.Count() > 0)
+            {
+                foreach (var image in Images)
+                {
+                    try
+                    {
+                        MemoryStream target = new MemoryStream();
+                        image.InputStream.CopyTo(target);
+                        byte[] data = target.ToArray();
+                        var client = new RestClient("http://128.199.108.177:8001/upload_image");
+                        var request = new RestRequest(Method.POST);
+                        request.AddHeader("Content-Type", "multipart/form-data");
+                        request.AlwaysMultipartFormData = true;
+                        request.AddFile("book_cover", data, "image.jpeg");
+                        IRestResponse response = client.Execute(request);
+                        string resJsonRaw = response.Content;
+                        JObject json = JObject.Parse(resJsonRaw);
+                        Image imgObj = new Image();
+                        imgObj.idBook = book.ID;
+                        imgObj.Url = json.GetValue("url").ToString();
+                        takaDB.Images.Add(imgObj);
+                    }
+                    catch (Exception)
+                    {
+
+                    }
+                }
+            }
+            takaDB.SaveChanges();
+            return book;
+        }
 
     }
 }

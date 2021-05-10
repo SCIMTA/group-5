@@ -32,7 +32,12 @@
             {
                 if (e.ID == ViewBag.Type)
                 {
-                    <div class="list-group-item" style="border:0px;padding:10px"><b style="color:#ee4d2d">@e.Name</b></div>
+                    <div class="list-group-item" style="border:0px;padding:10px">
+                        <b style="color:#ee4d2d">@e.Name</b>
+                        <a href="/Home/List?page=1&text=@ViewBag.TextSearch&cate=@ViewBag.Cate&sort=@ViewBag.Sort&pageSize=@ViewBag.PageSize&type=0&language=@ViewBag.Language" class="btn">
+                            <ion-icon style="font-size:25px;text-align:center" name="close-circle-outline"></ion-icon>
+                        </a>
+                    </div>
                 }
                 else
                 {
@@ -47,7 +52,12 @@
             {
                 if (e.ID == ViewBag.Language)
                 {
-                    <div class="list-group-item" style="border:0px;padding:10px"><b style="color:#ee4d2d">@e.Name</b></div>
+                    <div class="list-group-item" style="border:0px;padding:10px">
+                        <b style="color:#ee4d2d">@e.Name</b>
+                        <a href="/Home/List?page=1&text=@ViewBag.TextSearch&cate=@ViewBag.Cate&sort=@ViewBag.Sort&pageSize=@ViewBag.PageSize&type=@ViewBag.Type&language=0" class="btn">
+                            <ion-icon style="font-size:25px;text-align:center" name="close-circle-outline"></ion-icon>
+                        </a>
+                    </div>
                 }
                 else
                 {

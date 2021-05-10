@@ -81,14 +81,14 @@ namespace taka.Controllers
             int idCategory,
             int idAuthor,
             int idPublisher,
-            int iDLanguage,
-            int iDType,
-            int Page,
+            int idLanguage,
+            int idType,
+            string Page,
             int Quantity,
             string Description)
         {
-            //Request.Files.AllKeys;
-            return RedirectToAction("Add", "Admin",new { value = Images.Count()});
+            Book book = dB.AddBook(Images,Title, Price, idCategory, idAuthor, idPublisher, idLanguage, idType, Page, Quantity, Description);
+            return RedirectToAction("Detail", "Home",new { id = book.ID});
         }
 
         public ActionResult Add()
