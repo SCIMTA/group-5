@@ -7,6 +7,7 @@ using taka.Models.DatabaseInteractive;
 
 namespace taka.Controllers
 {
+    [Authorize]
     public class UserController : Controller
     {
         TakaDB db = new TakaDB();

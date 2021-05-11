@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using System.Web.UI;
 using taka.Models.Enitities;
 using taka.Utils;
 
@@ -21,7 +22,7 @@ namespace taka
         }
         void Session_Start(object sender, EventArgs erg)
         {
-          
+
             Application.Lock();
             if (Application["Views"] == null)
                 Application["Views"] = 1;
@@ -34,8 +35,10 @@ namespace taka
         {
             User user = (User)Session[C.SESSION.UserInfo];
             if (user != null)
-                Session[C.SESSION.Cart] = new taka.Models.DatabaseInteractive.TakaDB().GetListCarts(user.ID).Count;
+                Session[C.SESSION.Cart] = new Models.DatabaseInteractive.TakaDB().GetListCarts(user.ID).Count;
         }
+
+
     }
 
 }
