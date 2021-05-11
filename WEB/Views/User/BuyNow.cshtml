@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "BuyNow";
+    ViewBag.shipper = "Đơn vị vận chuyển";
 }
 
 <!--Section: Block Content-->
@@ -25,10 +26,10 @@
                         <!-- Grid column -->
                         <div class="col-lg-6">
 
-                            <!-- First name -->
+                            <!-- Last name -->
                             <div class="md-form md-outline mb-0 mb-lg-4">
                                 <input type="text" id="firstName" class="form-control mb-0 mb-lg-2">
-                                <label for="firstName">First name</label>
+                                <label for="lastName">Họ</label>
                             </div>
 
                         </div>
@@ -36,10 +37,10 @@
                         <!-- Grid column -->
                         <div class="col-lg-6">
 
-                            <!-- Last name -->
+                            <!-- First name -->
                             <div class="md-form md-outline">
                                 <input type="text" id="lastName" class="form-control">
-                                <label for="lastName">Last name</label>
+                                <label for="firstName">Tên</label>
                             </div>
 
                         </div>
@@ -47,74 +48,43 @@
 
                     </div>
                     <!-- Grid row -->
-                    <!-- Company name -->
-                    <div class="md-form md-outline my-0">
-                        <input type="text" id="companyName" class="form-control mb-0">
-                        <label for="companyName">Company name (optional)</label>
-                    </div>
-
-                    <!-- Country -->
-                    <div class="d-flex flex-wrap">
-                        <div class="select-outline position-relative w-100">
-                            <select class="mdb-select md-form md-outline">
-                                <option value="" disabled selected>Choose your option</option>
-                                <option value="1">Option 1</option>
-                                <option value="2">Option 2</option>
-                                <option value="3">Option 3</option>
-                            </select>
-                            <label>Country</label>
+                    <!-- Shipper -->
+                    <div class="d-flex flex-wrap card">
+                        <div class="dropdown card-body">
+                            <button class="btn btn-light dropdown-toggle" type="button" id="shipper" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Giao hàng nhanh
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" onclick="changeShipper('shipper1')">Giao hàng nhanh</a>
+                                <a class="dropdown-item" onclick="changeShipper('shipper2')">Giao hàng tiết kiệm</a>
+                                <a class="dropdown-item" onclick="changeShipper('shipper2')">Viettel Post</a>
+                            </div>
+                            <p class="text-right" id="estimateTime">Thời gian dự kiến: 2 - 3 ngày</p>
                         </div>
                     </div>
+                    <label > Đơn vị vận chuyển</label>
+                    <hr />
 
-                    <!-- Address Part 1 -->
-                    <div class="md-form md-outline mt-0">
-                        <input type="text" id="form14" placeholder="House number and street name" class="form-control">
-                        <label for="form14">Address</label>
-                    </div>
 
                     <!-- Address Part 2 -->
                     <div class="md-form md-outline">
-                        <input type="text" id="form15" placeholder="Apartment, suite, unit etc. (optional)"
+                        <input type="text" id="form15" placeholder="Số nhà, Đường, Phường/Xã, Quận/Huyện, Tỉnh/Thành Phố"
                                class="form-control">
-                        <label for="form15">Address</label>
+                        <label for="form15">Địa chỉ</label>
                     </div>
 
-                    <!-- Postcode / ZIP -->
-                    <div class="md-form md-outline">
-                        <input type="text" id="form16" class="form-control">
-                        <label for="form16">Postcode / ZIP</label>
-                    </div>
 
-                    <!-- Town / City -->
-                    <div class="md-form md-outline">
-                        <input type="text" id="form17" class="form-control">
-                        <label for="form17">Town / City</label>
-                    </div>
 
                     <!-- Phone -->
                     <div class="md-form md-outline">
                         <input type="number" id="form18" class="form-control">
-                        <label for="form18">Phone</label>
-                    </div>
-
-                    <!-- Email address -->
-                    <div class="md-form md-outline">
-                        <input type="email" id="form19" class="form-control">
-                        <label for="form19">Email address</label>
+                        <label for="form18">Số điện thoại</label>
                     </div>
 
                     <!-- Additional information -->
                     <div class="md-form md-outline">
                         <textarea id="form76" class="md-textarea form-control" rows="4"></textarea>
-                        <label for="form76">Additional information</label>
-                    </div>
-
-                    <div class="form-check pl-0 mb-4 mb-lg-0">
-                        <input type="checkbox" class="form-check-input filled-in" id="new3">
-                        <label class="form-check-label small text-uppercase card-link-secondary" for="new3">
-                            Create an
-                            account?
-                        </label>
+                        <label for="form76">Lời nhắn tới người bán</label>
                     </div>
 
                 </div>
@@ -195,4 +165,28 @@
             $(this).closest('.select-outline').find('.caret').toggleClass('active');
         });
     });
+
+    let changeShipper = (id){
+        let shipper = 'Giao hàng nhanh';
+        if (id == 'shipper2') {
+            shipper = 'Giao hàng tiết kiệm';
+        }
+        if (id == 'shipper3') {
+            shipper = 'Viettel Post';
+        }
+        $('#shipper').text(shipper);
+        changeEstimate(id);
+    }
+
+    let changeEstimate = (id){
+        let estimateTime = ' 2 - 3 ngày';
+        if (id == 'shipper2') {
+            estimateTime = ' 3 - 5 ngày';
+        }
+        if (id == 'shipper3') {
+            estimateTime = ' 2 - 5 ngày';
+        }
+        $('#estimateTime').text('Thời gian dự kiến:' + estimateTime);
+    }
+    changeShipper();
 </script>
