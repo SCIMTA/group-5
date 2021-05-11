@@ -41,19 +41,23 @@ namespace taka.Controllers
 
 
         [HttpPost]
-        public ActionResult EditBook(int MA_DAU_SACH,
-            HttpPostedFileBase BIA_SACH,
-            string TEN_DAU_SACH,
-            int MA_THE_LOAI,
-            int MA_NHA_XUAT_BAN,
-            int MA_TAC_GIA,
-            int GIA_TRI,
-            int SO_TRANG,
-            int TONG_SO_LUONG,
-            int SO_LUONG_CON_LAI,
-            string MO_TA_SACH)
+        public ActionResult EditBook(int ID,
+             IEnumerable<HttpPostedFileBase> Images,
+             IEnumerable<int> images_delete,
+            string Title,
+            int Price,
+            int idCategory,
+            int idAuthor,
+            int idPublisher,
+            int idLanguage,
+            int idType,
+            string Page,
+            string Date,
+            int Quantity,
+            string Description)
         {
-            return View();
+            dB.EditBook(ID, images_delete, Images, Title, Price, idCategory, idAuthor, idPublisher, idLanguage, idType, Page, Date, Quantity, Description);
+            return RedirectToAction("Detail", "Home", new { id = ID });
         }
 
         [HttpPost]
@@ -85,11 +89,12 @@ namespace taka.Controllers
             int idLanguage,
             int idType,
             string Page,
+            string Date,
             int Quantity,
             string Description)
         {
-            Book book = dB.AddBook(Images,Title, Price, idCategory, idAuthor, idPublisher, idLanguage, idType, Page, Quantity, Description);
-            return RedirectToAction("Detail", "Home",new { id = book.ID});
+            Book book = dB.AddBook(Images, Title, Price, idCategory, idAuthor, idPublisher, idLanguage, idType, Page, Date, Quantity, Description);
+            return RedirectToAction("Detail", "Home", new { id = book.ID });
         }
 
         public ActionResult Add()

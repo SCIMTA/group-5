@@ -367,6 +367,7 @@ namespace taka.Models.DatabaseInteractive
             int idLanguage,
             int idType,
             string Page,
+            string Date,
             int Quantity,
             string Description)
         {
@@ -379,6 +380,7 @@ namespace taka.Models.DatabaseInteractive
             book.idLanguage = idLanguage;
             book.idType = idType;
             book.Page = Page;
+            book.Date = Date;
             book.Quantity = Quantity;
             book.Description = Description;
             book.RateCount = 0;
@@ -418,7 +420,10 @@ namespace taka.Models.DatabaseInteractive
         }
 
 
-        public Book EditBook(int ID,IEnumerable<HttpPostedFileBase> Images, string Title,
+        public Book EditBook(int ID,
+            IEnumerable<int> images_delete,
+            IEnumerable<HttpPostedFileBase> Images,
+            string Title,
             int Price,
             int idCategory,
             int idAuthor,
@@ -426,10 +431,13 @@ namespace taka.Models.DatabaseInteractive
             int idLanguage,
             int idType,
             string Page,
+            string Date,
             int Quantity,
             string Description)
         {
-            Book book = takaDB.Books.Where(x=>x.ID==ID).First();
+            if(images_delete!=null)
+            takaDB.Images.RemoveRange(takaDB.Images.Where(x => images_delete.Contains(x.ID)));
+            Book book = takaDB.Books.Where(x => x.ID == ID).First();
             book.Title = Title;
             book.Price = Price;
             book.idCategory = idCategory;
@@ -438,6 +446,7 @@ namespace taka.Models.DatabaseInteractive
             book.idLanguage = idLanguage;
             book.idType = idType;
             book.Page = Page;
+            book.Date = Date;
             book.Quantity = Quantity;
             book.Description = Description;
             takaDB.SaveChanges();
@@ -459,11 +468,11 @@ namespace taka.Models.DatabaseInteractive
                         string resJsonRaw = response.Content;
                         JObject json = JObject.Parse(resJsonRaw);
                         Image imgObj = new Image();
-                        imgObj.idBook = book.ID;
+                        imgObj.idBook = ID;
                         imgObj.Url = json.GetValue("url").ToString();
                         takaDB.Images.Add(imgObj);
                     }
-                    catch (Exception)
+                    catch (Exception e)
                     {
 
                     }

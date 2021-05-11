@@ -16,9 +16,9 @@
             <label for="file-input">
                 <img src="https://cdn.pixabay.com/photo/2017/11/10/05/24/add-2935429_960_720.png" id="imgBiaSach" style="height:250px;width:150px;object-fit:contain;text-align:center;" />
             </label>
-            <input id="file-input" name="Images" type="file" hidden multiple accept="image/*" onchange="OnAddImage()" />
+            <input id="file-input" name="Images" type="file" hidden multiple accept="image/*" onchange="OnAddImage()" required" />
         </div>
-        <div id="images" style="overflow-x:auto;height:300px;flex-direction:row;display:flex;overflow-y:hidden">
+        <div id="images" style="overflow-x:auto;height:300px;flex-direction:row;display:flex;overflow-y:hidden" onchange="alert('ahihi')">
         </div>
     </div>
     <div class="col">
@@ -103,7 +103,7 @@
                           rows="15"></textarea>
             </div>
 
-            <button type="submit" class="btn btn-light col p-3" style="background-color:#ee4d2d;color:white;">Thêm đầu sách</button>
+            <button type="submit" id="button_push" class="btn btn-light col p-3" style="background-color:#ee4d2d;color:white;">Thêm đầu sách</button>
 
         </div>
     </div>
@@ -136,6 +136,10 @@
             dt.items.add(listImg[i].file)
         }
         $("#file-input")[0].files = dt.files
+        if ($("#images")[0].children.length == 0)
+            $("#button_push").attr("disabled", "disabled")
+        else
+            $("#button_push").removeAttr("disabled")
     }
 
     let deleteImage = id => {
@@ -150,7 +154,7 @@
         const files = $("#file-input")[0].files
         if (files && files.length > 0) {
             for (let i = 0; i < files.length; i++) {
-                
+
                 let reader = new FileReader();
                 reader.onload = function (e) {
                     $("#images").append(`<div onclick="deleteImage('${imgCount}')" class="m-3" style="position: relative; display: inline-block;" id="divBiaSach_${imgCount}" onmouseover="onFocusImg('${imgCount}')" onmouseout="onBlurImg()">

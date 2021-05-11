@@ -33,7 +33,7 @@
             @if (userInfo != null && !userInfo.Phone.Equals("admin"))
             {
 
-                <a href="/User/ShoppingCart?idUser=@userInfo.ID"><ion-icon class="btn btn-light m-1" style="height:25px; margin-top:10px; color:#ee4d2d" name="cart-outline"></ion-icon></a>
+                <a href="/User/ShoppingCart?idUser=@userInfo.ID"><div style="position:absolute;top:0">@Session[taka.Utils.C.SESSION.Cart]</div>  <ion-icon class="btn btn-light m-1" style="height:25px; margin-top:10px; color:#ee4d2d" name="cart-outline"></ion-icon></a>
 
                 <button type="button" class="btn btn-light m-1" data-toggle="modal" data-target="#modalUser" style="color:#ee4d2d;">
                     <b>Xin chào @userInfo.Fullname</b>
