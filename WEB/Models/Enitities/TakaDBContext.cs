@@ -23,6 +23,7 @@ namespace taka.Models.Enitities
         public virtual DbSet<OrderDetail> OrderDetails { get; set; }
         public virtual DbSet<Publisher> Publishers { get; set; }
         public virtual DbSet<Rate> Rates { get; set; }
+        public virtual DbSet<RatingItem> RatingItems { get; set; }
         public virtual DbSet<Type> Types { get; set; }
         public virtual DbSet<User> Users { get; set; }
 
@@ -115,6 +116,11 @@ namespace taka.Models.Enitities
 
             modelBuilder.Entity<User>()
                 .HasMany(e => e.Carts)
+                .WithOptional(e => e.User)
+                .HasForeignKey(e => e.idUser);
+
+            modelBuilder.Entity<User>()
+                .HasMany(e => e.Orders)
                 .WithOptional(e => e.User)
                 .HasForeignKey(e => e.idUser);
 

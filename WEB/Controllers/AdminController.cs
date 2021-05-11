@@ -63,7 +63,8 @@ namespace taka.Controllers
             {
                 if (id == -1)
                     throw new Exception("Not found");
-                return RedirectToAction("Index", "Home");
+                dB.DeleteBook(id);
+                return RedirectToAction("List", "Home");
             }
             catch (Exception)
             {
@@ -101,7 +102,7 @@ namespace taka.Controllers
             return View();
         }
 
-        public ActionResult Manager(string tab = "statistic", string text = "")
+        public ActionResult Manager(string tab = "order", string text = "")
         {
             ViewBag.listUsers = dB.GetUsers();
             ViewBag.listCategories = dB.GetCategories();

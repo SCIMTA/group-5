@@ -150,6 +150,7 @@
     <Compile Include="Models\Enitities\OrderDetail.cs" />
     <Compile Include="Models\Enitities\Publisher.cs" />
     <Compile Include="Models\Enitities\Rate.cs" />
+    <Compile Include="Models\Enitities\RatingItem.cs" />
     <Compile Include="Models\Enitities\TakaDBContext.cs" />
     <Compile Include="Models\Enitities\Type.cs" />
     <Compile Include="Models\Enitities\User.cs" />
@@ -207,7 +208,7 @@
     <Content Include="Views\Shared\ModalRegister.cshtml" />
     <Content Include="Views\Admin\Add.cshtml" />
     <Content Include="Views\Admin\Manager.cshtml" />
-    <Content Include="Views\Admin\Shared\Statistic.cshtml" />
+    <Content Include="Views\Admin\Shared\Order.cshtml" />
     <Content Include="Views\Admin\Shared\User.cshtml" />
     <Content Include="Views\Admin\Shared\Category.cshtml" />
     <Content Include="Views\Admin\Shared\Publisher.cshtml" />

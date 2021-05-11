@@ -28,12 +28,12 @@ namespace taka.Controllers
         }
         public ActionResult ShoppingCart(int idUser)
         {
-            List<Models.Enitities.Cart> listCarts = db.getListCarts(idUser);
+            List<Models.Enitities.Cart> listCarts = db.GetListCarts(idUser);
             return View(listCarts);
         }
         public ActionResult DeleteCartItem(int idUser, int idBook)
         {
-            db.deleteCartItem(idUser, idBook);
+            db.DeleteCartItem(idUser, idBook);
             return RedirectToAction("ShoppingCart", "User", new { idUser = idUser});
         }
     }

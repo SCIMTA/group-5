@@ -14,6 +14,7 @@ namespace taka.Models.Enitities
         {
             Addresses = new HashSet<Address>();
             Carts = new HashSet<Cart>();
+            Orders = new HashSet<Order>();
             Rates = new HashSet<Rate>();
         }
 
@@ -44,6 +45,9 @@ namespace taka.Models.Enitities
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Cart> Carts { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Order> Orders { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Rate> Rates { get; set; }

@@ -13,7 +13,7 @@ namespace taka.Models.Enitities
 
         public int idBook { get; set; }
 
-        public int id { get; set; }
+        public int ID { get; set; }
 
         public virtual Book Book { get; set; }
 
