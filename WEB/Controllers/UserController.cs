@@ -21,17 +21,17 @@ namespace taka.Controllers
         public ActionResult AddToCart(int idBook, int idUser, int quantity)
         {
             db.AddCart(idBook, idUser, quantity);
-            TempData[C.TEMPDATA.Message] = "Thêm vào giỏ hàng thành công";
+            TempData[taka.Utils.C.TEMPDATA.Message] = "Thêm vào giỏ hàng thành công";
             return RedirectToAction("Detail", "Home", new { id = idBook });
         }
         public ActionResult BuyNow(int[] id)
         {
-
+            
             return View();
         }
         public ActionResult ShoppingCart(int idUser)
         {
-            List<Cart> listCarts = db.GetListCarts(idUser);
+            List<Models.Enitities.Cart> listCarts = db.GetListCarts(idUser);
             return View(listCarts);
         }
         [HttpPost]
@@ -40,11 +40,11 @@ namespace taka.Controllers
             try
             {
                 db.ChangeQuantity(idCart, quantity);
-                return Json(new { status = 1 });
+                return Json(new { status = 1, JsonRequestBehavior.AllowGet });
             }
             catch (Exception)
             {
-                return Json(new { status = 0 });
+                return Json(new { status = 0, JsonRequestBehavior.AllowGet });
             }
         }
         public ActionResult DeleteCartItem(int idUser, int idBook)
@@ -68,8 +68,8 @@ namespace taka.Controllers
         public ActionResult EditUser(string email, string fullname, string gender, string birthday)
         {
             User user = (User)Session[C.SESSION.UserInfo];
-            db.UpdateUser(user.Phone, email, fullname, gender, birthday);
-            return RedirectToAction("Infor", "User", new { id = user.ID });
+            Session[C.SESSION.UserInfo] = db.UpdateUser(user.Phone, email, fullname, gender, birthday);
+            return RedirectToAction("Infor", "User",new { id = user.ID});
         }
     }
 }

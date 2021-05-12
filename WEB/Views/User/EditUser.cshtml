@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "Chỉnh sửa thông tin";
     Layout = "~/Views/User/_LayoutUser.cshtml";
+    string[] genders = new string[] {"Khác", "Nam", "Nữ" };
 }
 
 <body>
@@ -28,9 +29,17 @@
                     <th>Giới tính</th>
                     <td>
                         <select name="gender" class="form-control">
-                            <option value="Khác">Khác</option>
-                            <option value="Nam">Nam</option>
-                            <option value="Nữ">Nữ</option>
+                            @foreach (var item in genders)
+                            {
+                                if (item.Equals(Model.Gender))
+                                {
+                                    <option value="@item" selected>@item</option>
+                                }
+                                else
+                                {
+                                    <option value="@item">@item</option>
+                                }
+                            }
                         </select>
                     </td>
                 </tr>
@@ -42,3 +51,4 @@
 
     </form>
 </body>
+

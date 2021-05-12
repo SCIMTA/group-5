@@ -141,16 +141,17 @@ namespace taka.Models.DatabaseInteractive
             return user;
         }
 
-        public void UpdateUser(string phone, string email, string fullname, string gender, string birthday)
+        public User UpdateUser(string phone, string email, string fullname, string gender, string birthday)
         {
             User user = takaDB.Users.Where(x => x.Phone == phone).First();
             if (user == null)
-                return;
+                return null;
             user.Email = email;
             user.Fullname = fullname;
             user.Gender = gender;
             user.Birthday = birthday.Length == 0 ? DateTime.Now.ToShortDateString() : birthday;
             takaDB.SaveChanges();
+            return user;
         }       
         public void BanUser(int ID,int ban=0)
         {
