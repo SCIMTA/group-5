@@ -24,14 +24,26 @@ namespace taka.Controllers
         }
         public ActionResult BuyNow(int[] id)
         {
-            ViewBag.count = id.Length;
-
+            
             return View();
         }
         public ActionResult ShoppingCart(int idUser)
         {
             List<Models.Enitities.Cart> listCarts = db.GetListCarts(idUser);
             return View(listCarts);
+        }
+        [HttpPost]
+        public JsonResult ChangeQuantity(int idCart, int quantity)
+        {
+            try
+            {
+                db.ChangeQuantity(idCart, quantity);
+                return Json(new { status = 1, JsonRequestBehavior.AllowGet });
+            }
+            catch (Exception)
+            {
+                return Json(new { status = 0, JsonRequestBehavior.AllowGet });
+            }
         }
         public ActionResult DeleteCartItem(int idUser, int idBook)
         {

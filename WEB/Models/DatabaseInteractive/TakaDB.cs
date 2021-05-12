@@ -10,6 +10,12 @@ using taka.Utils;
 
 namespace taka.Models.DatabaseInteractive
 {
+    public class BillInfo
+    {
+        int id;
+        int price;
+        int quantity;
+    }
     public class ListBook
     {
         public int pages { get; set; }
@@ -488,6 +494,12 @@ namespace taka.Models.DatabaseInteractive
             }
             takaDB.SaveChanges();
             return book;
+        }
+
+        public void ChangeQuantity(int idCart, int quantity)
+        {
+            takaDB.Carts.Where(x => x.ID == idCart).First().Quantity = quantity;
+            takaDB.SaveChanges();
         }
 
     }
