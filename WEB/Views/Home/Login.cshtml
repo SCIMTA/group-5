@@ -2,7 +2,7 @@
     ViewBag.Title = "Đăng nhập";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+<div class="g-signin2" data-onsuccess="onSignIn" hidden></div>
 <div style="display:flex;flex-direction:row;background-color:#ee4d2d;padding:10px;border-radius:10px;min-height:650px">
     <div style="flex:1;display:flex;justify-content:center">
         <img style="width:60%;object-fit:contain;" src="~/Content/Icon/ic_icon.png" />
@@ -30,7 +30,7 @@
                             <input name="password" type="password" class="form-control" placeholder="Mật khẩu *" value="" />
                         </div>
                         <div class="form-group">
-                            <input type="submit" class="btn btn-light" style="background-color:#ee4d2d;color:white;width:100%" value="Đăng nhập" />
+                            <input type="submit" class="col btn btn-light" style="background-color:#ee4d2d;color:white;width:100%" value="Đăng nhập" />
                         </div>
                     </form>
                 </div>
@@ -42,7 +42,7 @@
                         <input name="returnUrl" hidden value="@ViewBag.returnUrl" />
                         <input name="tab" hidden value="register" />
                         <div class="form-group">
-                            <input name="phone" type="number" class="form-control" placeholder="Số điện thoại *" value="@ViewBag.phone" required />
+                            <input name="phone"  type="number" class="form-control" placeholder="Số điện thoại *" value="@ViewBag.phone" required />
                         </div>
                         <div class="form-group">
                             <input name="password" type="password" class="form-control" placeholder="Mật khẩu *" value="" required />
@@ -51,10 +51,10 @@
                             <input name="repassword" type="password" class="form-control" placeholder="Nhập lại mật khẩu *" value="" required />
                         </div>
                         <div class="form-group">
-                            <input name="email" type="email" class="form-control" placeholder="Email " value="@ViewBag.email" />
+                            <input name="email" id="email" type="email" class="form-control" placeholder="Email " value="@ViewBag.email" />
                         </div>
                         <div class="form-group">
-                            <input name="fullname" type="text" class="form-control" placeholder="Họ và tên " value="@ViewBag.fullname" />
+                            <input name="fullname" id="fullname" type="text" class="form-control" placeholder="Họ và tên " value="@ViewBag.fullname" />
                         </div>
                         <div class="form-group">
                             <label>Giới tính</label>
@@ -70,6 +70,7 @@
                         <div class="form-group">
                             <input type="submit" class="btn btn-light" style="background-color:#ee4d2d;color:white;width:100%" value="Đăng ký" />
                         </div>
+                        <div class="col btn btn-light" style="background-color:#ee4d2d;color:white;width:100%" onclick="signIn()">Đăng ký với google</div>
                     </form>
                 </div>
 
@@ -96,4 +97,32 @@ else
 }
 
 
+<script>
+    let signIn = () => {
+        signOut(() => {
+            let auth2 = gapi.auth2.getAuthInstance();
+            auth2.signIn().then(function () {
+                if (auth2.isSignedIn.get()) {
+                    let profile = auth2.currentUser.get().getBasicProfile();
+                    $("#fullname").val(profile.getName())
+                    $("#email").val(profile.getEmail())
+                    console.log('ID: ' + profile.getId());
+                    console.log('Full Name: ' + profile.getName());
+                    console.log('Given Name: ' + profile.getGivenName());
+                    console.log('Family Name: ' + profile.getFamilyName());
+                    console.log('Image URL: ' + profile.getImageUrl());
+                    console.log('Email: ' + profile.getEmail());
+                }
+            });
+        })
+    }
 
+    let signOut = (callback) => {
+        let auth2 = gapi.auth2.getAuthInstance();
+        auth2.signOut().then(() => {
+            
+            setTimeout(callback, 1000)
+        })
+        auth2.disconnect()
+    }
+</script>
