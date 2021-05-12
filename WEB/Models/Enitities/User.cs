@@ -40,6 +40,9 @@ namespace taka.Models.Enitities
 
         public int? is_ban { get; set; }
 
+        [StringLength(100)]
+        public string KeySearch { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Address> Addresses { get; set; }
 

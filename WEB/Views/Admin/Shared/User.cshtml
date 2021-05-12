@@ -6,18 +6,13 @@
     <div class="col-6">
         <h4>Danh sách</h4>
         <hr />
-        <input type="text" class="form-control" placeholder="Tìm kiếm người dùng ( Tên, số điện thoại )" />
+        <input type="text" class="form-control" id="search_user" placeholder="Tìm kiếm người dùng ( Tên, số điện thoại )" oninput="onInputSearch('body_user','search_user')" />
         <div style="overflow-y:auto;height:800px">
             <table class="table">
-                <tbody>
-                    <tr>
-                        <th>SĐT</th>
-                        <th>Tên</th>
-                        <th>Khoá TK</th>
-                    </tr>
+                <tbody id="body_user">
                     @foreach (var user in listUser)
                     {
-                        <tr style="cursor:pointer" onclick="fillUser('@user.Phone', '@user.Email', '@user.Fullname', '@user.Gender', '@user.Birthday')">
+                        <tr style="cursor:pointer" title="@user.KeySearch" onclick="fillUser('@user.Phone', '@user.Email', '@user.Fullname', '@user.Gender', '@user.Birthday')">
                             <th>@user.Phone</th>
                             <td>@user.Fullname</td>
                             @if (user.is_ban != 1)
