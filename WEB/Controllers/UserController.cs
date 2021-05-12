@@ -68,7 +68,7 @@ namespace taka.Controllers
         public ActionResult EditUser(string email, string fullname, string gender, string birthday)
         {
             User user = (User)Session[C.SESSION.UserInfo];
-            db.UpdateUser(user.Phone, email, fullname, gender, birthday);
+            Session[C.SESSION.UserInfo] = db.UpdateUser(user.Phone, email, fullname, gender, birthday);
             return RedirectToAction("Infor", "User",new { id = user.ID});
         }
     }
