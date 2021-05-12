@@ -140,17 +140,7 @@ namespace taka.Models.DatabaseInteractive
             var user = takaDB.Users.Where(x => x.ID == id).First();
             return user;
         }
-        public void EditUser(User u)
-        {
-            User user = GetUserDetail(u.ID);
-            if (user == null)
-                return;
-            user.Email = u.Email;
-            user.Fullname = u.Fullname;
-            user.Gender = u.Gender;
-            user.Birthday = u.Birthday.Length == 0 ? DateTime.Now.ToShortDateString() : u.Birthday;
-            takaDB.SaveChanges();
-        }
+
         public void UpdateUser(string phone, string email, string fullname, string gender, string birthday)
         {
             User user = takaDB.Users.Where(x => x.Phone == phone).First();

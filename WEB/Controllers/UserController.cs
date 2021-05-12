@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using taka.Models.DatabaseInteractive;
 using taka.Models.Enitities;
+using taka.Utils;
 
 namespace taka.Controllers
 {
@@ -52,38 +53,23 @@ namespace taka.Controllers
             return RedirectToAction("ShoppingCart", "User", new { idUser = idUser });
         }
 
-        public ActionResult Infor(int id)
+        public ActionResult Infor()
         {
-            User user = db.GetUserDetail(id);
+            User user = (User)Session[C.SESSION.UserInfo];
             return View(user);
         }
-        public ActionResult EditUser(int id)
+        public ActionResult EditUser()
         {
-            User user = db.GetUserDetail(id);
+            User user = (User)Session[C.SESSION.UserInfo];
             return View(user);
         }
 
         [HttpPost]
-        public ActionResult EditUser(int id, string phone, string email, string fullname, string gender, string birthday)
+        public ActionResult EditUser(string email, string fullname, string gender, string birthday)
         {
-            User user = db.GetUserDetail(id);
-
-            //if (ModelState.IsValid)
-            //{
-            //    user.Email = email;
-            //    user.Fullname = fullname;
-            //    user.Gender = gender;
-            //    user.Birthday = birthday;
-
-            //    db.EditUser(user);
-            //    return View("Infor", "User", new { id = id});
-            //}
-            //else
-            //{
-            //    return View(user);
-            //}
-            db.EditUser(user);
-            return View();
+            User user = (User)Session[C.SESSION.UserInfo];
+            db.UpdateUser(user.Phone, email, fullname, gender, birthday);
+            return RedirectToAction("Infor", "User",new { id = user.ID});
         }
     }
 }
