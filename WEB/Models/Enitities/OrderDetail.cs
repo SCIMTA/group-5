@@ -12,6 +12,7 @@ namespace taka.Models.Enitities
         public int idOrder { get; set; }
 
         public int idBook { get; set; }
+        public int Quantity { get; set; }
 
         public int ID { get; set; }
 

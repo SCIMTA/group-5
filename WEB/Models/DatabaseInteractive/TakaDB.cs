@@ -10,6 +10,12 @@ using taka.Utils;
 
 namespace taka.Models.DatabaseInteractive
 {
+    public class BillInfo
+    {
+        int id;
+        int price;
+        int quantity;
+    }
     public class ListBook
     {
         public int pages { get; set; }
@@ -154,6 +160,14 @@ namespace taka.Models.DatabaseInteractive
             user.Fullname = fullname;
             user.Gender = gender;
             user.Birthday = birthday.Length == 0 ? DateTime.Now.ToShortDateString() : birthday;
+            takaDB.SaveChanges();
+        }       
+        public void BanUser(int ID,int ban=0)
+        {
+            User user = takaDB.Users.Where(x => x.ID == ID).First();
+            if (user == null)
+                return;
+            user.is_ban = ban;
             takaDB.SaveChanges();
         }
 
@@ -496,6 +510,12 @@ namespace taka.Models.DatabaseInteractive
             }
             takaDB.SaveChanges();
             return book;
+        }
+
+        public void ChangeQuantity(int idCart, int quantity)
+        {
+            takaDB.Carts.Where(x => x.ID == idCart).First().Quantity = quantity;
+            takaDB.SaveChanges();
         }
 
     }

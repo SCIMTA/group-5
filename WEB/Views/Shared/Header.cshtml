@@ -8,12 +8,8 @@
         <nav class="nav float-right">
             @if (userInfo == null)
             {
-                <button type="button" class="btn btn-light m-1" data-toggle="modal" data-target="#modalLogin" style="color:#ee4d2d;">
+                <button type="button" class="btn btn-light m-1"  onclick="goToLoginPage()"  style="color:#ee4d2d;">
                     <b>Đăng nhập</b>
-                </button>
-
-                <button type="button" class="btn btn-light m-1" data-toggle="modal" data-target="#modalRegister" style="color:#ee4d2d;">
-                    <b>Đăng ký</b>
                 </button>
             }
             @if (userInfo != null && userInfo.Phone.Equals("admin"))
@@ -33,7 +29,12 @@
             @if (userInfo != null && !userInfo.Phone.Equals("admin"))
             {
 
-                <a href="/User/ShoppingCart?idUser=@userInfo.ID"><div style="position:absolute;top:0">@Session[taka.Utils.C.SESSION.Cart]</div>  <ion-icon class="btn btn-light m-1" style="height:25px; margin-top:10px; color:#ee4d2d" name="cart-outline"></ion-icon></a>
+                <a href="/User/ShoppingCart?idUser=@userInfo.ID" style="position:relative">
+                    <ion-icon class="btn btn-light m-1" style="height:25px; margin-top:10px; color:#ee4d2d" name="cart-outline"></ion-icon>
+                    <b style="position:absolute;top:0%;right:0%;background-color:white;border-radius:30px;width:20px;height:20px;text-align:center;line-height:15px;border:1px solid #ee4d2d;color:#ee4d2d">
+                        @Session[taka.Utils.C.SESSION.Cart]
+                    </b>
+                </a>
 
                 <button type="button" class="btn btn-light m-1" data-toggle="modal" data-target="#modalUser" style="color:#ee4d2d;">
                     <b>Xin chào @userInfo.Fullname</b>

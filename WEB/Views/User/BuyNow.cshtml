@@ -52,14 +52,14 @@
                     <div class="d-flex flex-wrap card">
                         <div class="dropdown card-body">
                             <button class="btn btn-light dropdown-toggle" type="button" id="shipper" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Giao hàng nhanh
+                                
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" onclick="changeShipper('shipper1')">Giao hàng nhanh</a>
-                                <a class="dropdown-item" onclick="changeShipper('shipper2')">Giao hàng tiết kiệm</a>
-                                <a class="dropdown-item" onclick="changeShipper('shipper2')">Viettel Post</a>
+                                <button class="dropdown-item" onclick="changeShipper('shipper1')">Giao hàng nhanh</button>
+                                <button class="dropdown-item" onclick="changeShipper('shipper2')">Giao hàng tiết kiệm</button>
+                                <button class="dropdown-item" onclick="changeShipper('shipper3')">Viettel Post</button>
                             </div>
-                            <p class="text-right" id="estimateTime">Thời gian dự kiến: 2 - 3 ngày</p>
+                            <p class="text-right" id="estimateTime"></p>
                         </div>
                     </div>
                     <label > Đơn vị vận chuyển</label>
@@ -166,7 +166,7 @@
         });
     });
 
-    let changeShipper = (id){
+    let changeShipper = (id) => {
         let shipper = 'Giao hàng nhanh';
         if (id == 'shipper2') {
             shipper = 'Giao hàng tiết kiệm';
@@ -178,7 +178,7 @@
         changeEstimate(id);
     }
 
-    let changeEstimate = (id){
+    let changeEstimate = (id) => {
         let estimateTime = ' 2 - 3 ngày';
         if (id == 'shipper2') {
             estimateTime = ' 3 - 5 ngày';

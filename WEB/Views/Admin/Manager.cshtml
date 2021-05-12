@@ -27,7 +27,17 @@
     </div>
     <script>
         $("#tab_@ViewBag.tab").addClass("active")
-        $("#@ViewBag.tab").addClass(["show","active"])
+        $("#@ViewBag.tab").addClass(["show", "active"])
+        let onInputSearch = (bodyId, inputId) => {
+            let root = $(`#${bodyId} tr`)
+            for (let i = 0; i < root.length; i++) {
+                if (root[i].title.includes($(`#${inputId}`).val())) {
+                    $(root[i]).removeAttr("hidden")
+                } else {
+                    $(root[i]).attr("hidden", "hidden")
+                }
+            }
+        }
     </script>
 </div>
 

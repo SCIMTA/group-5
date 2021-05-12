@@ -2,7 +2,7 @@
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = "Tiki phiên bản giới hạn";
+    ViewBag.Title = "Takasa";
 
 }
 
@@ -122,7 +122,7 @@
                         try
                         {
                             var item = Model.ToArray()[i * 4 + j];
-                            <a href="/Home/Detail?id=@item.ID" id="root_@item.ID" style="flex:1;min-width:200px; position: relative;margin:5px;padding:5px; text-decoration:none" onmousemove="onMoveMouseItem('root_@item.ID')" onmouseout="onMoveOutMouseOfItem('root_@item.ID')">
+                            <a href="/Home/Detail?id=@item.ID" id="root_@item.ID" style="flex:1;min-width:200px; position: relative;margin:5px;padding:5px; text-decoration:none;border: 1px solid white" onmousemove="onMoveMouseItem('root_@item.ID')" onmouseout="onMoveOutMouseOfItem('root_@item.ID')">
                                 <div>
                                     <p>
                                         <img src="@item.Images.First().Url" style="width:100% ;height:200px;object-fit:contain" />
@@ -184,6 +184,6 @@
         $('#' + id).css('border', '1px solid #ee4d2d')
     }
     const onMoveOutMouseOfItem = (id) => {
-        $('#' + id).css('border', '0px')
+        $('#' + id).css('border', '1px solid white')
     }
 </script>

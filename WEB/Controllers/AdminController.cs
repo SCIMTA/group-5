@@ -9,6 +9,7 @@ using taka.Utils;
 
 namespace taka.Controllers
 {
+    [Authorize(Users = "admin")]
     public class AdminController : Controller
     {
 
@@ -117,6 +118,12 @@ namespace taka.Controllers
             ViewBag.listLanguages = dB.GetLanguages();
             ViewBag.tab = tab;
             return View();
+        }
+
+        public ActionResult BanUser(int id, int ban = 0)
+        {
+            dB.BanUser(id, ban);
+            return RedirectToAction("Manager", "Admin", new { tab = "user" });
         }
 
         public ActionResult UpdateUser(string phone, string email, string fullname, string gender, string birthday)

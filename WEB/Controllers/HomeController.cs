@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using taka.Models.DatabaseInteractive;
 using taka.Models.Enitities;
 using taka.Utils;
@@ -48,24 +49,29 @@ namespace taka.Controllers
 
 
         [HttpPost]
-        public ActionResult Login(string phone, string password, string callbackUrl)
+        public ActionResult Login(string phone, string password, string returnUrl)
         {
-
             User user = dB.Login(phone, password);
             if (user != null)
             {
+                if(user.is_ban==1)
+                {
+                    TempData[C.TEMPDATA.Message] = "Tài khoản của bạn đã bị khoá, vùi lòng liên hiện để biết thêm thông tin";
+                    return RedirectToAction("Login", "Home", new { returnUrl, phone });
+                }    
+                FormsAuthentication.SetAuthCookie(phone, true);
                 Session[C.SESSION.UserInfo] = user;
             }
             else
             {
-                TempData[C.TEMPDATA.Message] = "Sai tài khoản hoặc mật khẩu";
-                TempData[C.TEMPDATA.RequireLogin] = true;
+                TempData[C.TEMPDATA.Message] = "Sai số điện thoại hoặc mật khẩu";
+                return RedirectToAction("Login", "Home", new { returnUrl, phone });
             }
-            return Redirect(callbackUrl);
+            return Redirect(returnUrl);
         }
 
         [HttpPost]
-        public ActionResult Register(string phone, string password, string email, string gender, string fullname, string birthday, string callbackUrl)
+        public ActionResult Register(string phone, string password, string email, string gender, string fullname, string birthday, string returnUrl, string tab)
         {
             User user = dB.Register(phone, password, email, gender, fullname, birthday);
 
@@ -73,12 +79,18 @@ namespace taka.Controllers
             {
                 Session[C.SESSION.UserInfo] = user;
             }
-            return Redirect(callbackUrl);
+            else
+            {
+                TempData[C.TEMPDATA.Message] = "Số điện thoại đã tồn tại";
+                return RedirectToAction("Login", "Home", new { returnUrl, phone, email, fullname, gender, birthday, tab });
+            }
+            return Redirect(returnUrl);
         }
 
         public ActionResult Logout()
         {
             Session[C.SESSION.UserInfo] = null;
+            FormsAuthentication.SignOut();
             return RedirectToAction("Index", "Home");
         }
 
@@ -99,6 +111,23 @@ namespace taka.Controllers
         }
         public ActionResult Error()
         {
+            return View();
+        }
+
+        public ActionResult Login(string phone = "", string email = "", string gender = "", string fullname = "", string birthday = "", string returnUrl = "", string tab = "login")
+        {
+            if (Session[C.SESSION.UserInfo] != null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            FormsAuthentication.SignOut();
+            ViewBag.returnUrl = returnUrl;
+            ViewBag.phone = phone;
+            ViewBag.email = email;
+            ViewBag.gender = gender;
+            ViewBag.fullname = fullname;
+            ViewBag.birthday = birthday;
+            ViewBag.tab = tab;
             return View();
         }
     }
