@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using taka.Models.DatabaseInteractive;
+using taka.Models.Enitities;
 
 namespace taka.Controllers
 {
@@ -36,6 +37,40 @@ namespace taka.Controllers
         {
             db.DeleteCartItem(idUser, idBook);
             return RedirectToAction("ShoppingCart", "User", new { idUser = idUser });
+        }
+
+        public ActionResult Infor(int id)
+        {
+            User user = db.GetUserDetail(id);
+            return View(user);
+        }
+        public ActionResult EditUser(int id)
+        {
+            User user = db.GetUserDetail(id);
+            return View(user);
+        }
+
+        [HttpPost]
+        public ActionResult EditUser(int id, string phone, string email, string fullname, string gender, string birthday)
+        {
+            User user = db.GetUserDetail(id);
+
+            //if (ModelState.IsValid)
+            //{
+            //    user.Email = email;
+            //    user.Fullname = fullname;
+            //    user.Gender = gender;
+            //    user.Birthday = birthday;
+
+            //    db.EditUser(user);
+            //    return View("Infor", "User", new { id = id});
+            //}
+            //else
+            //{
+            //    return View(user);
+            //}
+            db.EditUser(user);
+            return View();
         }
     }
 }

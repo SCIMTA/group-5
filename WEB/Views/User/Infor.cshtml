@@ -1,0 +1,39 @@
+﻿@model taka.Models.Enitities.User
+
+@{
+    ViewBag.Title = "Hồ sơ";
+    Layout = "~/Views/User/_LayoutUser.cshtml";
+}
+
+<body>
+    <div class="user-page-brief">
+        <h3> Hồ sơ của tôi</h3>
+    </div>
+    <div>
+        <table class="table" style="vertical-align:auto">
+            <tr>
+                <th>Họ Tên</th>
+                <td>@Model.Fullname</td>
+            </tr>
+            <tr>
+                <th>Ngày sinh</th>
+                <td>@Model.Birthday</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>@Model.Email</td>
+            </tr>
+            <tr>
+                <th>Số điện thoại</th>
+                <td>@Model.Phone</td>
+            </tr>
+            <tr>
+                <th>Giới tính</th>
+                <td>@Model.Gender</td>
+            </tr>
+        </table>
+    </div>
+
+
+</body>
+
