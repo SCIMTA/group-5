@@ -10,7 +10,7 @@
     images.AddRange(Model.Images.ToList());
 }
 
-<form class="form-horizontal" method="post" action="/Home/EditBook" enctype="multipart/form-data">
+<form class="form-horizontal" method="post" action="/Admin/EditBook" enctype="multipart/form-data">
     <h4>Cập nhật thông tin</h4>
     <hr />
     <p>
@@ -22,19 +22,20 @@
             <label for="file-input">
                 <img src="https://cdn.pixabay.com/photo/2017/11/10/05/24/add-2935429_960_720.png" id="imgBiaSach" style="height:250px;width:150px;object-fit:contain;text-align:center;" />
             </label>
-            <input id="file-input" name="BIA_SACH" type="file" hidden multiple accept="image/*" />
+            <input id="file-input" name="Images" type="file" hidden multiple accept="image/*" onchange="OnAddImage();" required />
         </div>
+        <div id="images_delete" hidden></div>
         <div id="images" style="overflow-x:auto;height:300px;flex-direction:row;display:flex;overflow-y:hidden">
             @for (int i = 0; i < images.Count; i++)
             {
-                <div onclick="deleteImage('@i')" class="m-3" style="position: relative; display: inline-block;" id="divBiaSach_@i" onmouseover="onFocusImg('@i')" onmouseout="onBlurImg()">
+                <div onclick="deleteImage('@i', '@images[i].ID')" class="m-3" style="position: relative; display: inline-block;" id="divBiaSach_@i" onmouseover="onFocusImg('@i')" onmouseout="onBlurImg()">
                     <img id="imgBiaSach_@i" src="@images[i].Url" style="height:250px;width:250px;object-fit:contain;text-align:center;" />
                     <div style="position: absolute; top: 100px; left: 100px; height: 100%; width: 100%; z-index: 2;"><img hidden='hidden' id="icDelete_@i" style="height:50px;width:50px;object-fit:contain;" src="/Content/Icon/ic_delete.png" /></div>
                 </div>
             }
         </div>
     </div>
-    <input class="form-control" name="MA_DAU_SACH" value="@Model.ID" hidden />
+    <input class="form-control" name="ID" value="@Model.ID" hidden />
     <div class="col">
         <div class="col">
             <div class="form-group">
@@ -65,6 +66,7 @@
                        class="form-control"
                        name="Date"
                        id="Date"
+                       value="@Model.Date"
                        required
                        oninput="setCustomValidity('')"
                        oninvalid="this.setCustomValidity('@ViewBag.MessageForValid')" />
@@ -83,11 +85,11 @@
             </div>
             <div class="form-group">
                 <label>Ngôn ngữ</label>
-                @Html.DropDownList("iDLanguage", new SelectList(ViewBag.listLanguages, "ID", "Name"), htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("idLanguage", new SelectList(ViewBag.listLanguages, "ID", "Name"), htmlAttributes: new { @class = "form-control" })
             </div>
             <div class="form-group">
                 <label>Hình thức</label>
-                @Html.DropDownList("iDType", new SelectList(ViewBag.listTypes, "ID", "Name"), htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("idType", new SelectList(ViewBag.listTypes, "ID", "Name"), htmlAttributes: new { @class = "form-control" })
             </div>
             <div class="form-group">
                 <label>Số trang</label>
@@ -121,12 +123,17 @@
                           rows="15">@Model.Description</textarea>
             </div>
 
-            <button type="submit" class="btn btn-light col p-3" style="background-color:#ee4d2d;color:white;">Cập nhật thông tin</button>
+            <button type="submit" id="button_push" class="btn btn-light col p-3" style="background-color:#ee4d2d;color:white;">Cập nhật thông tin</button>
 
         </div>
     </div>
 </form>
 <script>
+
+    let listImg = []
+
+    let dt = new DataTransfer()
+
     let oldId = -1
     const onFocusImg = (id) => {
         $("#imgBiaSach_" + id).css('opacity', 0.3);
@@ -140,29 +147,57 @@
         $("#icDelete_" + oldId).attr('hidden', 'hidden');
     }
 
-    let deleteImage = id => {
+    let setFileInput = () => {
+        dt.items.clear()
+        for (let i = 0; i < listImg.length; i++) {
+            dt.items.add(listImg[i].file)
+        }
+        $("#file-input")[0].files = dt.files
+        if ($("#images")[0].children.length == 0)
+            $("#button_push").attr("disabled", "disabled")
+        else
+            $("#button_push").removeAttr("disabled")
+
+    }
+
+
+    let deleteImage = (id, idImage) => {
         $("#divBiaSach_" + id).remove();
+        let containt = listImg.filter(e => e.id == id).length > 0
+        if (containt) {
+            listImg = listImg.filter(e => e.id != id)
+        } else {
+            $("#images_delete").append(`<input name="images_delete" hidden value="${idImage}" />`)
+        }
+        setFileInput()
     }
 </script>
 
 <script>
-    let imgCount = 0;
-    $('document').ready(function () {
-        $("#file-input").change(function () {
-            if (this.files && this.files.length > 0) {
-                for (let i = 0; i < this.files.length; i++) {
-                    let reader = new FileReader();
-                    reader.onload = function (e) {
-                        $("#images").append(`<div onclick="deleteImage('${imgCount}')" class="m-3" style="position: relative; display: inline-block;" id="divBiaSach_${imgCount}" onmouseover="onFocusImg('${imgCount}')" onmouseout="onBlurImg()">
+    let imgCount = @images.Count;
+
+    let OnAddImage = () => {
+        const files = $("#file-input")[0].files
+        if (files && files.length > 0) {
+            for (let i = 0; i < files.length; i++) {
+
+                let reader = new FileReader();
+                reader.onload = function (e) {
+                    $("#images").append(`<div onclick="deleteImage('${imgCount}')" class="m-3" style="position: relative; display: inline-block;" id="divBiaSach_${imgCount}" onmouseover="onFocusImg('${imgCount}')" onmouseout="onBlurImg()">
     <img id="imgBiaSach_${imgCount}" style="height:250px;width:250px;object-fit:contain;text-align:center;" />
     <div style="position: absolute; top: 100px; left: 100px; height: 100%; width: 100%; z-index: 2;"><img hidden='hidden' id="icDelete_${imgCount}" style="height:50px;width:50px;object-fit:contain;" src="/Content/Icon/ic_delete.png" /></div>
 </div>`)
-                        $('#imgBiaSach_' + imgCount).attr('src', e.target.result);
-                        imgCount += 1
-                    }
-                    reader.readAsDataURL(this.files[i])
+                    $('#imgBiaSach_' + imgCount).attr('src', e.target.result);
+                    listImg.push({
+                        id: imgCount,
+                        file: files[i]
+                    })
+                    setFileInput()
+                    imgCount += 1
                 }
+                reader.readAsDataURL(files[i])
             }
-        });
-    });
+        }
+
+    }
 </script>

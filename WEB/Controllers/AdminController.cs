@@ -9,6 +9,7 @@ using taka.Utils;
 
 namespace taka.Controllers
 {
+    [Authorize(Users = "admin")]
     public class AdminController : Controller
     {
 
@@ -41,19 +42,23 @@ namespace taka.Controllers
 
 
         [HttpPost]
-        public ActionResult EditBook(int MA_DAU_SACH,
-            HttpPostedFileBase BIA_SACH,
-            string TEN_DAU_SACH,
-            int MA_THE_LOAI,
-            int MA_NHA_XUAT_BAN,
-            int MA_TAC_GIA,
-            int GIA_TRI,
-            int SO_TRANG,
-            int TONG_SO_LUONG,
-            int SO_LUONG_CON_LAI,
-            string MO_TA_SACH)
+        public ActionResult EditBook(int ID,
+             IEnumerable<HttpPostedFileBase> Images,
+             IEnumerable<int> images_delete,
+            string Title,
+            int Price,
+            int idCategory,
+            int idAuthor,
+            int idPublisher,
+            int idLanguage,
+            int idType,
+            string Page,
+            string Date,
+            int Quantity,
+            string Description)
         {
-            return View();
+            dB.EditBook(ID, images_delete, Images, Title, Price, idCategory, idAuthor, idPublisher, idLanguage, idType, Page, Date, Quantity, Description);
+            return RedirectToAction("Detail", "Home", new { id = ID });
         }
 
         [HttpPost]
@@ -63,7 +68,8 @@ namespace taka.Controllers
             {
                 if (id == -1)
                     throw new Exception("Not found");
-                return RedirectToAction("Index", "Home");
+                dB.DeleteBook(id);
+                return RedirectToAction("List", "Home");
             }
             catch (Exception)
             {
@@ -84,11 +90,12 @@ namespace taka.Controllers
             int idLanguage,
             int idType,
             string Page,
+            string Date,
             int Quantity,
             string Description)
         {
-            Book book = dB.AddBook(Images,Title, Price, idCategory, idAuthor, idPublisher, idLanguage, idType, Page, Quantity, Description);
-            return RedirectToAction("Detail", "Home",new { id = book.ID});
+            Book book = dB.AddBook(Images, Title, Price, idCategory, idAuthor, idPublisher, idLanguage, idType, Page, Date, Quantity, Description);
+            return RedirectToAction("Detail", "Home", new { id = book.ID });
         }
 
         public ActionResult Add()
@@ -101,7 +108,7 @@ namespace taka.Controllers
             return View();
         }
 
-        public ActionResult Manager(string tab = "statistic", string text = "")
+        public ActionResult Manager(string tab = "order", string text = "")
         {
             ViewBag.listUsers = dB.GetUsers();
             ViewBag.listCategories = dB.GetCategories();
@@ -111,6 +118,12 @@ namespace taka.Controllers
             ViewBag.listLanguages = dB.GetLanguages();
             ViewBag.tab = tab;
             return View();
+        }
+
+        public ActionResult BanUser(int id, int ban = 0)
+        {
+            dB.BanUser(id, ban);
+            return RedirectToAction("Manager", "Admin", new { tab = "user" });
         }
 
         public ActionResult UpdateUser(string phone, string email, string fullname, string gender, string birthday)

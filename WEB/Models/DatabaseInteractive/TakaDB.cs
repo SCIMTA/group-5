@@ -35,7 +35,8 @@ namespace taka.Models.DatabaseInteractive
         public ListBook GetListBook(int page = 1, string text = "", int cate = 0, int sort = 0, int pageSize = 16, int type = 0, int language = 0)
         {
             var removeUnicode = HelperFunctions.RemoveUnicode(text);
-            var listItem = takaDB.Books.Where(m => m.KeySearch.Contains(removeUnicode));
+            var listItem = takaDB.Books.Where(x => x.isHidden != 1);
+            listItem = listItem.Where(m => m.KeySearch.Contains(removeUnicode));
             if (cate != 0)
                 listItem = listItem.Where(m => m.idCategory == cate);
 
@@ -53,7 +54,7 @@ namespace taka.Models.DatabaseInteractive
                     listItem = listItem.OrderByDescending(m => m.Price);
             }
             else
-                listItem = listItem.OrderBy(m => m.ID);
+                listItem = listItem.OrderByDescending(m => m.ID);
 
             int maxPage = listItem.Count() / pageSize + 1;
             return new ListBook(maxPage, listItem.Skip((page - 1) * pageSize).Take(pageSize).ToList());
@@ -62,7 +63,7 @@ namespace taka.Models.DatabaseInteractive
         public List<ListBook> GetHomePage()
         {
             int pageSize = 10;
-            var listItem = takaDB.Books;
+            var listItem = takaDB.Books.Where(x => x.isHidden != 1);
             List<ListBook> list = new List<ListBook>();
             foreach (var cate in GetCategories())
             {
@@ -109,7 +110,7 @@ namespace taka.Models.DatabaseInteractive
 
         public Book GetBookDetail(int id)
         {
-            return takaDB.Books.Where(x => x.ID == id).First();
+            return takaDB.Books.Where(x => x.ID == id && x.isHidden != 1).First();
         }
 
         public User Register(string phone, string password, string email = "", string gender = "", string fullname = "", string birthday = "")
@@ -137,6 +138,14 @@ namespace taka.Models.DatabaseInteractive
             user.Fullname = fullname;
             user.Gender = gender;
             user.Birthday = birthday.Length == 0 ? DateTime.Now.ToShortDateString() : birthday;
+            takaDB.SaveChanges();
+        }       
+        public void BanUser(int ID,int ban=0)
+        {
+            User user = takaDB.Users.Where(x => x.ID == ID).First();
+            if (user == null)
+                return;
+            user.is_ban = ban;
             takaDB.SaveChanges();
         }
 
@@ -335,19 +344,25 @@ namespace taka.Models.DatabaseInteractive
             }
             takaDB.SaveChanges();
         }
-        public List<Cart> getListCarts(int idUser)
+        public List<Cart> GetListCarts(int idUser)
         {
             var listCarts = takaDB.Carts.Where(x => x.idUser == idUser).ToList();
             return listCarts;
         }
-        public void deleteCartItem(int idUser, int idBook)
+        public void DeleteCartItem(int idUser, int idBook)
         {
-            Enitities.Cart deleteItem = takaDB.Carts.Where(x => x.idUser == idUser && x.idBook == idBook).First();
+            Cart deleteItem = takaDB.Carts.Where(x => x.idUser == idUser && x.idBook == idBook).First();
             takaDB.Carts.Remove(deleteItem);
             takaDB.SaveChanges();
         }
         public bool DeleteBook(int id)
         {
+            var item = takaDB.Books.Where(x => x.ID == id).First();
+            if (item != null)
+            {
+                item.isHidden = 1;
+                takaDB.SaveChanges();
+            }
             return true;
         }
 
@@ -360,12 +375,10 @@ namespace taka.Models.DatabaseInteractive
             int idLanguage,
             int idType,
             string Page,
+            string Date,
             int Quantity,
             string Description)
         {
-
-
-
             Book book = new Book();
             book.Title = Title;
             book.Price = Price;
@@ -375,8 +388,11 @@ namespace taka.Models.DatabaseInteractive
             book.idLanguage = idLanguage;
             book.idType = idType;
             book.Page = Page;
+            book.Date = Date;
             book.Quantity = Quantity;
             book.Description = Description;
+            book.RateCount = 0;
+            book.RatePoint = 0;
             takaDB.Books.Add(book);
             takaDB.SaveChanges();
             if (Images != null && Images.Count() > 0)
@@ -402,6 +418,69 @@ namespace taka.Models.DatabaseInteractive
                         takaDB.Images.Add(imgObj);
                     }
                     catch (Exception)
+                    {
+
+                    }
+                }
+            }
+            takaDB.SaveChanges();
+            return book;
+        }
+
+
+        public Book EditBook(int ID,
+            IEnumerable<int> images_delete,
+            IEnumerable<HttpPostedFileBase> Images,
+            string Title,
+            int Price,
+            int idCategory,
+            int idAuthor,
+            int idPublisher,
+            int idLanguage,
+            int idType,
+            string Page,
+            string Date,
+            int Quantity,
+            string Description)
+        {
+            if(images_delete!=null)
+            takaDB.Images.RemoveRange(takaDB.Images.Where(x => images_delete.Contains(x.ID)));
+            Book book = takaDB.Books.Where(x => x.ID == ID).First();
+            book.Title = Title;
+            book.Price = Price;
+            book.idCategory = idCategory;
+            book.idAuthor = idAuthor;
+            book.idPublisher = idPublisher;
+            book.idLanguage = idLanguage;
+            book.idType = idType;
+            book.Page = Page;
+            book.Date = Date;
+            book.Quantity = Quantity;
+            book.Description = Description;
+            takaDB.SaveChanges();
+            if (Images != null && Images.Count() > 0)
+            {
+                foreach (var image in Images)
+                {
+                    try
+                    {
+                        MemoryStream target = new MemoryStream();
+                        image.InputStream.CopyTo(target);
+                        byte[] data = target.ToArray();
+                        var client = new RestClient("http://128.199.108.177:8001/upload_image");
+                        var request = new RestRequest(Method.POST);
+                        request.AddHeader("Content-Type", "multipart/form-data");
+                        request.AlwaysMultipartFormData = true;
+                        request.AddFile("book_cover", data, "image.jpeg");
+                        IRestResponse response = client.Execute(request);
+                        string resJsonRaw = response.Content;
+                        JObject json = JObject.Parse(resJsonRaw);
+                        Image imgObj = new Image();
+                        imgObj.idBook = ID;
+                        imgObj.Url = json.GetValue("url").ToString();
+                        takaDB.Images.Add(imgObj);
+                    }
+                    catch (Exception e)
                     {
 
                     }

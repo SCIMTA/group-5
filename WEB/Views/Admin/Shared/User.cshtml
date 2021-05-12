@@ -4,16 +4,25 @@
 
 <div class="row">
     <div class="col-6">
-        <input type="text" class="form-control" placeholder="Tìm kiếm người dùng ( Tên, số điện thoại )" />
+        <h4>Danh sách</h4>
+        <hr />
+        <input type="text" class="form-control" id="search_user" placeholder="Tìm kiếm người dùng ( Tên, số điện thoại )" oninput="onInputSearch('body_user','search_user')" />
         <div style="overflow-y:auto;height:800px">
             <table class="table">
-                <tbody>
+                <tbody id="body_user">
                     @foreach (var user in listUser)
                     {
-                        <tr style="cursor:pointer" onclick="fillUser('@user.Phone', '@user.Email', '@user.Fullname', '@user.Gender', '@user.Birthday')">
+                        <tr style="cursor:pointer" title="@user.KeySearch" onclick="fillUser('@user.Phone', '@user.Email', '@user.Fullname', '@user.Gender', '@user.Birthday')">
                             <th>@user.Phone</th>
                             <td>@user.Fullname</td>
-                            <td><a href="#"><img src="~/Content/Icon/ic_delete.png" style="width:25px" /></a></td>
+                            @if (user.is_ban != 1)
+                            {
+                                <td><a href="/Admin/BanUser?id=@user.ID&ban=1"><img src="~/Content/Icon/ic_lock.png" style="width:25px" /></a></td>
+                            }
+                            else
+                            {
+                                <td><a href="/Admin/BanUser?id=@user.ID&ban=0"><img src="~/Content/Icon/ic_unlock.png" style="width:25px" /></a></td>
+                            }
                         </tr>
 
                     }

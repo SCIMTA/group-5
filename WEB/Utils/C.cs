@@ -10,6 +10,7 @@ namespace taka.Utils
         public class SESSION
         {
             public static string UserInfo = "UserInfo";
+            public static string Cart = "Cart";
         }
 
         public class TEMPDATA

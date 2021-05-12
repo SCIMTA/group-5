@@ -7,6 +7,7 @@ using taka.Models.DatabaseInteractive;
 
 namespace taka.Controllers
 {
+    [Authorize]
     public class UserController : Controller
     {
         TakaDB db = new TakaDB();
@@ -18,9 +19,10 @@ namespace taka.Controllers
         public ActionResult AddToCart(int idBook, int idUser, int quantity)
         {
             db.AddCart(idBook, idUser, quantity);
-            return RedirectToAction("Index", "Home");
+            TempData[taka.Utils.C.TEMPDATA.Message] = "Thêm vào giỏ hàng thành công";
+            return RedirectToAction("Detail", "Home", new { id = idBook });
         }
-        public ActionResult BuyNow(int [] id)
+        public ActionResult BuyNow(int[] id)
         {
             ViewBag.count = id.Length;
 
@@ -28,13 +30,13 @@ namespace taka.Controllers
         }
         public ActionResult ShoppingCart(int idUser)
         {
-            List<Models.Enitities.Cart> listCarts = db.getListCarts(idUser);
+            List<Models.Enitities.Cart> listCarts = db.GetListCarts(idUser);
             return View(listCarts);
         }
         public ActionResult DeleteCartItem(int idUser, int idBook)
         {
-            db.deleteCartItem(idUser, idBook);
-            return RedirectToAction("ShoppingCart", "User", new { idUser = idUser});
+            db.DeleteCartItem(idUser, idBook);
+            return RedirectToAction("ShoppingCart", "User", new { idUser = idUser });
         }
     }
 }

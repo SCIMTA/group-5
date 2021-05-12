@@ -9,7 +9,7 @@
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/Home?cate=@Model.idCategory">@Model.Category.Name</a></li>
+        <li class="breadcrumb-item"><a href="/Home/List?cate=@Model.idCategory">@Model.Category.Name</a></li>
         <li class="breadcrumb-item active" aria-current="page">@Model.Title</li>
     </ol>
 </nav>
@@ -73,6 +73,18 @@
             </tbody>
         </table>
         <hr />
+
+        <div class="number-input md-number-input">
+            Số lượng:
+            <a class="btn btn-outline-light" onclick="changeQuantity(-1)" style="border:none;">
+                <ion-icon name="remove-outline"></ion-icon>
+            </a>
+            <input class="quantity" style="width:50px;text-align:center;" name="quantity" value="1" type="text" id="quantity-input" oninput="onChangeTextQuantity()">
+            <a class="btn btn-outline-light" onclick="changeQuantity(1)" style="border:none;">
+                <ion-icon name="add-outline"></ion-icon>
+            </a>
+        </div>
+
         <div class="row col">
             @if (userInfo != null && userInfo.Phone.Equals("admin"))
             {
@@ -81,16 +93,6 @@
             }
             else
             {
-                <div class="number-input md-number-input">
-                    Số lượng:
-                    <a class="btn btn-outline-light" onclick="this.parentNode.querySelector('input[type=number]').stepDown()" style="border:none;">
-                        <ion-icon name="remove-outline"></ion-icon>
-                    </a>
-                    <input class="quantity" min="0" name="quantity" value="1" type="number" id="quantity-input">
-                    <a class="btn btn-outline-light" onclick="this.parentNode.querySelector('input[type=number]').stepUp()" style="border:none;">
-                        <ion-icon name="add-outline"></ion-icon>
-                    </a>
-                </div>
                 <button type="button" onclick="addToCart()" onmousemove="onMouseMoveOutline('outline-btn')" onmouseout="onMouseOutOutline('outline-btn')" id="outline-btn" class="btn col p-3 m-3" style="background-color:white;color:#ee4d2d; border:3; border-color:#ee4d2d">Thêm vào giỏ hàng</button>
                 <button type="button" onclick="buyNow()" onmousemove="onMouseMoveColorFilled('colorfilled-btn')" onmouseout="onMouseOutColorFilled('colorfilled-btn')" id="colorfilled-btn" class="btn col p-3 m-3" style="background-color:#ee4d2d; color:white; border:3; border-color:#ee4d2d">Mua ngay</button>
             }
@@ -108,7 +110,42 @@
         @Model.Description
     </p>
 </div>
-
+<hr />
+<h5>
+    Đánh giá
+</h5>
+<div class="pl-3 pr-3">
+    @if (Model.Rates.Count == 0)
+    {
+        <div>Chưa có đánh giá</div>
+    }
+    else
+    {
+        <hr />
+        foreach (var rate in Model.Rates)
+        {
+            <br />
+            <i>
+                @rate.User.Fullname
+            </i>
+            <div class="row ml-0 mt-1" style="color:lightgray">
+                @for (int _ = 0; _ < rate.Rate1; _++)
+                {
+                    <ion-icon style="color:#ffca00" name="star"></ion-icon>
+                }
+                @for (int _ = 0; _ < 5 - rate.Rate1; _++)
+                {
+                    <ion-icon name="star"></ion-icon>
+                }
+            </div>
+            <p>
+                @rate.Comment
+            </p>
+            <hr />
+        }
+    }
+    <br />
+</div>
 @if (userInfo != null && userInfo.Phone.Equals("admin"))
 {
     <script>
@@ -140,13 +177,10 @@
 {
     <script>
         let addToCart = () => {
-            alert("thêm vào giỏ");
             const quant = $("#quantity-input").val();
-            window.location.href = "/User/AddToCart?idBook=@Model.ID&idUser=@userInfo.ID&quantity=" + quant;
-
-                }
+            window.location.href = `/User/AddToCart?idBook=@Model.ID&idUser=@userInfo.ID&quantity=${quant}`;
+        }
         let buyNow = () => {
-            alert("mua ngay");
             window.location.href = "/User/BuyNow?idUser=@userInfo.ID";
         }
     </script>
@@ -189,4 +223,20 @@
 
     }
 
+    let onChangeTextQuantity = () => {
+        let rawStr = $(".number-input input").val()
+        if (rawStr.length == 0)
+            $(".number-input input").val(1)
+        else {
+            rawStr = rawStr.replace(/\D/g, '');
+            $(".number-input input").val(parseInt(rawStr) || 1)
+        }
+    }
+
+    let changeQuantity = (val) => {
+        const result = parseInt($(".number-input input").val()) + val
+        if (result == 0)
+            return
+        $(".number-input input").val(result)
+    }
 </script>
