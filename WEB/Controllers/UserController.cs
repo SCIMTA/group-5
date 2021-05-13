@@ -18,20 +18,22 @@ namespace taka.Controllers
         {
             return View();
         }
-        public ActionResult AddToCart(int idBook, int idUser, int quantity)
+        public ActionResult AddToCart(int idBook, int quantity)
         {
-            db.AddCart(idBook, idUser, quantity);
-            TempData[taka.Utils.C.TEMPDATA.Message] = "Thêm vào giỏ hàng thành công";
+            User user = (User)Session[C.SESSION.UserInfo];
+            db.AddCart(idBook, user.ID, quantity);
+            TempData[C.TEMPDATA.Message] = "Thêm vào giỏ hàng thành công";
             return RedirectToAction("Detail", "Home", new { id = idBook });
         }
         public ActionResult BuyNow(int[] id)
         {
-            
+
             return View();
         }
-        public ActionResult ShoppingCart(int idUser)
+        public ActionResult ShoppingCart()
         {
-            List<Models.Enitities.Cart> listCarts = db.GetListCarts(idUser);
+            User user = (User)Session[C.SESSION.UserInfo];
+            List<Cart> listCarts = db.GetListCarts(user.ID);
             return View(listCarts);
         }
         [HttpPost]
@@ -40,17 +42,18 @@ namespace taka.Controllers
             try
             {
                 db.ChangeQuantity(idCart, quantity);
-                return Json(new { status = 1, JsonRequestBehavior.AllowGet });
+                return Json(new { status = 1 });
             }
             catch (Exception)
             {
-                return Json(new { status = 0, JsonRequestBehavior.AllowGet });
+                return Json(new { status = 0 });
             }
         }
-        public ActionResult DeleteCartItem(int idUser, int idBook)
+        public ActionResult DeleteCartItem(int idBook)
         {
-            db.DeleteCartItem(idUser, idBook);
-            return RedirectToAction("ShoppingCart", "User", new { idUser = idUser });
+            User user = (User)Session[C.SESSION.UserInfo];
+            db.DeleteCartItem(user.ID, idBook);
+            return RedirectToAction("ShoppingCart", "User", new { idUser = user.ID });
         }
 
         public ActionResult Infor()
@@ -69,7 +72,7 @@ namespace taka.Controllers
         {
             User user = (User)Session[C.SESSION.UserInfo];
             Session[C.SESSION.UserInfo] = db.UpdateUser(user.Phone, email, fullname, gender, birthday);
-            return RedirectToAction("Infor", "User",new { id = user.ID});
+            return RedirectToAction("Infor", "User", new { id = user.ID });
         }
     }
 }

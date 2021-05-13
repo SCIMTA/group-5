@@ -178,10 +178,10 @@
     <script>
         let addToCart = () => {
             const quant = $("#quantity-input").val();
-            window.location.href = `/User/AddToCart?idBook=@Model.ID&idUser=@userInfo.ID&quantity=${quant}`;
+            window.location.href = `/User/AddToCart?idBook=@Model.ID&quantity=${quant}`;
         }
         let buyNow = () => {
-            window.location.href = "/User/BuyNow?idUser=@userInfo.ID";
+            window.location.href = "/User/BuyNow?idBook=@Model.ID";
         }
     </script>
 }
