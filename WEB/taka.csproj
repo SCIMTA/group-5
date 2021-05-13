@@ -169,6 +169,8 @@
     <Content Include="Content\Icon\ic_icon.png" />
     <Content Include="Content\Icon\ic_lock.png" />
     <Content Include="Content\Icon\ic_unlock.png" />
+    <Content Include="Content\IndedxAdmin.js" />
+    <Content Include="Content\IndedxAdmin.css" />
     <Content Include="Content\style.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -223,6 +225,7 @@
     <Content Include="Views\User\Infor.cshtml" />
     <Content Include="Views\User\_LayoutUser.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

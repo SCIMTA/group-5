@@ -388,7 +388,6 @@ namespace taka.Models.DatabaseInteractive
                 if (!permanently)
                 {
                     item.isHidden = 1;
-                    takaDB.SaveChanges();
                 }
                 else
                 {
@@ -396,7 +395,9 @@ namespace taka.Models.DatabaseInteractive
                     takaDB.Images.RemoveRange(takaDB.Images.Where(x => x.idBook == id));
                     takaDB.Rates.RemoveRange(takaDB.Rates.Where(x => x.idBook == id));
                     takaDB.OrderDetails.RemoveRange(takaDB.OrderDetails.Where(x => x.idBook == id));
+                    takaDB.Books.Remove(item);
                 }
+            takaDB.SaveChanges();
             return true;
         }
 
@@ -498,21 +499,24 @@ namespace taka.Models.DatabaseInteractive
                 {
                     try
                     {
-                        MemoryStream target = new MemoryStream();
-                        image.InputStream.CopyTo(target);
-                        byte[] data = target.ToArray();
-                        var client = new RestClient("http://128.199.108.177:8001/upload_image");
-                        var request = new RestRequest(Method.POST);
-                        request.AddHeader("Content-Type", "multipart/form-data");
-                        request.AlwaysMultipartFormData = true;
-                        request.AddFile("book_cover", data, "image.jpeg");
-                        IRestResponse response = client.Execute(request);
-                        string resJsonRaw = response.Content;
-                        JObject json = JObject.Parse(resJsonRaw);
-                        Image imgObj = new Image();
-                        imgObj.idBook = ID;
-                        imgObj.Url = json.GetValue("url").ToString();
-                        takaDB.Images.Add(imgObj);
+                        if (image != null)
+                        {
+                            MemoryStream target = new MemoryStream();
+                            image.InputStream.CopyTo(target);
+                            byte[] data = target.ToArray();
+                            var client = new RestClient("http://128.199.108.177:8001/upload_image");
+                            var request = new RestRequest(Method.POST);
+                            request.AddHeader("Content-Type", "multipart/form-data");
+                            request.AlwaysMultipartFormData = true;
+                            request.AddFile("book_cover", data, "image.jpeg");
+                            IRestResponse response = client.Execute(request);
+                            string resJsonRaw = response.Content;
+                            JObject json = JObject.Parse(resJsonRaw);
+                            Image imgObj = new Image();
+                            imgObj.idBook = ID;
+                            imgObj.Url = json.GetValue("url").ToString();
+                            takaDB.Images.Add(imgObj);
+                        }
                     }
                     catch (Exception e)
                     {

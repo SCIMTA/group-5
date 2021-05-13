@@ -17,7 +17,13 @@ namespace taka.Controllers
         // GET: Admin
         public ActionResult Index()
         {
-            bool isLogin = Session[C.SESSION.UserInfo] != null;
+            ViewBag.listUsers = dB.GetUsers();
+            ViewBag.listCategories = dB.GetCategories();
+            ViewBag.listPublishers = dB.GetPublishers();
+            ViewBag.listAuthors = dB.GetAuthors();
+            ViewBag.listTypes = dB.GetTypes();
+            ViewBag.listLanguages = dB.GetLanguages();
+            ViewBag.tab = "order";
             return View();
         }
         public ActionResult Edit(int id = -1)
@@ -68,7 +74,7 @@ namespace taka.Controllers
             {
                 if (id == -1)
                     throw new Exception("Not found");
-                dB.DeleteBook(id);
+                dB.DeleteBook(id,true);
                 return RedirectToAction("List", "Home");
             }
             catch (Exception)
