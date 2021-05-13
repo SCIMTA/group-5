@@ -18,5 +18,7 @@ namespace taka.Utils
             public static string Message = "Message";
             public static string RequireLogin = "RequireLogin";
         }
+
+        public static int ID_ADMIN = 4;
     }
 }

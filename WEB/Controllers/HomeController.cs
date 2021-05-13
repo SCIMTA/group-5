@@ -75,29 +75,26 @@ namespace taka.Controllers
         }
 
 
-        public ActionResult LoginWithGoogle(string googleId, string returnUrl = "")
+        [HttpPost]
+        public ActionResult LoginWithGoogle(string googleId, string fullname, string email, string returnUrl = "")
         {
-            User user = dB.LoginWithGoogle(googleId);
-            if (user != null)
+            User user = dB.LoginWithGoogle(googleId, fullname, email);
+            if (user.is_ban == 1)
             {
-                if (user.is_ban == 1)
+                TempData[C.TEMPDATA.Message] = "Tài khoản của bạn đã bị khoá, vùi lòng liên hiện để biết thêm thông tin";
+                return Json(new
                 {
-                    TempData[C.TEMPDATA.Message] = "Tài khoản của bạn đã bị khoá, vùi lòng liên hiện để biết thêm thông tin";
-                    return RedirectToAction("Login", "Home", new { returnUrl });
-                }
-                FormsAuthentication.SetAuthCookie(user.Phone, true);
-                Session[C.SESSION.UserInfo] = user;
+                    status = 0,
+                    returnUrl = returnUrl
+                });
             }
-            else
+
+            FormsAuthentication.SetAuthCookie(user.ID == C.ID_ADMIN ? "admin" : "" + user.ID, true);
+            Session[C.SESSION.UserInfo] = user;
+            return Json(new
             {
-                TempData[C.TEMPDATA.Message] = "Tài khoản chưa tồn lại";
-                return RedirectToAction("Login", "Home", new { returnUrl });
-            }
-
-            if (returnUrl.Equals(""))
-                return RedirectToAction("Index", "Home");
-
-            return Redirect(returnUrl);
+                status = 1,
+            });
         }
 
 

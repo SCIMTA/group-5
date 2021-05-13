@@ -106,7 +106,7 @@ namespace taka.Models.DatabaseInteractive
 
         public List<User> GetUsers()
         {
-            return takaDB.Users.Where(x => !x.Phone.Equals("admin")).ToList();
+            return takaDB.Users.Where(x => !x.ID.Equals(C.ID_ADMIN)).ToList();
         }
 
         public string findTextCategory(int id)
@@ -339,12 +339,18 @@ namespace taka.Models.DatabaseInteractive
                 return user.First();
             return null;
         }
-        public User LoginWithGoogle(string gooogleId)
+        public User LoginWithGoogle(string gooogleId, string fullname, string email)
         {
-            var user = takaDB.Users.Where(x => x.google_id==gooogleId);
+            var user = takaDB.Users.Where(x => x.google_id == gooogleId);
             if (user.Count() > 0)
                 return user.First();
-            return null;
+            User newUser = new User();
+            newUser.google_id = gooogleId;
+            newUser.Fullname = fullname;
+            newUser.Email = email;
+            takaDB.Users.Add(newUser);
+            takaDB.SaveChanges();
+            return newUser;
         }
 
         public void AddCart(int idBook, int idUser, int quantity = 1)
@@ -375,14 +381,22 @@ namespace taka.Models.DatabaseInteractive
             takaDB.Carts.Remove(deleteItem);
             takaDB.SaveChanges();
         }
-        public bool DeleteBook(int id)
+        public bool DeleteBook(int id, bool permanently = false)
         {
             var item = takaDB.Books.Where(x => x.ID == id).First();
             if (item != null)
-            {
-                item.isHidden = 1;
-                takaDB.SaveChanges();
-            }
+                if (!permanently)
+                {
+                    item.isHidden = 1;
+                    takaDB.SaveChanges();
+                }
+                else
+                {
+                    takaDB.Carts.RemoveRange(takaDB.Carts.Where(x => x.idBook == id));
+                    takaDB.Images.RemoveRange(takaDB.Images.Where(x => x.idBook == id));
+                    takaDB.Rates.RemoveRange(takaDB.Rates.Where(x => x.idBook == id));
+                    takaDB.OrderDetails.RemoveRange(takaDB.OrderDetails.Where(x => x.idBook == id));
+                }
             return true;
         }
 

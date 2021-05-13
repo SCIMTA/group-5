@@ -2,17 +2,17 @@
     taka.Models.Enitities.User userInfo = (taka.Models.Enitities.User)Session["UserInfo"];
 }
 
-<div style="background-color:#ee4d2d">
-    <img src="https://cdn0.fahasa.com/media/wysiwyg/Thang-05-2021/BigSale1_header.png" style="width:100%" />
+<img src="https://cdn0.fahasa.com/media/wysiwyg/Thang-05-2021/BigSale1_header.png" class="sticky-top" style="width:100%;cursor:pointer" onclick="window.location.href = '/Home'"/>
+<header style="background-color:#ee4d2d" role="banner">
     <div class="container">
         <nav class="nav float-right">
             @if (userInfo == null)
             {
-                <button type="button" class="btn btn-light m-1"  onclick="goToLoginPage()"  style="color:#ee4d2d;">
+                <button type="button" class="btn btn-light m-1" onclick="goToLoginPage()" style="color:#ee4d2d;">
                     <b>Đăng nhập</b>
                 </button>
             }
-            @if (userInfo != null && userInfo.Phone.Equals("admin"))
+            @if (userInfo != null && userInfo.ID.Equals(taka.Utils.C.ID_ADMIN))
             {
                 <a href="/Admin/Add" class="btn btn-light m-1" style="color:#ee4d2d;">
                     <b>Thêm đầu sách</b>
@@ -26,7 +26,7 @@
                 </a>
 
             }
-            @if (userInfo != null && !userInfo.Phone.Equals("admin"))
+            @if (userInfo != null && !userInfo.ID.Equals(taka.Utils.C.ID_ADMIN))
             {
 
                 <a href="/User/ShoppingCart" style="position:relative">
@@ -53,4 +53,4 @@
             </button>
         </div>
     </form>
-</div>
+</header>

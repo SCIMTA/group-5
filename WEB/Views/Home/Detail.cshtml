@@ -86,7 +86,7 @@
         </div>
 
         <div class="row col">
-            @if (userInfo != null && userInfo.Phone.Equals("admin"))
+            @if (userInfo != null && userInfo.ID.Equals(taka.Utils.C.ID_ADMIN))
             {
                 <button type="button" onclick="updateBook()" onmousemove="onMouseMoveOutline('outline-btn')" onmouseout="onMouseOutOutline('outline-btn')" id="outline-btn" class="btn col p-3 m-3" style="background-color:white;color:#ee4d2d; border:3; border-color:#ee4d2d">Cập nhật thông tin</button>
                 <button type="button" onclick="showDeleteModal()" onmousemove="onMouseMoveColorFilled('colorfilled-btn')" onmouseout="onMouseOutColorFilled('colorfilled-btn')" id="colorfilled-btn" class="btn col p-3 m-3" style="background-color:#ee4d2d; color:white; border:3; border-color:#ee4d2d">Xoá</button>
@@ -146,7 +146,7 @@
     }
     <br />
 </div>
-@if (userInfo != null && userInfo.Phone.Equals("admin"))
+@if (userInfo != null && userInfo.ID.Equals(taka.Utils.C.ID_ADMIN))
 {
     <script>
     let updateBook = () => {
@@ -173,7 +173,7 @@
     </script>
 }
 
-@if (userInfo != null && !userInfo.Phone.Equals("admin"))
+@if (userInfo != null && !userInfo.ID.Equals(taka.Utils.C.ID_ADMIN))
 {
     <script>
         let addToCart = () => {
