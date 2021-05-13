@@ -7,7 +7,7 @@
     <div style="flex:1;display:flex;justify-content:center">
         <img style="width:60%;object-fit:contain;" src="~/Content/Icon/ic_icon.png" />
     </div>
-    <div style="flex:1;;background-color:#f5f5f5;padding:10px;border-radius:10px">
+    <div style="flex:1;background-color:#f5f5f5;padding:10px;border-radius:10px">
         <div style="display:flex;flex:1">
             <div class="list-group" id="list-tab" style="flex-direction: row;flex:1" role="tablist">
                 <a class="btn m-1 pl-5 pr-5 btn-light" style="flex:1" id="tab_login" data-toggle="list" href="#login" role="tab">Đăng nhập</a>
@@ -108,9 +108,15 @@ else
             auth2.signIn().then(function () {
                 if (auth2.isSignedIn.get()) {
                     let profile = auth2.currentUser.get().getBasicProfile();
-                    $("#fullname").val(profile.getName())
-                    $("#email").val(profile.getEmail())
-                    window.location.href = `/Home/LoginWithGoogle?googleId=${auth2.currentUser.get().getAuthResponse().login_hint}&returnUrl=@ViewBag.returnUrl`
+                    $.post('/Home/LoginWithGoogle', {
+                        googleId: auth2.currentUser.get().getAuthResponse().login_hint,
+                        fullname: profile.getName(),
+                        email: profile.getEmail(),
+                        returnUrl:'@ViewBag.returnUrl'
+                    }, res => {
+                        window.location.href = '@ViewBag.returnUrl'
+                    })
+                    //window.location.href = `/Home/LoginWithGoogle?googleId=${auth2.currentUser.get().getAuthResponse().login_hint}&returnUrl=@ViewBag.returnUrl`
                     console.log('ID: ' + profile.getId());
                     console.log('Full Name: ' + profile.getName());
                     console.log('Given Name: ' + profile.getGivenName());

@@ -75,29 +75,49 @@ namespace taka.Controllers
         }
 
 
-        public ActionResult LoginWithGoogle(string googleId, string returnUrl = "")
+        [HttpPost]
+        public ActionResult LoginWithGoogle(string googleId, string fullname, string email, string returnUrl = "")
         {
-            User user = dB.LoginWithGoogle(googleId);
+            User user = dB.LoginWithGoogle(googleId,fullname,email);
             if (user != null)
             {
                 if (user.is_ban == 1)
                 {
                     TempData[C.TEMPDATA.Message] = "Tài khoản của bạn đã bị khoá, vùi lòng liên hiện để biết thêm thông tin";
-                    return RedirectToAction("Login", "Home", new { returnUrl });
+                    return Json(new
+                    {
+                        status = 0,
+                        message = "Tài khoản của bạn đã bị khoá, vùi lòng liên hiện để biết thêm thông tin",
+                        returnUrl = returnUrl
+                    });
+                    //return RedirectToAction("Login", "Home", new { returnUrl });
                 }
-                FormsAuthentication.SetAuthCookie(user.Phone, true);
+                FormsAuthentication.SetAuthCookie(user.ID.ToString(), true);
                 Session[C.SESSION.UserInfo] = user;
             }
             else
             {
                 TempData[C.TEMPDATA.Message] = "Tài khoản chưa tồn lại";
-                return RedirectToAction("Login", "Home", new { returnUrl });
+                return Json(new
+                {
+                    status = 0,
+                    message = "Tài khoản chưa tồn lại",
+                });
+                //return RedirectToAction("Login", "Home", new
+                //{
+                //    returnUrl
+                //});
             }
 
             if (returnUrl.Equals(""))
                 return RedirectToAction("Index", "Home");
 
-            return Redirect(returnUrl);
+            return Json(new
+            {
+                status = 1,
+                message = "Thành công",
+            });
+            //return Redirect(returnUrl);
         }
 
 
