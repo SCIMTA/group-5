@@ -12,9 +12,9 @@ namespace taka.Models.DatabaseInteractive
 {
     public class BillInfo
     {
-        int id;
-        int price;
-        int quantity;
+        int id { get; set; }
+        int price { get; set; }
+        int quantity { get; set; }
     }
     public class ListBook
     {
