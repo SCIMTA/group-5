@@ -42,6 +42,8 @@ namespace taka.Models.Enitities
 
         [StringLength(100)]
         public string KeySearch { get; set; }
+        [StringLength(256)]
+        public string google_id { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Address> Addresses { get; set; }

@@ -152,8 +152,8 @@ namespace taka.Models.DatabaseInteractive
             user.Birthday = birthday.Length == 0 ? DateTime.Now.ToShortDateString() : birthday;
             takaDB.SaveChanges();
             return user;
-        }       
-        public void BanUser(int ID,int ban=0)
+        }
+        public void BanUser(int ID, int ban = 0)
         {
             User user = takaDB.Users.Where(x => x.ID == ID).First();
             if (user == null)
@@ -339,6 +339,13 @@ namespace taka.Models.DatabaseInteractive
                 return user.First();
             return null;
         }
+        public User LoginWithGoogle(string gooogleId)
+        {
+            var user = takaDB.Users.Where(x => x.google_id==gooogleId);
+            if (user.Count() > 0)
+                return user.First();
+            return null;
+        }
 
         public void AddCart(int idBook, int idUser, int quantity = 1)
         {
@@ -456,8 +463,8 @@ namespace taka.Models.DatabaseInteractive
             int Quantity,
             string Description)
         {
-            if(images_delete!=null)
-            takaDB.Images.RemoveRange(takaDB.Images.Where(x => images_delete.Contains(x.ID)));
+            if (images_delete != null)
+                takaDB.Images.RemoveRange(takaDB.Images.Where(x => images_delete.Contains(x.ID)));
             Book book = takaDB.Books.Where(x => x.ID == ID).First();
             book.Title = Title;
             book.Price = Price;

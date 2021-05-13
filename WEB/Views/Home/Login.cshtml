@@ -30,7 +30,11 @@
                             <input name="password" type="password" class="form-control" placeholder="Mật khẩu *" value="" />
                         </div>
                         <div class="form-group">
-                            <input type="submit" class="col btn btn-light" style="background-color:#ee4d2d;color:white;width:100%" value="Đăng nhập" />
+                            <input type="submit" class="col btn btn-light p-3" style="background-color:#ee4d2d;color:white;width:100%;" value="Đăng nhập" />
+                        </div>
+                        <div class="col btn btn-light p-2" style="width:100%;border:1px solid #808080" onclick="signIn()">
+                            <img src="~/Content/Icon/ic_google.png" style="height:35px;margin-right:20px" />
+                            Đăng nhập với google
                         </div>
                     </form>
                 </div>
@@ -42,7 +46,7 @@
                         <input name="returnUrl" hidden value="@ViewBag.returnUrl" />
                         <input name="tab" hidden value="register" />
                         <div class="form-group">
-                            <input name="phone"  type="number" class="form-control" placeholder="Số điện thoại *" value="@ViewBag.phone" required />
+                            <input name="phone" type="number" class="form-control" placeholder="Số điện thoại *" value="@ViewBag.phone" required />
                         </div>
                         <div class="form-group">
                             <input name="password" type="password" class="form-control" placeholder="Mật khẩu *" value="" required />
@@ -68,9 +72,9 @@
                             <input name="birthday" type="date" class="form-control" placeholder="Ngày sinh " value="@ViewBag.birthday" />
                         </div>
                         <div class="form-group">
-                            <input type="submit" class="btn btn-light" style="background-color:#ee4d2d;color:white;width:100%" value="Đăng ký" />
+                            <input type="submit" class="btn btn-light p-3" style="background-color:#ee4d2d;color:white;width:100%" value="Đăng ký" />
                         </div>
-                        <div class="col btn btn-light" style="background-color:#ee4d2d;color:white;width:100%" onclick="signIn()">Đăng ký với google</div>
+
                     </form>
                 </div>
 
@@ -106,6 +110,7 @@ else
                     let profile = auth2.currentUser.get().getBasicProfile();
                     $("#fullname").val(profile.getName())
                     $("#email").val(profile.getEmail())
+                    window.location.href = `/Home/LoginWithGoogle?googleId=${auth2.currentUser.get().getAuthResponse().login_hint}&returnUrl=@ViewBag.returnUrl`
                     console.log('ID: ' + profile.getId());
                     console.log('Full Name: ' + profile.getName());
                     console.log('Given Name: ' + profile.getGivenName());
@@ -120,7 +125,7 @@ else
     let signOut = (callback) => {
         let auth2 = gapi.auth2.getAuthInstance();
         auth2.signOut().then(() => {
-            
+
             setTimeout(callback, 1000)
         })
         auth2.disconnect()

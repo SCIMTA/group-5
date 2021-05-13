@@ -54,11 +54,11 @@ namespace taka.Controllers
             User user = dB.Login(phone, password);
             if (user != null)
             {
-                if(user.is_ban==1)
+                if (user.is_ban == 1)
                 {
                     TempData[C.TEMPDATA.Message] = "Tài khoản của bạn đã bị khoá, vùi lòng liên hiện để biết thêm thông tin";
                     return RedirectToAction("Login", "Home", new { returnUrl, phone });
-                }    
+                }
                 FormsAuthentication.SetAuthCookie(phone, true);
                 Session[C.SESSION.UserInfo] = user;
             }
@@ -67,8 +67,40 @@ namespace taka.Controllers
                 TempData[C.TEMPDATA.Message] = "Sai số điện thoại hoặc mật khẩu";
                 return RedirectToAction("Login", "Home", new { returnUrl, phone });
             }
+
+            if (returnUrl.Equals(""))
+                return RedirectToAction("Index", "Home");
+
             return Redirect(returnUrl);
         }
+
+
+        public ActionResult LoginWithGoogle(string googleId, string returnUrl = "")
+        {
+            User user = dB.LoginWithGoogle(googleId);
+            if (user != null)
+            {
+                if (user.is_ban == 1)
+                {
+                    TempData[C.TEMPDATA.Message] = "Tài khoản của bạn đã bị khoá, vùi lòng liên hiện để biết thêm thông tin";
+                    return RedirectToAction("Login", "Home", new { returnUrl });
+                }
+                FormsAuthentication.SetAuthCookie(user.Phone, true);
+                Session[C.SESSION.UserInfo] = user;
+            }
+            else
+            {
+                TempData[C.TEMPDATA.Message] = "Tài khoản chưa tồn lại";
+                return RedirectToAction("Login", "Home", new { returnUrl });
+            }
+
+            if (returnUrl.Equals(""))
+                return RedirectToAction("Index", "Home");
+
+            return Redirect(returnUrl);
+        }
+
+
 
         [HttpPost]
         public ActionResult Register(string phone, string password, string email, string gender, string fullname, string birthday, string returnUrl, string tab)
@@ -84,6 +116,10 @@ namespace taka.Controllers
                 TempData[C.TEMPDATA.Message] = "Số điện thoại đã tồn tại";
                 return RedirectToAction("Login", "Home", new { returnUrl, phone, email, fullname, gender, birthday, tab });
             }
+
+            if (returnUrl.Equals(""))
+                return RedirectToAction("Index", "Home");
+
             return Redirect(returnUrl);
         }
 
