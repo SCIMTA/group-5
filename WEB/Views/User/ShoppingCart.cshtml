@@ -43,8 +43,7 @@
 
                                         </div>
                                         <div class="col-4">
-                                            <div class="def-number-input number-input safari_only mb-0 w-100">
-
+                                            <div class="def-number-input number-input safari_only mb-0" style="text-align:end">
                                                 <a class="btn btn-outline-light" onclick="downQuantity('@item.ID')" style="border:none; ">
                                                     <ion-icon name="remove-outline"></ion-icon>
                                                 </a>
@@ -62,7 +61,7 @@
                                     </div>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div>
-                                            <a href="/User/DeleteCartItem?idBook=@item.idBook" type="button" class="card-link-secondary small text-uppercase mr-3">
+                                            <a href="/User/DeleteCartItem?idBook=@item.idBook" type="button" class="card-link-secondary small text-uppercase ml-3">
                                                 <i class="fas fa-trash-alt mr-1"></i> Xóa mặt hàng
                                             </a>
 
@@ -86,9 +85,7 @@
             <!-- Card -->
             <div class="mb-3">
                 <div class="pt-4">
-
                     <h5 class="mb-4">Chấp nhận thanh toán qua</h5>
-
                     <img class="mr-2" width="45px"
                          src="https://mdbootstrap.com/wp-content/plugins/woocommerce-gateway-stripe/assets/images/visa.svg"
                          alt="Visa">
@@ -142,7 +139,7 @@
                         </li>
                     </ul>
 
-                    <button type="submit" class="btn btn-primary btn-block">Mua ngay</button>
+                    <button type="submit" style="background-color:#ee4d2d;color:white" class="btn btn-light btn-block">Mua ngay</button>
 
                 </div>
             </div>
