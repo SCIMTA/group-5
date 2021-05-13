@@ -9,7 +9,7 @@ using taka.Utils;
 
 namespace taka.Controllers
 {
-    [Authorize(Users = "4")]
+    [Authorize(Users = "admin")]
     public class AdminController : Controller
     {
 
