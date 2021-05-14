@@ -498,3 +498,32 @@ body {
     .chiller-theme .sidebar-footer > a:last-child {
         border-right: none;
     }
+
+
+.side-bar-tab {
+    margin: 10px;
+    border:2px solid white;
+    border-radius: 5px
+}
+
+.side-bar-click {
+    color: white !important;
+    display: flex !important;
+}
+
+.side-bar-icon {
+    margin-right: 10px;
+    font-size: 25px
+}
+
+.side-bar-text {
+    margin-top: 2px
+}
+
+.active {
+    background-color: white
+}
+
+    .active > a:first-child {
+        color: #ee4d2d !important;
+    }

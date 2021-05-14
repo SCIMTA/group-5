@@ -59,7 +59,7 @@ namespace taka.Controllers
                     TempData[C.TEMPDATA.Message] = "Tài khoản của bạn đã bị khoá, vùi lòng liên hiện để biết thêm thông tin";
                     return RedirectToAction("Login", "Home", new { returnUrl, phone });
                 }
-                FormsAuthentication.SetAuthCookie(phone, true);
+                FormsAuthentication.SetAuthCookie(user.ID == C.ID_ADMIN ? "admin" : "" + user.ID, true);
                 Session[C.SESSION.UserInfo] = user;
             }
             else
@@ -67,6 +67,8 @@ namespace taka.Controllers
                 TempData[C.TEMPDATA.Message] = "Sai số điện thoại hoặc mật khẩu";
                 return RedirectToAction("Login", "Home", new { returnUrl, phone });
             }
+            if (user.ID.Equals(C.ID_ADMIN))
+                return RedirectToAction("Index", "Admin");
 
             if (returnUrl.Equals(""))
                 return RedirectToAction("Index", "Home");

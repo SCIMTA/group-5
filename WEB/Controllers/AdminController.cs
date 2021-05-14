@@ -15,15 +15,58 @@ namespace taka.Controllers
 
         TakaDB dB = new TakaDB();
         // GET: Admin
-        public ActionResult Index()
+        public ActionResult Index(string tab = "order", int page = 1, string text = "", int cate = 0, int sort = 0, int pageSize = 16, int type = 0, int language = 0)
         {
-            ViewBag.listUsers = dB.GetUsers();
-            ViewBag.listCategories = dB.GetCategories();
-            ViewBag.listPublishers = dB.GetPublishers();
-            ViewBag.listAuthors = dB.GetAuthors();
-            ViewBag.listTypes = dB.GetTypes();
-            ViewBag.listLanguages = dB.GetLanguages();
-            ViewBag.tab = "order";
+
+            ViewBag.tab = tab;
+
+            switch (ViewBag.tab)
+            {
+                case "order":
+                    ViewBag.ListCate = dB.GetCategories();
+                    ViewBag.ListType = dB.GetTypes();
+                    ViewBag.ListLanguage = dB.GetLanguages();
+                    ViewBag.Cate = cate;
+                    ViewBag.Sort = sort;
+                    ViewBag.Type = type;
+                    ViewBag.Language = language;
+                    ViewBag.TextSort = "Mới nhất";
+                    ViewBag.PageSize = 16;
+                    ViewBag.CurrentPage = page;
+                    if (sort != 0)
+                    {
+                        ViewBag.TextSort = sort == 1 ? "Giá thấp nhất" : "Giá cao nhất";
+                    }
+                    if (pageSize != 16 && pageSize % 16 == 0 && pageSize <= 64)
+                    {
+                        ViewBag.PageSize = pageSize;
+                    }
+                    ListBook listBook = dB.GetListBook(page, text, cate, sort, pageSize, type, language);
+                    ViewBag.ListPage = HelperFunctions.getNumPage(page, listBook.pages);
+                    ViewBag.maxPage = listBook.pages;
+                    ViewBag.TextSearch = text;
+                    ViewBag.list = listBook.books;
+                    break;
+                case "user":
+                    ViewBag.list = dB.GetUsers();
+                    break;
+                case "category":
+                    ViewBag.list = dB.GetCategories();
+                    break;
+                case "publisher":
+                    ViewBag.list = dB.GetPublishers();
+                    break;
+                case "author":
+                    ViewBag.list = dB.GetAuthors();
+                    break;
+                case "type":
+                    ViewBag.list = dB.GetTypes();
+                    break;
+                case "language":
+                    ViewBag.list = dB.GetLanguages();
+                    break;
+            }
+
             return View();
         }
         public ActionResult Edit(int id = -1)
@@ -74,7 +117,7 @@ namespace taka.Controllers
             {
                 if (id == -1)
                     throw new Exception("Not found");
-                dB.DeleteBook(id,true);
+                dB.DeleteBook(id, true);
                 return RedirectToAction("List", "Home");
             }
             catch (Exception)

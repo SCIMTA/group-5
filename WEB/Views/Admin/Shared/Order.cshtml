@@ -1,3 +1,184 @@
-﻿
+﻿@{
+    IEnumerable<taka.Models.Enitities.Book> Model = ViewBag.list;
+}
+<div style="display:flex;flex-direction:row">
+    <div style="flex:1;">
+        <div class="ml-3">
+            <br />
+            <h5>
+                THỂ LOẠI
+            </h5>
+            @foreach (var cate in ViewBag.ListCate)
+            {
+                if (cate.ID == ViewBag.cate)
+                {
+                    <div class="list-group-item" style="border:0px;padding:10px"><b style="color:#ee4d2d">@cate.Name</b></div>
+                }
+                else
+                {
+                    <a class="list-group-item" style="border:0px;padding:10px;color:dimgray" href="?page=1&text=@ViewBag.TextSearch&cate=@cate.ID&sort=@ViewBag.Sort&pageSize=@ViewBag.PageSize&type=@ViewBag.Type&language=@ViewBag.Language">@cate.Name</a>
+                }
+            }
+            <br />
+            <h5>
+                HÌNH THỨC
+            </h5>
+            @foreach (var e in ViewBag.ListType)
+            {
+                if (e.ID == ViewBag.Type)
+                {
+                    <div class="list-group-item" style="border:0px;padding:10px">
+                        <b style="color:#ee4d2d">@e.Name</b>
+                        <a href="?page=1&text=@ViewBag.TextSearch&cate=@ViewBag.Cate&sort=@ViewBag.Sort&pageSize=@ViewBag.PageSize&type=0&language=@ViewBag.Language" class="btn">
+                            <ion-icon style="font-size:25px;text-align:center" name="close-circle-outline"></ion-icon>
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <a class="list-group-item" style="border:0px;padding:10px;color:dimgray" href="?page=1&text=@ViewBag.TextSearch&cate=@ViewBag.Cate&sort=@ViewBag.Sort&pageSize=@ViewBag.PageSize&type=@e.ID&language=@ViewBag.Language">@e.Name</a>
+                }
+            }
+            <br />
+            <h5>
+                Ngôn ngữ
+            </h5>
+            @foreach (var e in ViewBag.ListLanguage)
+            {
+                if (e.ID == ViewBag.Language)
+                {
+                    <div class="list-group-item" style="border:0px;padding:10px">
+                        <b style="color:#ee4d2d">@e.Name</b>
+                        <a href="?page=1&text=@ViewBag.TextSearch&cate=@ViewBag.Cate&sort=@ViewBag.Sort&pageSize=@ViewBag.PageSize&type=@ViewBag.Type&language=0" class="btn">
+                            <ion-icon style="font-size:25px;text-align:center" name="close-circle-outline"></ion-icon>
+                        </a>
+                    </div>
+                }
+                else
+                {
+                    <a class="list-group-item" style="border:0px;padding:10px;color:dimgray" href="?page=1&text=@ViewBag.TextSearch&cate=@ViewBag.Cate&sort=@ViewBag.Sort&pageSize=@ViewBag.PageSize&type=@ViewBag.Type&language=@e.ID">@e.Name</a>
+                }
+            }
+        </div>
+    </div>
+    <div style="background-color:#f5f5f5;width:15px"></div>
+    <div style="flex:4;margin-left:15px">
+        <div class="row col">
+            <div class="mt-1">Sắp xếp theo</div>
+            <div class="dropdown ml-3">
+                <button class="btn dropdown-toggle" type="button" id="dropdownCate" data-toggle="dropdown">
+                    <span>@ViewBag.TextSort</span>
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="?page=1&text=@ViewBag.TextSearch&cate=@ViewBag.Cate&sort=0&pageSize=@ViewBag.PageSize&type=@ViewBag.Type&language=@ViewBag.Language">Mới nhất</a>
+                    <a class="dropdown-item" href="?page=1&text=@ViewBag.TextSearch&cate=@ViewBag.Cate&sort=1&pageSize=@ViewBag.PageSize&type=@ViewBag.Type&language=@ViewBag.Language">Giá thấp nhất</a>
+                    <a class="dropdown-item" href="?page=1&text=@ViewBag.TextSearch&cate=@ViewBag.Cate&sort=2&pageSize=@ViewBag.PageSize&type=@ViewBag.Type&language=@ViewBag.Language">Giá cao nhất</a>
+                </div>
+            </div>
 
-<div>Order</div>
+            <div class="dropdown ml-3">
+                <button class="btn dropdown-toggle" type="button" id="dropdownPageSize" data-toggle="dropdown">
+                    <span>@ViewBag.PageSize sản phẩm</span>
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="?page=1&text=@ViewBag.TextSearch&cate=@ViewBag.Cate&sort=@ViewBag.Sort&pageSize=16&type=@ViewBag.Type&language=@ViewBag.Language">16 sản phẩm</a>
+                    <a class="dropdown-item" href="?page=1&text=@ViewBag.TextSearch&cate=@ViewBag.Cate&sort=@ViewBag.Sort&pageSize=32&type=@ViewBag.Type&language=@ViewBag.Language">32 sản phẩm</a>
+                    <a class="dropdown-item" href="?page=1&text=@ViewBag.TextSearch&cate=@ViewBag.Cate&sort=@ViewBag.Sort&pageSize=64&type=@ViewBag.Type&language=@ViewBag.Language">64 sản phẩm</a>
+                </div>
+            </div>
+
+            @if (ViewBag.Sort != 0)
+            {
+                <a href="?page=1&text=@ViewBag.TextSearch&cate=@ViewBag.Cate" class="btn">
+                    <ion-icon style="font-size:25px;text-align:center" name="close-circle-outline"></ion-icon>
+                </a>
+            }
+
+
+        </div>
+
+        @if (Model.Count() == 0)
+        {
+            <div style="text-align:center;margin-top:200px;margin-bottom:300px" class="col">
+                <img src="https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/assets/4122b759f91bd8dce310f1bc691e78ad.png">
+                <div class="product-not-exist__text">Không tìm thấy sản phẩm</div>
+            </div>
+        }
+        else
+        {
+            <p class="mt-3">
+                Trang @ViewBag.CurrentPage/@ViewBag.maxPage
+            </p>
+            for (int i = 0; i < ViewBag.PageSize / 4; i++)
+            {
+                <div class="row" style="margin-bottom:30px;display: flex;justify-content: center;align-items: center;">
+                    @for (int j = 0; j < 4; j++)
+                    {
+                        try
+                        {
+                            var item = Model.ToArray()[i * 4 + j];
+                            <a href="/Home/Detail?id=@item.ID" id="root_@item.ID" style="flex:1;min-width:200px; position: relative;margin:5px;padding:5px; text-decoration:none;border: 1px solid white" onmousemove="onMoveMouseItem('root_@item.ID')" onmouseout="onMoveOutMouseOfItem('root_@item.ID')">
+                                <div>
+                                    <p>
+                                        <img src="@item.Images.First().Url" style="width:100% ;height:200px;object-fit:contain" />
+                                    </p>
+                                    <div style=" overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;height:50px;color:dimgray">
+                                        @item.Title
+                                    </div>
+                                    <b style="font-size: 18px; color: #ee4d2d;">
+                                        @String.Format(new System.Globalization.CultureInfo("vi-VN"), "{0:N0}", item.Price) đ
+                                    </b>
+                                    <div>
+                                        <i style="font-size:14px;color:dimgray;text-decoration: line-through;">
+                                            @String.Format(new System.Globalization.CultureInfo("vi-VN"), "{0:N0}", (double)item.Price * 1.5)đ
+                                        </i>
+                                    </div>
+                                </div>
+                                <div class="row ml-0 mt-1" style="color:lightgray">
+                                    @for (int _ = 0; _ < item.RatePoint; _++)
+                                    {
+                                        <ion-icon style="color:#ffca00" name="star"></ion-icon>
+                                    }
+                                    @for (int _ = 0; _ < 5 - item.RatePoint; _++)
+                                    {
+                                        <ion-icon name="star"></ion-icon>
+                                    }
+                                    <div style="color:#ee4d2d;margin-top:-5px" class="ml-1">(@item.RateCount)</div>
+                                </div>
+                            </a>
+                        }
+                        catch (Exception)
+                        {
+                        }
+                    }
+                </div>
+            }
+            <div class="row" style="width: 35%; margin: auto;">
+                @foreach (int i in ViewBag.ListPage)
+                {
+                    if (i == ViewBag.CurrentPage)
+                    {
+                        <div class="col" style="text-align:center;margin-bottom:30px;background:#ee4d2d;color:white;border-radius:5px;padding:10px;margin-left:5px;margin-right:5px">
+                            @(ViewBag.CurrentPage)
+                        </div>
+                    }
+                    else
+                    {
+                        <a href="?page=@i&text=@ViewBag.TextSearch&cate=@ViewBag.Cate&sort=@ViewBag.Sort&pageSize=@ViewBag.PageSize&type=@ViewBag.Type&language=@ViewBag.Language" class="col" style="text-align:center;margin-bottom:30px;padding:10px;background-color:lightgray;color:black;margin-left:5px;margin-right:5px;border-radius:5px;">
+                            @i
+                        </a>
+                    }
+                }
+            </div>
+        }
+    </div>
+</div>
+
+<script>
+    const onMoveMouseItem = (id) => {
+        $('#' + id).css('border', '1px solid #ee4d2d')
+    }
+    const onMoveOutMouseOfItem = (id) => {
+        $('#' + id).css('border', '1px solid white')
+    }
+</script>
