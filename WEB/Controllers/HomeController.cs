@@ -68,7 +68,7 @@ namespace taka.Controllers
                 return RedirectToAction("Login", "Home", new { returnUrl, phone });
             }
             if (user.ID.Equals(C.ID_ADMIN))
-                return RedirectToAction("Index", "Admin");
+                return RedirectToAction("Order", "Admin");
 
             if (returnUrl.Equals(""))
                 return RedirectToAction("Index", "Home");
