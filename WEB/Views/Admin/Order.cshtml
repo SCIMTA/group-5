@@ -21,11 +21,12 @@
                 Giá
             </h5>
             <label>Từ</label>
-            <input type="number" class="form-control" value="0" />
+            <input type="number" class="form-control price" value="@ViewBag.PriceFrom" />
             <label>Đến</label>
-            <input type="number" class="form-control" />
+            <input type="number" class="form-control price" value="@ViewBag.PriceTo" />
             <p>
-                <a class="btn btn-light mt-1" style="background-color:#ee4d2d;color:white">
+                <a href="#" onclick="getUrl({ priceFrom: $('.form-control.price')[0].value, priceTo:$('.form-control.price')[1].value })"
+                   class="btn btn-light mt-1" style="background-color:#ee4d2d;color:white">
                     Xác nhận
                 </a>
             </p>
@@ -40,7 +41,7 @@
                 }
                 else
                 {
-                    <a class="list-group-item" style="border:0px;padding:10px;color:dimgray" href="?page=1&text=@ViewBag.TextSearch&cate=@cate.ID&sort=@ViewBag.Sort&pageSize=@ViewBag.PageSize&type=@ViewBag.Type&language=@ViewBag.Language">@cate.Name</a>
+                    <a class="list-group-item" style="border:0px;padding:10px;color:dimgray" href="#" onclick="getUrl({ cate: '@cate.ID', page:1 })">@cate.Name</a>
                 }
             }
             <br />
@@ -53,14 +54,14 @@
                 {
                     <div class="list-group-item" style="border:0px;padding:10px">
                         <b style="color:#ee4d2d">@e.Name</b>
-                        <a href="?page=1&text=@ViewBag.TextSearch&cate=@ViewBag.Cate&sort=@ViewBag.Sort&pageSize=@ViewBag.PageSize&type=0&language=@ViewBag.Language" class="btn">
+                        <a href="#" onclick="getUrl({ page: 1, type:0 })" class="btn">
                             <ion-icon style="font-size:25px;text-align:center" name="close-circle-outline"></ion-icon>
                         </a>
                     </div>
                 }
                 else
                 {
-                    <a class="list-group-item" style="border:0px;padding:10px;color:dimgray" href="?page=1&text=@ViewBag.TextSearch&cate=@ViewBag.Cate&sort=@ViewBag.Sort&pageSize=@ViewBag.PageSize&type=@e.ID&language=@ViewBag.Language">@e.Name</a>
+                    <a class="list-group-item" style="border:0px;padding:10px;color:dimgray" href="#" onclick="getUrl({  page: 1, type:@e.ID })">@e.Name</a>
                 }
             }
             <br />
@@ -73,14 +74,14 @@
                 {
                     <div class="list-group-item" style="border:0px;padding:10px">
                         <b style="color:#ee4d2d">@e.Name</b>
-                        <a href="?page=1&text=@ViewBag.TextSearch&cate=@ViewBag.Cate&sort=@ViewBag.Sort&pageSize=@ViewBag.PageSize&type=@ViewBag.Type&language=0" class="btn">
+                        <a href="#" onclick="getUrl({ page: 1, language: 0 })" class="btn">
                             <ion-icon style="font-size:25px;text-align:center" name="close-circle-outline"></ion-icon>
                         </a>
                     </div>
                 }
                 else
                 {
-                    <a class="list-group-item" style="border:0px;padding:10px;color:dimgray" href="?page=1&text=@ViewBag.TextSearch&cate=@ViewBag.Cate&sort=@ViewBag.Sort&pageSize=@ViewBag.PageSize&type=@ViewBag.Type&language=@e.ID">@e.Name</a>
+                    <a class="list-group-item" style="border:0px;padding:10px;color:dimgray" href="#" onclick="getUrl({ page: 1, language: @e.ID})">@e.Name</a>
                 }
             }
         </div>
@@ -94,9 +95,9 @@
                     <span>@ViewBag.TextSort</span>
                 </button>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="?page=1&text=@ViewBag.TextSearch&cate=@ViewBag.Cate&sort=0&pageSize=@ViewBag.PageSize&type=@ViewBag.Type&language=@ViewBag.Language">Mới nhất</a>
-                    <a class="dropdown-item" href="?page=1&text=@ViewBag.TextSearch&cate=@ViewBag.Cate&sort=1&pageSize=@ViewBag.PageSize&type=@ViewBag.Type&language=@ViewBag.Language">Giá thấp nhất</a>
-                    <a class="dropdown-item" href="?page=1&text=@ViewBag.TextSearch&cate=@ViewBag.Cate&sort=2&pageSize=@ViewBag.PageSize&type=@ViewBag.Type&language=@ViewBag.Language">Giá cao nhất</a>
+                    <a class="dropdown-item" href="#" onclick="getUrl({ page: 1, sort: 0 })">Mới nhất</a>
+                    <a class="dropdown-item" href="#" onclick="getUrl({ page: 1, sort: 1 })">Giá thấp nhất</a>
+                    <a class="dropdown-item" href="#" onclick="getUrl({ page: 1, sort: 2 })">Giá cao nhất</a>
                 </div>
             </div>
 
@@ -105,15 +106,15 @@
                     <span>@ViewBag.PageSize sản phẩm</span>
                 </button>
                 <div class="dropdown-menu">
-                    <a class="dropdown-item" href="?page=1&text=@ViewBag.TextSearch&cate=@ViewBag.Cate&sort=@ViewBag.Sort&pageSize=16&type=@ViewBag.Type&language=@ViewBag.Language">16 sản phẩm</a>
-                    <a class="dropdown-item" href="?page=1&text=@ViewBag.TextSearch&cate=@ViewBag.Cate&sort=@ViewBag.Sort&pageSize=32&type=@ViewBag.Type&language=@ViewBag.Language">32 sản phẩm</a>
-                    <a class="dropdown-item" href="?page=1&text=@ViewBag.TextSearch&cate=@ViewBag.Cate&sort=@ViewBag.Sort&pageSize=64&type=@ViewBag.Type&language=@ViewBag.Language">64 sản phẩm</a>
+                    <a class="dropdown-item" href="#" onclick="getUrl({ page: 1, pageSize: 16 })">16 sản phẩm</a>
+                    <a class="dropdown-item" href="#" onclick="getUrl({ page: 1, pageSize: 32 })">32 sản phẩm</a>
+                    <a class="dropdown-item" href="#" onclick="getUrl({ page: 1, pageSize: 64 })">64 sản phẩm</a>
                 </div>
             </div>
 
             @if (ViewBag.Sort != 0)
             {
-                <a href="?page=1&text=@ViewBag.TextSearch&cate=@ViewBag.Cate" class="btn">
+                <a href="#" onclick="getUrl({ page: 1, sort: 0 })" class="btn">
                     <ion-icon style="font-size:25px;text-align:center" name="close-circle-outline"></ion-icon>
                 </a>
             }
@@ -175,7 +176,23 @@
                     </i>
                 </a>
             }
-            <div class="row" style="width: 35%; margin: auto;">
+
+
+            <div class="row" style="width: 50%; margin: auto;">
+                @if (@ViewBag.CurrentPage > 1)
+                {
+                    <a href="#" onclick="getUrl({ page: @ViewBag.CurrentPage-1 })" class="col" style="text-align:center;margin-bottom:30px;padding:10px;background-color:lightgray;color:black;margin-left:5px;margin-right:5px;border-radius:5px;">
+                        <ion-icon style="font-size:18px;margin-top:2px" name="chevron-back-outline"></ion-icon>
+                    </a>
+                }
+                @if (@ViewBag.CurrentPage > 3)
+                {
+                    <a href="#" onclick="getUrl({ page: 1 })" class="col" style="text-align:center;margin-bottom:30px;padding:10px;background-color:lightgray;color:black;margin-left:5px;margin-right:5px;border-radius:5px;">
+                        1
+                    </a>
+                    <ion-icon style="font-size:18px;margin-top:12px" name="ellipsis-horizontal-outline"></ion-icon>
+                }
+
                 @foreach (int i in ViewBag.ListPage)
                 {
                     if (i == ViewBag.CurrentPage)
@@ -186,11 +203,26 @@
                     }
                     else
                     {
-                        <a href="?page=@i&text=@ViewBag.TextSearch&cate=@ViewBag.Cate&sort=@ViewBag.Sort&pageSize=@ViewBag.PageSize&type=@ViewBag.Type&language=@ViewBag.Language" class="col" style="text-align:center;margin-bottom:30px;padding:10px;background-color:lightgray;color:black;margin-left:5px;margin-right:5px;border-radius:5px;">
+                        <a href="#" onclick="getUrl({ page: @i })" class="col" style="text-align:center;margin-bottom:30px;padding:10px;background-color:lightgray;color:black;margin-left:5px;margin-right:5px;border-radius:5px;">
                             @i
                         </a>
                     }
                 }
+
+                @if (@ViewBag.CurrentPage <= (@ViewBag.maxPage - 3))
+                {
+                    <ion-icon style="font-size:18px;margin-top:12px" name="ellipsis-horizontal-outline"></ion-icon>
+                    <a href="#" onclick="getUrl({ page: @ViewBag.maxPage })" class="col" style="text-align:center;margin-bottom:30px;padding:10px;background-color:lightgray;color:black;margin-left:5px;margin-right:5px;border-radius:5px;">
+                        @ViewBag.maxPage
+                    </a>
+                }
+                @if (@ViewBag.CurrentPage < @ViewBag.maxPage)
+                {
+                    <a href="#" onclick="getUrl({ page: @ViewBag.CurrentPage+1 })" class="col" style="text-align:center;margin-bottom:30px;padding:10px;background-color:lightgray;color:black;margin-left:5px;margin-right:5px;border-radius:5px;">
+                        <ion-icon style="font-size:18px;margin-top:2px" name="chevron-forward-outline"></ion-icon>
+                    </a>
+                }
+
             </div>
         }
     </div>
@@ -203,4 +235,18 @@
     const onMoveOutMouseOfItem = (id) => {
         $('#' + id).css('border', '1px solid white')
     }
+
+    let getUrl = ({ page = '@ViewBag.Page',
+        text = '@ViewBag.TextSearch',
+        cate = '@ViewBag.Cate',
+        sort = '@ViewBag.Sort',
+        pageSize = '@ViewBag.PageSize',
+        type = '@ViewBag.Type',
+        language = '@ViewBag.Language',
+        priceFrom = '@ViewBag.PriceFrom',
+        priceTo = '@ViewBag.PriceTo' }) => {
+        let url = `?page=${page}&text=${text}&cate=${cate}&sort=${sort}&pageSize=${pageSize}&type=${type}&language=${language}&priceFrom=${priceFrom}&priceTo=${priceTo}`
+        window.location.href = url
+    }
+
 </script>
