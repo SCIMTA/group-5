@@ -10,11 +10,11 @@ using taka.Utils;
 
 namespace taka.Models.DatabaseInteractive
 {
-    public class BillInfo
+    public class BillItem
     {
-        int id { get; set; }
-        int price { get; set; }
-        int quantity { get; set; }
+        public int id { get; set; }
+        public int price { get; set; }
+        public int quantity { get; set; }
     }
     public class ListBook
     {
@@ -534,5 +534,25 @@ namespace taka.Models.DatabaseInteractive
             takaDB.SaveChanges();
         }
 
+        public List<BillItem> GetBillItems(int [] ids)
+        {
+            
+            List<BillItem> billItems = new List<BillItem>();
+            
+
+            foreach (var id in ids)
+            {
+                Cart cart = new Cart();
+                BillItem billItem = new BillItem();
+                cart = takaDB.Carts.Where(x => x.ID == id).First();
+                billItem.id = cart.ID;
+                billItem.price = (int)cart.Book.Price;
+                billItem.quantity = (int)cart.Quantity;
+                billItems.Add(billItem);
+            }
+                
+
+            return billItems;
+        }
     }
 }

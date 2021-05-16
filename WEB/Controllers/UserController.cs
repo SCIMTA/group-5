@@ -27,8 +27,15 @@ namespace taka.Controllers
         }
         public ActionResult BuyNow(int[] id)
         {
-
-            return View();
+            var listItems = db.GetBillItems(id);
+            ViewBag.listItems = listItems[0].id;
+            //ViewBag.listItems2 = listItems[1].id;
+            return View(listItems);
+        }
+        [HttpPost]
+        public ActionResult CheckOut(int[] id)
+        {
+            return RedirectToAction("Index", "Home");
         }
         public ActionResult ShoppingCart()
         {

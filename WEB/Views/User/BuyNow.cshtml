@@ -1,15 +1,21 @@
-﻿@model IEnumerable<taka.Models.Enitities.Cart>
+﻿@model IEnumerable<taka.Models.DatabaseInteractive.BillItem>
 
 @{
     ViewBag.Title = "BuyNow";
     ViewBag.shipper = "Đơn vị vận chuyển";
 }
-
+<header>
+    <style>
+        .dropdown-item:active {
+            border: 0px !important;
+        }
+    </style>
+</header>
 <!--Section: Block Content-->
 <section>
 
     <!--Grid row-->
-    <div class="row">
+    <form class="row" action="/User/CheckOut" method="post">
 
         <!--Grid column-->
         <div class="col-lg-8 mb-4">
@@ -28,8 +34,8 @@
 
                             <!-- Last name -->
                             <div class="md-form md-outline mb-0 mb-lg-4">
-                                <input type="text" id="firstName" class="form-control mb-0 mb-lg-2">
-                                <label for="lastName">Họ</label>
+                                <input type="text" id="firstName" class="form-control mb-0 mb-lg-2" placeholder="Họ">
+
                             </div>
 
                         </div>
@@ -39,8 +45,8 @@
 
                             <!-- First name -->
                             <div class="md-form md-outline">
-                                <input type="text" id="lastName" class="form-control">
-                                <label for="firstName">Tên</label>
+                                <input type="text" id="lastName" class="form-control" placeholder="Tên">
+
                             </div>
 
                         </div>
@@ -49,10 +55,9 @@
                     </div>
                     <!-- Grid row -->
                     <!-- Shipper -->
-                    <div class="d-flex flex-wrap card">
+                    <div class="d-flex flex-wrap card md-form md-outline mb-0 mb-lg-4">
                         <div class="dropdown card-body">
                             <button class="btn btn-light dropdown-toggle" type="button" id="shipper" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <button class="dropdown-item" onclick="changeShipper('shipper1')">Giao hàng nhanh</button>
@@ -62,31 +67,30 @@
                             <p class="text-right" id="estimateTime"></p>
                         </div>
                     </div>
-                    <label > Đơn vị vận chuyển</label>
-                    <hr />
+                    
+                    
 
 
-                    <!-- Address Part 2 -->
-                    <div class="md-form md-outline">
-                        <input type="text" id="form15" placeholder="Số nhà, Đường, Phường/Xã, Quận/Huyện, Tỉnh/Thành Phố"
-                               class="form-control">
-                        <label for="form15">Địa chỉ</label>
+                    <div class="md-form md-outline mb-0 mb-lg-4">
+                        <div class="md-form md-outline">
+                            <input type="text" id="form15" placeholder="Số nhà, Đường, Phường/Xã, Quận/Huyện, Tỉnh/Thành Phố"
+                                   class="form-control">
+                        </div>
                     </div>
-
 
 
                     <!-- Phone -->
-                    <div class="md-form md-outline">
-                        <input type="number" id="form18" class="form-control">
-                        <label for="form18">Số điện thoại</label>
+                    <div class="md-form md-outline mb-0 mb-lg-4">
+                        <div class="md-form md-outline">
+                            <input type="number" id="form18" class="form-control" placeholder="Số điện thoại">
+                        </div>
                     </div>
-
                     <!-- Additional information -->
-                    <div class="md-form md-outline">
-                        <textarea id="form76" class="md-textarea form-control" rows="4"></textarea>
-                        <label for="form76">Lời nhắn tới người bán</label>
+                    <div class="md-form md-outline mb-0 mb-lg-4">
+                        <div class="md-form md-outline">
+                            <textarea id="form76" class="md-textarea form-control" rows="4" placeholder="Lời nhắn tới người bán"></textarea>
+                        </div>
                     </div>
-
                 </div>
             </div>
             <!-- Card -->
@@ -97,96 +101,112 @@
         <div class="col-lg-4">
 
             <!-- Card -->
-            <div class="card mb-4">
-                <div class="card-body">
+            <div class="mb-3">
+                <div class="pt-4">
 
-                    <h5 class="mb-3">The total amount of</h5>
+                    <h5 class="mb-3">Tổng tiền</h5>
 
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
-                            Temporary amount
-                            <span>$53.98</span>
+                            Tổng tạm
+                            <span id="totalAmount">
+
+                            </span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center px-0">
-                            Shipping
-                            <span>Gratis</span>
+                            Phí vận chuyển
+                            <span id="shipFee"></span>
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
                             <div>
-                                <strong>The total amount of</strong>
+                                <strong>Tổng tiền cần thanh toán</strong>
                                 <strong>
-                                    <p class="mb-0">(including VAT)</p>
+                                    <p class="mb-0">(đã bao gồm VAT)</p>
                                 </strong>
                             </div>
-                            <span><strong>$53.98</strong></span>
+                            <span>
+                                <strong id="totalSumVAT" name="price">
+
+                                </strong>
+                            </span>
                         </li>
                     </ul>
+                    <div>
+                        @foreach (var item in Model)
+                        {
+                            <input hidden class="id_cart" name="id" value="@item.id" />
 
-                    <button type="button" class="btn btn-primary btn-block waves-effect waves-light">Make purchase</button>
-
-                </div>
-            </div>
-            <!-- Card -->
-            <!-- Card -->
-            <div class="card mb-4">
-                <div class="card-body">
-
-                    <a class="dark-grey-text d-flex justify-content-between" data-toggle="collapse" href="#collapseExample"
-                       aria-expanded="false" aria-controls="collapseExample">
-                        Add a discount code (optional)
-                        <span><i class="fas fa-chevron-down pt-1"></i></span>
-                    </a>
-
-                    <div class="collapse" id="collapseExample">
-                        <div class="mt-3">
-                            <div class="md-form md-outline mb-0">
-                                <input type="text" id="discount-code" class="form-control font-weight-light"
-                                       placeholder="Enter discount code">
-                            </div>
-                        </div>
+                        }
+                        <button type="submit" style="background-color:#ee4d2d;color:white" class="btn btn-light btn-block">Mua ngay</button>
                     </div>
+
                 </div>
             </div>
+            <!-- Card -->
+            <!-- Card -->
             <!-- Card -->
 
         </div>
         <!--Grid column-->
 
-    </div>
+    </form>
     <!--Grid row-->
+
+    @foreach (var item in Model)
+    {
+
+        <div hidden class="amount">
+            @item.price
+        </div>
+        <div hidden class="quantity">
+            @item.quantity
+        </div>
+    }
 
 </section>
 <!--Section: Block Content-->
 <script>
-    $(document).ready(function () {
-        $('.mdb-select').materialSelect();
-        $('.select-wrapper.md-form.md-outline input.select-dropdown').bind('focus blur', function () {
-            $(this).closest('.select-outline').find('label').toggleClass('active');
-            $(this).closest('.select-outline').find('.caret').toggleClass('active');
-        });
-    });
+    let changeTotalAmount = () => {
+        let sum = 0;
+        let shipFee = $('#shipFee').text().replace('.', '').replace('VND', '').trim();
+        for (let i = 0; i < $('.amount').length; i++) {
+            let id = $('.id_cart')[i].textContent;
+            let price = $('.amount')[i].textContent;
+            let quantity = $('.quantity')[i].textContent;
+            sum += price * quantity;
+        }
+        $('#totalAmount').text(sum.toLocaleString('it-IT', { style: 'currency', currency: 'VND' }))
+        $('#totalSumVAT').text((parseInt(sum) + parseInt(shipFee)).toLocaleString('it-IT', { style: 'currency', currency: 'VND' }))
+    }
+
 
     let changeShipper = (id) => {
         let shipper = 'Giao hàng nhanh';
+        let shipFee = 40000;
         if (id == 'shipper2') {
             shipper = 'Giao hàng tiết kiệm';
+            shipFee = 15000;
         }
         if (id == 'shipper3') {
             shipper = 'Viettel Post';
+            shipFee = 30000;
         }
         $('#shipper').text(shipper);
+        $('#shipFee').text(shipFee.toLocaleString('it-IT', { style: 'currency', currency: 'VND' }))
         changeEstimate(id);
     }
 
     let changeEstimate = (id) => {
         let estimateTime = ' 2 - 3 ngày';
         if (id == 'shipper2') {
-            estimateTime = ' 3 - 5 ngày';
+            estimateTime = ' 4 - 6 ngày';
         }
         if (id == 'shipper3') {
             estimateTime = ' 2 - 5 ngày';
         }
         $('#estimateTime').text('Thời gian dự kiến:' + estimateTime);
+        changeTotalAmount();
     }
     changeShipper();
+    changeTotalAmount()
 </script>

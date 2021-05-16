@@ -47,7 +47,7 @@
                                                 <a class="btn btn-outline-light" onclick="downQuantity('@item.ID')" style="border:none; ">
                                                     <ion-icon name="remove-outline"></ion-icon>
                                                 </a>
-                                                <input class="quantity amount" value="@item.Quantity" type="text" style="width: 25px; text-align: center;" id="inputQuantity_@item.ID" oninput="onChangeTextQuantity('@item.ID')">
+                                                <input class="quantity amount" value="@item.Quantity" type="text" style="width: 25px; text-align: center; border:none;" id="inputQuantity_@item.ID" oninput="onChangeTextQuantity('@item.ID')">
                                                 <div hidden class="amount">@item.Book.Price</div>
                                                 <a class="btn btn-outline-light" onclick="upQuantity('@item.ID')" style="border:none;">
                                                     <ion-icon name="add-outline"></ion-icon>
