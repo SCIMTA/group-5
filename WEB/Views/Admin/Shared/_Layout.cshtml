@@ -1,11 +1,15 @@
 ﻿
 @{
     Layout = null;
+    if (ViewBag.Icon == null)
+    {
+        ViewBag.Icon = "https://salt.tikicdn.com/media/upload/2018/12/03/0054c1410e38f1b9f3609c244974dd9c.png";
+    }
 }
 <html lang="en">
 <head>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <title>@ViewBag.Title</title>
+    <title>TAKASA - Quản trị hệ thống</title>
     <link rel="icon" type="image/png" href="@ViewBag.Icon" sizes="32x32">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
@@ -21,14 +25,14 @@
 <body data-new-gr-c-s-check-loaded="14.1010.0" data-gr-ext-installed="">
     <div class="page-wrapper chiller-theme toggled">
         <a id="show-sidebar" class="btn btn-sm btn-dark" href="#">
-            <i class="fas fa-bars"></i>
+            <ion-icon class="side-bar-icon" name="list-outline"></ion-icon>
         </a>
-        <nav id="sidebar" class="sidebar-wrapper" style="background-color:#ee4d2d">
+        <nav id="sidebar" class="sidebar-wrapper" style="background-color:#ee4d2d;">
             <div class="sidebar-content">
                 <div style="display:flex;flex:1;flex-direction:row;padding:10px;">
                     <img style="width:150px;object-fit:contain" src="~/Content/Icon/ic_icon.png" />
                     <div id="close-sidebar" style="text-align: right; font-size: 25px; flex: 1; display: flex;justify-content:flex-end">
-                        <i class="fas fa-times" style="color:white;"></i>
+                        <ion-icon class="side-bar-icon" name="close-circle-outline"></ion-icon>
                     </div>
                 </div>
                 <div class="sidebar-menu">
@@ -37,78 +41,59 @@
                             <span style="color:white">Quản trị hệ thống</span>
                         </li>
                         <li class="side-bar-tab">
-                            <a href="?tab=order" style="color:#ee4d2d;" class="side-bar-click">
+                            <a href="/Admin/Order" style="color:#ee4d2d;" class="side-bar-click">
                                 <ion-icon name="cube-outline" class="side-bar-icon"></ion-icon>
                                 <b class="side-bar-text">Đơn hàng</b>
                             </a>
                         </li>
                         <li class="side-bar-tab">
-                            <a href="?tab=user" class="side-bar-click">
+                            <a href="/Admin/User" class="side-bar-click">
                                 <ion-icon class="side-bar-icon" name="person-circle-outline"></ion-icon>
                                 <b class="side-bar-text">Người dùng</b>
                             </a>
                         </li>
                         <li class="side-bar-tab">
-                            <a href="?tab=category" class="side-bar-click">
+                            <a href="/Admin/Category" class="side-bar-click">
                                 <ion-icon class="side-bar-icon" name="albums-outline"></ion-icon>
                                 <b class="side-bar-text">Danh mục</b>
                             </a>
                         </li>
                         <li class="side-bar-tab">
-                            <a href="?tab=publisher" class="side-bar-click">
+                            <a href="/Admin/Publisher" class="side-bar-click">
                                 <ion-icon class="side-bar-icon" name="library-outline"></ion-icon>
                                 <b class="side-bar-text">Nhà xuất bản</b>
                             </a>
                         </li>
                         <li class="side-bar-tab">
-                            <a href="?tab=author" class="side-bar-click">
+                            <a href="/Admin/Author" class="side-bar-click">
                                 <ion-icon class="side-bar-icon" name="people-circle-outline"></ion-icon>
                                 <b class="side-bar-text">Tác giả</b>
                             </a>
                         </li>
                         <li class="side-bar-tab">
-                            <a href="?tab=type" class="side-bar-click">
+                            <a href="/Admin/Type" class="side-bar-click">
                                 <ion-icon class="side-bar-icon" name="layers-outline"></ion-icon>
                                 <b class="side-bar-text">Hình thức</b>
                             </a>
                         </li>
                         <li class="side-bar-tab">
-                            <a href="?tab=language" class="side-bar-click">
+                            <a href="/Admin/Language" class="side-bar-click">
                                 <ion-icon class="side-bar-icon" name="language-outline"></ion-icon>
                                 <b class="side-bar-text">Ngôn ngữ</b>
+                            </a>
+                        </li>
+                        <li class="side-bar-tab">
+                            <a href="/Home/Logout" class="side-bar-click">
+                                <ion-icon class="side-bar-icon" name="log-out-outline"></ion-icon>
+                                <b class="side-bar-text">Đăng xuất</b>
                             </a>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
-
         <main class="page-content">
-            @switch (ViewBag.tab)
-            {
-                case "order":
-                    @RenderPage("~/Views/Admin/Shared/Order.cshtml")
-                    break;
-                case "user":
-                    @RenderPage("~/Views/Admin/Shared/User.cshtml")
-                    break;
-                case "category":
-                    @RenderPage("~/Views/Admin/Shared/Category.cshtml")
-                    break;
-                case "publisher":
-                    @RenderPage("~/Views/Admin/Shared/Publisher.cshtml")
-                    break;
-                case "author":
-                    @RenderPage("~/Views/Admin/Shared/Author.cshtml")
-                    break;
-                case "type":
-                    @RenderPage("~/Views/Admin/Shared/Type.cshtml")
-                    break;
-                case "language":
-                    @RenderPage("~/Views/Admin/Shared/Language.cshtml")
-                    break;
-            }
-
+            @RenderBody()
         </main>
     </div>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
@@ -118,7 +103,7 @@
     <script>
         let listATag = $(".side-bar-click")
         for (let i = 0; i < listATag.length; i++) {
-            if (listATag[i].href.split("=")[1] =='@ViewBag.tab')
+            if (listATag[i].href.split("/")[4] == window.location.href.split("/")[4].split("?")[0])
                 $(listATag[i]).parent().addClass("active")
         }
     </script>

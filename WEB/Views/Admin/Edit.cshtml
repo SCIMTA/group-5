@@ -3,15 +3,24 @@
 @{
     ViewBag.Title = Model.Title;
     ViewBag.MessageForValid = "Vui lòng nhập đủ thông tin";
-    Layout = null;
+    Layout = "~/Views/Admin/Shared/_Layout.cshtml";
 
     List<taka.Models.Enitities.Image> images = new List<taka.Models.Enitities.Image>();
 
     images.AddRange(Model.Images.ToList());
 }
 
+
+
+
+
 <form class="form-horizontal" method="post" action="/Admin/EditBook" enctype="multipart/form-data">
-    <h4>Cập nhật thông tin</h4>
+    <div class="row">
+        <div onclick="goBack()" style="cursor:pointer">
+            <ion-icon style="font-size:25px;color:#ee4d2d;margin-top:5px;margin-right:10px" name="arrow-back-circle-outline"></ion-icon>
+        </div>
+        <h4>Cập nhật thông tin</h4>
+    </div>
     <hr />
     <p>
         <h5>Ảnh bìa sách</h5>
@@ -22,7 +31,7 @@
             <label for="file-input">
                 <img src="https://cdn.pixabay.com/photo/2017/11/10/05/24/add-2935429_960_720.png" id="imgBiaSach" style="height:250px;width:150px;object-fit:contain;text-align:center;" />
             </label>
-            <input id="file-input" name="Images" type="file" hidden multiple accept="image/*" onchange="OnAddImage();"/>
+            <input id="file-input" name="Images" type="file" hidden multiple accept="image/*" onchange="OnAddImage();" />
         </div>
         <div id="images_delete" hidden></div>
         <div id="images" style="overflow-x:auto;height:300px;flex-direction:row;display:flex;overflow-y:hidden">
@@ -129,6 +138,14 @@
     </div>
 </form>
 <script>
+
+    const goBack = () => {
+        if (document.referrer.includes("Edit")) {
+            window.location.href = '/Admin/Order'
+        } else {
+            history.back()
+        }
+    }
 
     let listImg = []
 

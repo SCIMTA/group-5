@@ -15,58 +15,62 @@ namespace taka.Controllers
 
         TakaDB dB = new TakaDB();
         // GET: Admin
-        public ActionResult Index(string tab = "order", int page = 1, string text = "", int cate = 0, int sort = 0, int pageSize = 16, int type = 0, int language = 0)
+        public ActionResult Order(int page = 1, string text = "", int cate = 0, int sort = 0, int pageSize = 16, int type = 0, int language = 0)
         {
-
-            ViewBag.tab = tab;
-
-            switch (ViewBag.tab)
+            ViewBag.ListCate = dB.GetCategories();
+            ViewBag.ListType = dB.GetTypes();
+            ViewBag.ListLanguage = dB.GetLanguages();
+            ViewBag.Cate = cate;
+            ViewBag.Sort = sort;
+            ViewBag.Type = type;
+            ViewBag.Language = language;
+            ViewBag.TextSort = "Mới nhất";
+            ViewBag.PageSize = 16;
+            ViewBag.CurrentPage = page;
+            if (sort != 0)
             {
-                case "order":
-                    ViewBag.ListCate = dB.GetCategories();
-                    ViewBag.ListType = dB.GetTypes();
-                    ViewBag.ListLanguage = dB.GetLanguages();
-                    ViewBag.Cate = cate;
-                    ViewBag.Sort = sort;
-                    ViewBag.Type = type;
-                    ViewBag.Language = language;
-                    ViewBag.TextSort = "Mới nhất";
-                    ViewBag.PageSize = 16;
-                    ViewBag.CurrentPage = page;
-                    if (sort != 0)
-                    {
-                        ViewBag.TextSort = sort == 1 ? "Giá thấp nhất" : "Giá cao nhất";
-                    }
-                    if (pageSize != 16 && pageSize % 16 == 0 && pageSize <= 64)
-                    {
-                        ViewBag.PageSize = pageSize;
-                    }
-                    ListBook listBook = dB.GetListBook(page, text, cate, sort, pageSize, type, language);
-                    ViewBag.ListPage = HelperFunctions.getNumPage(page, listBook.pages);
-                    ViewBag.maxPage = listBook.pages;
-                    ViewBag.TextSearch = text;
-                    ViewBag.list = listBook.books;
-                    break;
-                case "user":
-                    ViewBag.list = dB.GetUsers();
-                    break;
-                case "category":
-                    ViewBag.list = dB.GetCategories();
-                    break;
-                case "publisher":
-                    ViewBag.list = dB.GetPublishers();
-                    break;
-                case "author":
-                    ViewBag.list = dB.GetAuthors();
-                    break;
-                case "type":
-                    ViewBag.list = dB.GetTypes();
-                    break;
-                case "language":
-                    ViewBag.list = dB.GetLanguages();
-                    break;
+                ViewBag.TextSort = sort == 1 ? "Giá thấp nhất" : "Giá cao nhất";
             }
+            if (pageSize != 16 && pageSize % 16 == 0 && pageSize <= 64)
+            {
+                ViewBag.PageSize = pageSize;
+            }
+            ListBook listBook = dB.GetListBook(page, text, cate, sort, pageSize, type, language);
+            ViewBag.ListPage = HelperFunctions.getNumPage(page, listBook.pages);
+            ViewBag.maxPage = listBook.pages;
+            ViewBag.TextSearch = text;
+            ViewBag.list = listBook.books;
+            return View();
+        }
 
+        public ActionResult User()
+        {
+            ViewBag.list = dB.GetUsers();
+            return View();
+        }
+        public ActionResult Category()
+        {
+            ViewBag.list = dB.GetCategories();
+            return View();
+        }
+        public ActionResult Publisher()
+        {
+            ViewBag.list = dB.GetPublishers();
+            return View();
+        }
+        public ActionResult Author()
+        {
+            ViewBag.list = dB.GetAuthors();
+            return View();
+        }
+        public ActionResult Type()
+        {
+            ViewBag.list = dB.GetTypes();
+            return View();
+        }
+        public ActionResult Language()
+        {
+            ViewBag.list = dB.GetLanguages();
             return View();
         }
         public ActionResult Edit(int id = -1)
@@ -107,7 +111,7 @@ namespace taka.Controllers
             string Description)
         {
             dB.EditBook(ID, images_delete, Images, Title, Price, idCategory, idAuthor, idPublisher, idLanguage, idType, Page, Date, Quantity, Description);
-            return RedirectToAction("Detail", "Home", new { id = ID });
+            return RedirectToAction("Edit", "Admin", new { id = ID });
         }
 
         [HttpPost]
@@ -157,120 +161,108 @@ namespace taka.Controllers
             return View();
         }
 
-        public ActionResult Manager(string tab = "order", string text = "")
-        {
-            ViewBag.listUsers = dB.GetUsers();
-            ViewBag.listCategories = dB.GetCategories();
-            ViewBag.listPublishers = dB.GetPublishers();
-            ViewBag.listAuthors = dB.GetAuthors();
-            ViewBag.listTypes = dB.GetTypes();
-            ViewBag.listLanguages = dB.GetLanguages();
-            ViewBag.tab = tab;
-            return View();
-        }
-
         public ActionResult BanUser(int id, int ban = 0)
         {
             dB.BanUser(id, ban);
-            return RedirectToAction("Manager", "Admin", new { tab = "user" });
+            return RedirectToAction("User", "Admin");
         }
 
         public ActionResult UpdateUser(string phone, string email, string fullname, string gender, string birthday)
         {
             dB.UpdateUser(phone, email, fullname, gender, birthday);
-            return RedirectToAction("Manager", "Admin", new { tab = "user" });
+            return RedirectToAction("User", "Admin");
         }
 
         public ActionResult UpdateCategory(int id, string name)
         {
             dB.UpdateCategory(id, name);
-            return RedirectToAction("Manager", "Admin", new { tab = "category" });
+            return RedirectToAction("Category", "Admin");
         }
 
         public ActionResult AddCategory(string name)
         {
             dB.AddCategory(name);
-            return RedirectToAction("Manager", "Admin", new { tab = "category" });
+            return RedirectToAction("Category", "Admin");
         }
 
         public ActionResult RemoveCategory(int id)
         {
             dB.RemoveCategory(id);
-            return RedirectToAction("Manager", "Admin", new { tab = "category" });
+            return RedirectToAction("Category", "Admin");
         }
 
         public ActionResult UpdateLanguage(int id, string name)
         {
             dB.UpdateLanguage(id, name);
-            return RedirectToAction("Manager", "Admin", new { tab = "language" });
+            return RedirectToAction("Language", "Admin");
         }
 
         public ActionResult AddLanguage(string name)
         {
             dB.AddLanguage(name);
-            return RedirectToAction("Manager", "Admin", new { tab = "language" });
+            return RedirectToAction("Language", "Admin");
         }
 
         public ActionResult RemoveLanguage(int id)
         {
             dB.RemoveLanguage(id);
-            return RedirectToAction("Manager", "Admin", new { tab = "language" });
+            return RedirectToAction("Language", "Admin");
         }
 
         public ActionResult UpdatePublisher(int id, string name)
         {
             dB.UpdatePublisher(id, name);
-            return RedirectToAction("Manager", "Admin", new { tab = "publisher" });
+            return RedirectToAction("Publisher", "Admin");
         }
 
         public ActionResult AddPublisher(string name)
         {
             dB.AddPublisher(name);
-            return RedirectToAction("Manager", "Admin", new { tab = "publisher" });
+            return RedirectToAction("Publisher", "Admin");
         }
 
         public ActionResult RemovePublisher(int id)
         {
             dB.RemovePublisher(id);
-            return RedirectToAction("Manager", "Admin", new { tab = "publisher" });
+            return RedirectToAction("Publisher", "Admin");
         }
 
 
         public ActionResult UpdateAuthor(int id, string name)
         {
             dB.UpdateAuthor(id, name);
-            return RedirectToAction("Manager", "Admin", new { tab = "author" });
+            return RedirectToAction("Author", "Admin");
         }
 
         public ActionResult AddAuthor(string name)
         {
             dB.AddAuthor(name);
-            return RedirectToAction("Manager", "Admin", new { tab = "author" });
+            return RedirectToAction("Author", "Admin");
         }
 
         public ActionResult RemoveAuthor(int id)
         {
             dB.RemoveAuthor(id);
-            return RedirectToAction("Manager", "Admin", new { tab = "author" });
+            return RedirectToAction("Author", "Admin");
         }
 
 
         public ActionResult UpdateType(int id, string name)
         {
             dB.UpdateType(id, name);
-            return RedirectToAction("Manager", "Admin", new { tab = "type" });
+            return RedirectToAction("Type", "Admin");
         }
 
         public ActionResult AddType(string name)
         {
             dB.AddType(name);
-            return RedirectToAction("Manager", "Admin", new { tab = "type" });
+            return RedirectToAction("Type", "Admin");
         }
 
         public ActionResult RemoveType(int id)
         {
             dB.RemoveType(id);
-            return RedirectToAction("Manager", "Admin", new { tab = "type" });
+            return RedirectToAction("Type", "Admin");
         }
     }
 }
