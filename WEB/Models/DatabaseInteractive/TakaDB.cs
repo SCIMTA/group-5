@@ -38,7 +38,7 @@ namespace taka.Models.DatabaseInteractive
             takaDB = new TakaDBContext();
         }
 
-        public ListBook GetListBook(int page = 1, string text = "", int cate = 0, int sort = 0, int pageSize = 16, int type = 0, int language = 0)
+        public ListBook GetListBook(int page = 1, string text = "", int cate = 0, int sort = 0, int pageSize = 16, int type = 0, int language = 0, int priceFrom = 0, int priceTo = 0)
         {
             var removeUnicode = HelperFunctions.RemoveUnicode(text);
             var listItem = takaDB.Books.Where(x => x.isHidden != 1);
@@ -51,6 +51,11 @@ namespace taka.Models.DatabaseInteractive
 
             if (language != 0)
                 listItem = listItem.Where(m => m.idLanguage == language);
+            if (priceTo > 0)
+                listItem = listItem.Where(m => (m.Price > priceFrom && m.Price < priceTo));
+            else if (priceFrom > 0)
+                listItem = listItem.Where(m => m.Price > priceFrom);
+
 
             if (sort != 0)
             {
@@ -534,11 +539,11 @@ namespace taka.Models.DatabaseInteractive
             takaDB.SaveChanges();
         }
 
-        public List<BillItem> GetBillItems(int [] ids)
+        public List<BillItem> GetBillItems(int[] ids)
         {
-            
+
             List<BillItem> billItems = new List<BillItem>();
-            
+
 
             foreach (var id in ids)
             {
@@ -550,7 +555,7 @@ namespace taka.Models.DatabaseInteractive
                 billItem.quantity = (int)cart.Quantity;
                 billItems.Add(billItem);
             }
-                
+
 
             return billItems;
         }

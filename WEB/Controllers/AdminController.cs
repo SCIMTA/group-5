@@ -15,7 +15,7 @@ namespace taka.Controllers
 
         TakaDB dB = new TakaDB();
         // GET: Admin
-        public ActionResult Order(int page = 1, string text = "", int cate = 0, int sort = 0, int pageSize = 16, int type = 0, int language = 0)
+        public ActionResult Order(int page = 1, string text = "", int cate = 0, int sort = 0, int pageSize = 16, int type = 0, int language = 0, int priceFrom = 0, int priceTo = 0)
         {
             ViewBag.ListCate = dB.GetCategories();
             ViewBag.ListType = dB.GetTypes();
@@ -23,6 +23,10 @@ namespace taka.Controllers
             ViewBag.Cate = cate;
             ViewBag.Sort = sort;
             ViewBag.Type = type;
+            if (priceFrom > priceTo)
+                priceTo = 0;
+            ViewBag.PriceFrom = priceFrom;
+            ViewBag.PriceTo = priceTo;
             ViewBag.Language = language;
             ViewBag.TextSort = "Mới nhất";
             ViewBag.PageSize = 16;
@@ -35,7 +39,7 @@ namespace taka.Controllers
             {
                 ViewBag.PageSize = pageSize;
             }
-            ListBook listBook = dB.GetListBook(page, text, cate, sort, pageSize, type, language);
+            ListBook listBook = dB.GetListBook(page, text, cate, sort, pageSize, type, language, priceFrom, priceTo);
             ViewBag.ListPage = HelperFunctions.getNumPage(page, listBook.pages);
             ViewBag.maxPage = listBook.pages;
             ViewBag.TextSearch = text;
