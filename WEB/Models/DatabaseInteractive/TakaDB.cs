@@ -13,6 +13,7 @@ namespace taka.Models.DatabaseInteractive
     public class BillItem
     {
         public int id { get; set; }
+        public string bookName { get; set; }
         public int price { get; set; }
         public int quantity { get; set; }
     }
@@ -548,11 +549,18 @@ namespace taka.Models.DatabaseInteractive
                 billItem.id = cart.ID;
                 billItem.price = (int)cart.Book.Price;
                 billItem.quantity = (int)cart.Quantity;
+                billItem.bookName = cart.Book.Title;
                 billItems.Add(billItem);
             }
                 
 
             return billItems;
+        }
+        public List<Address> GetAddresses(int id)
+        {
+            List<Address> addresses = new List<Address>();
+            addresses = takaDB.Addresses.Where(x => x.idUser == id).ToList();
+            return addresses;
         }
     }
 }

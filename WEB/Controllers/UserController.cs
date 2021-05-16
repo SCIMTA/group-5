@@ -28,8 +28,8 @@ namespace taka.Controllers
         public ActionResult BuyNow(int[] id)
         {
             var listItems = db.GetBillItems(id);
-            ViewBag.listItems = listItems[0].id;
-            //ViewBag.listItems2 = listItems[1].id;
+            User user = (User)Session[C.SESSION.UserInfo];
+            ViewBag.addresses = db.GetAddresses(user.ID);
             return View(listItems);
         }
         [HttpPost]
