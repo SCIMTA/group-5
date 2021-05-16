@@ -502,7 +502,7 @@ body {
 
 .side-bar-tab {
     margin: 10px;
-    border:2px solid white;
+    border: 2px solid white;
     border-radius: 5px
 }
 
@@ -520,6 +520,27 @@ body {
     margin-top: 2px
 }
 
+.title-book {
+    color: dimgray;
+    display: flex;
+    flex: 2;
+    padding: 5px
+}
+
+.price-book {
+    font-size: 16px;
+    color: #ee4d2d;
+    display: flex;
+    flex: 1;
+}
+
+.header-book {
+    color: dimgray;
+    display: flex;
+    flex: 1;
+    padding: 5px
+}
+
 .active {
     background-color: white
 }
@@ -527,4 +548,3 @@ body {
     .active > a:first-child {
         color: #ee4d2d !important;
     }
-

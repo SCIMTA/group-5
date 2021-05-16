@@ -125,14 +125,12 @@ namespace taka.Controllers
             {
                 if (id == -1)
                     throw new Exception("Not found");
-                dB.DeleteBook(id, true);
-                return RedirectToAction("List", "Home");
+                dB.DeleteBook(id, false);
             }
             catch (Exception)
             {
-                return RedirectToAction("Error", "Home");
             }
-
+            return RedirectToAction("Order", "Admin");
         }
 
 
