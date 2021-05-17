@@ -3,10 +3,11 @@
     Layout = "~/Views/Admin/Shared/_Layout.cshtml";
 }
 
+@RenderPage("~/Views/Shared/ModalDelete.cshtml")
 
 <form action="?" class="pt-1 pb-4 container">
     <div class="input-group">
-        <input name="text" type="text" class="form-control" placeholder="Đắc nhân tâm" value="@ViewBag.TextSearch" />
+        <input name="text" type="text" class="form-control" placeholder="Tìm kiếm sách" value="@ViewBag.TextSearch" />
         <button class="btn btn-solid-primary btn-light" style="color:white;background-color:#ee4d2d;" type="submit">
             <ion-icon style="font-size:15px" name="search"></ion-icon>
         </button>
@@ -37,7 +38,12 @@
             {
                 if (cate.ID == ViewBag.cate)
                 {
-                    <div class="list-group-item" style="border:0px;padding:10px"><b style="color:#ee4d2d">@cate.Name</b></div>
+                    <div class="list-group-item" style="border:0px;padding:10px">
+                        <b style="color:#ee4d2d">@cate.Name</b>
+                        <a href="#" onclick="getUrl({ page: 1, cate:0 })" class="btn">
+                            <ion-icon style="font-size:25px;text-align:center" name="close-circle-outline"></ion-icon>
+                        </a>
+                    </div>
                 }
                 else
                 {
@@ -137,57 +143,70 @@
 
             <div style="margin:10px; flex:1;flex-direction:row;display:flex; border: 1px solid white;padding:10px;text-decoration:none">
                 <div style="width:100px ;object-fit:contain"></div>
-                <b style="color:dimgray;width:300px;padding:5px">
+                <b class="title-book">
                     Tên sách
                 </b>
-                <div style="color: dimgray; width: 100px; padding: 5px">
+                <div class="header-book">
                     Ngày nhập
                 </div>
-                <div style="color: dimgray; width: 100px; padding: 5px">
+                <div class="header-book">
                     Số trang
                 </div>
-                <div style="color: dimgray; width: 100px; padding: 5px">
+                <div class="header-book">
                     Số lượng
                 </div>
-                <i style="font-size: 16px; color: #ee4d2d;width:100px">
+                <i class="price-book">
                     Giá
                 </i>
+                <div class="header-book">
+                    Thao tác
+                </div>
             </div>
 
             foreach (var item in Model)
             {
-                <a href="/Admin/Edit?id=@item.ID" id="root_@item.ID" style="margin:10px; flex:1;flex-direction:row;display:flex; border: 1px solid white;padding:10px;text-decoration:none"
-                   onmousemove="onMoveMouseItem('root_@item.ID')" onmouseout="onMoveOutMouseOfItem('root_@item.ID')">
-                    <img src="@item.Images.First().Url" style="width:100px;height:100px ;object-fit:contain" />
-                    <b style="color:dimgray;width:300px;padding:5px">
+                <div id="root_@item.ID" style="margin:10px; flex:1;flex-direction:row;display:flex; border: 1px solid white;padding:10px;text-decoration:none"
+                     onmousemove="onMoveMouseItem('root_@item.ID')" onmouseout="onMoveOutMouseOfItem('root_@item.ID')">
+                    <a href="/Admin/Edit?id=@item.ID">
+                        <img src="@item.Images.First().Url" style="width:100px;height:100px ;object-fit:contain" />
+                    </a>
+                    <b class="title-book">
                         @item.Title
                     </b>
-                    <div style="color: dimgray; width: 100px; padding: 5px">
+                    <div class="header-book">
                         @item.Date
                     </div>
-                    <div style="color: dimgray; width: 100px; padding: 5px">
+                    <div class="header-book">
                         @item.Page
                     </div>
-                    <div style="color: dimgray; width: 100px; padding: 5px">
+                    <div class="header-book">
                         @item.Quantity
                     </div>
-                    <i style="font-size: 16px; color: #ee4d2d;width:100px">
+                    <i class="price-book">
                         @String.Format(new System.Globalization.CultureInfo("vi-VN"), "{0:N0}", item.Price) đ
                     </i>
-                </a>
+                    <div class="header-book" style="flex-direction:row">
+                        <a href="/Admin/Edit?id=@item.ID">
+                            <ion-icon style="font-size:25px" name="create-outline"></ion-icon>
+                        </a>
+                        <a href="#" onclick="onClickDeleteBook('@item.ID', '@item.Title')">
+                            <ion-icon style="font-size:25px;margin-left:20px" name="trash-outline"></ion-icon>
+                        </a>
+                    </div>
+                </div>
             }
 
 
-            <div class="row" style="width: 50%; margin: auto;">
+            <div class="row" style="width: 50%; margin: auto;justify-content:center">
                 @if (@ViewBag.CurrentPage > 1)
                 {
-                    <a href="#" onclick="getUrl({ page: @ViewBag.CurrentPage-1 })" class="col" style="text-align:center;margin-bottom:30px;padding:10px;background-color:lightgray;color:black;margin-left:5px;margin-right:5px;border-radius:5px;">
+                    <a href="#" onclick="getUrl({ page: @ViewBag.CurrentPage-1 })" class="col item-page">
                         <ion-icon style="font-size:18px;margin-top:2px" name="chevron-back-outline"></ion-icon>
                     </a>
                 }
                 @if (@ViewBag.CurrentPage > 3)
                 {
-                    <a href="#" onclick="getUrl({ page: 1 })" class="col" style="text-align:center;margin-bottom:30px;padding:10px;background-color:lightgray;color:black;margin-left:5px;margin-right:5px;border-radius:5px;">
+                    <a href="#" onclick="getUrl({ page: 1 })" class="col item-page">
                         1
                     </a>
                     <ion-icon style="font-size:18px;margin-top:12px" name="ellipsis-horizontal-outline"></ion-icon>
@@ -197,13 +216,13 @@
                 {
                     if (i == ViewBag.CurrentPage)
                     {
-                        <div class="col" style="text-align:center;margin-bottom:30px;background:#ee4d2d;color:white;border-radius:5px;padding:10px;margin-left:5px;margin-right:5px">
+                        <div class="col item-page" style="background:#ee4d2d;color:white;">
                             @(ViewBag.CurrentPage)
                         </div>
                     }
                     else
                     {
-                        <a href="#" onclick="getUrl({ page: @i })" class="col" style="text-align:center;margin-bottom:30px;padding:10px;background-color:lightgray;color:black;margin-left:5px;margin-right:5px;border-radius:5px;">
+                        <a href="#" onclick="getUrl({ page: @i })" class="col item-page">
                             @i
                         </a>
                     }
@@ -212,13 +231,13 @@
                 @if (@ViewBag.CurrentPage <= (@ViewBag.maxPage - 3))
                 {
                     <ion-icon style="font-size:18px;margin-top:12px" name="ellipsis-horizontal-outline"></ion-icon>
-                    <a href="#" onclick="getUrl({ page: @ViewBag.maxPage })" class="col" style="text-align:center;margin-bottom:30px;padding:10px;background-color:lightgray;color:black;margin-left:5px;margin-right:5px;border-radius:5px;">
+                    <a href="#" onclick="getUrl({ page: @ViewBag.maxPage })" class="col item-page">
                         @ViewBag.maxPage
                     </a>
                 }
                 @if (@ViewBag.CurrentPage < @ViewBag.maxPage)
                 {
-                    <a href="#" onclick="getUrl({ page: @ViewBag.CurrentPage+1 })" class="col" style="text-align:center;margin-bottom:30px;padding:10px;background-color:lightgray;color:black;margin-left:5px;margin-right:5px;border-radius:5px;">
+                    <a href="#" onclick="getUrl({ page: @ViewBag.CurrentPage+1 })" class="col item-page" >
                         <ion-icon style="font-size:18px;margin-top:2px" name="chevron-forward-outline"></ion-icon>
                     </a>
                 }
@@ -236,8 +255,14 @@
         $('#' + id).css('border', '1px solid white')
     }
 
+    let onClickDeleteBook = (id, title) => {
+        $('#delete-book-title').text(title)
+        $('#delete-book-id').val(id)
+        $('#modalDelete').modal('show');
+    }
+
     let getUrl = ({ page = '@ViewBag.Page',
-        text = '@ViewBag.TextSearch',
+        text = $(".form-control")[0].value,
         cate = '@ViewBag.Cate',
         sort = '@ViewBag.Sort',
         pageSize = '@ViewBag.PageSize',
@@ -248,5 +273,4 @@
         let url = `?page=${page}&text=${text}&cate=${cate}&sort=${sort}&pageSize=${pageSize}&type=${type}&language=${language}&priceFrom=${priceFrom}&priceTo=${priceTo}`
         window.location.href = url
     }
-
 </script>
