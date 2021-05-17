@@ -3,6 +3,7 @@
 @{
     ViewBag.Title = "BuyNow";
     List<taka.Models.Enitities.Address> listAddress = ViewBag.addresses;
+    ViewBag.MessageForValid = "Vui lòng nhập đủ thông tin";
 }
 <header>
     <style>
@@ -38,7 +39,7 @@
                                 {
                                     <a class="btn dropdown-item address_dropdown btn-light" id="address_@item.ID" onclick="changeAddress('@item.Address1'); changePhone('@item.Phone'); changeName('@item.Name'); changeIDAdress('@item.ID');">@item.Address1</a>
                                 }
-                                <a class="dropdown-item btn btn-light" id="address_other" onclick="changeAddress('Khác'); changeIDAdress('-1');">Khác</a>
+                                <a class="dropdown-item btn btn-light address_other" id="" onclick="changeAddress('Khác'); changeIDAdress('-1');">Khác</a>
                             </div>
                             <div class="text-right">
                                 <h5 class="client-name"></h5>
@@ -212,6 +213,9 @@
             $('.other-contact-info').show('fast');
             $('.client-name,.client-phone').text('');
             $('.input-address,.input-name,.input-phone').val('')
+            $('.input-address,.input-phone,.input-name').attr('required', 'required');
+            $('.input-address,.input-phone,.input-name').attr('oninvalid', "this.setCustomValidity('Vui lòng nhập đủ thông tin!')");
+            $('.input-address,.input-phone,.input-name').attr('oninput', "setCustomValidity('')");
         }
         else {
             $('.other-contact-info').hide('fast');
@@ -231,7 +235,10 @@
     let changeIDAdress = (id) => {
         $('.id_address').val(id);
     }
-    $('.address_dropdown')[0].onclick();
+    if (@listAddress.Count() > 0)
+        $('.address_dropdown')[0].onclick();
+    else
+        $('.address_other')[0].onclick();
     changeShipper();
 
     changeTotalAmount();
