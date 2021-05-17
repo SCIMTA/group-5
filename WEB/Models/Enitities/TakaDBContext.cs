@@ -53,15 +53,15 @@ namespace taka.Models.Enitities
                 .HasForeignKey(e => e.idBook);
 
             modelBuilder.Entity<Book>()
+                .HasMany(e => e.Rates)
+                .WithOptional(e => e.Book)
+                .HasForeignKey(e => e.idBook);
+
+            modelBuilder.Entity<Book>()
                 .HasMany(e => e.OrderDetails)
                 .WithRequired(e => e.Book)
                 .HasForeignKey(e => e.idBook)
                 .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<Book>()
-                .HasMany(e => e.Rates)
-                .WithOptional(e => e.Book)
-                .HasForeignKey(e => e.idBook);
 
             modelBuilder.Entity<Category>()
                 .HasMany(e => e.Books)

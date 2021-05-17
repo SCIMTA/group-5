@@ -9,12 +9,13 @@ namespace taka.Models.Enitities
     [Table("OrderDetail")]
     public partial class OrderDetail
     {
+        public int ID { get; set; }
+
         public int idOrder { get; set; }
 
         public int idBook { get; set; }
-        public int Quantity { get; set; }
 
-        public int ID { get; set; }
+        public int Quantity { get; set; }
 
         public virtual Book Book { get; set; }
 

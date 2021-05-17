@@ -567,5 +567,48 @@ namespace taka.Models.DatabaseInteractive
             addresses = takaDB.Addresses.Where(x => x.idUser == id).ToList();
             return addresses;
         }
+        public void CheckOut(int[] id_cart, int id_address, int totalPrice, string shipper, int idUser, string fullName, string phone, string address, string message)
+        {
+            
+            Order order = new Order();
+            order.CreateDate = DateTime.Now;
+            order.idUser = idUser;
+            if (id_address != -1)
+            {
+                string clientName = takaDB.Addresses.Where(x => x.ID == id_address).First().Name;
+
+                order.IDAddress = id_address;
+                order.ClientName = clientName;
+            }
+            else
+            {
+                Address newAdress = new Address();
+                newAdress.idUser = idUser;
+                newAdress.Name = fullName;
+                newAdress.Phone = phone;
+                newAdress.Address1 = address;
+                takaDB.Addresses.Add(newAdress);
+                takaDB.SaveChanges();
+                order.IDAddress = takaDB.Addresses.Where(x => x.Address1 == address).First().ID;
+                order.ClientName = fullName;
+            }
+            order.TotalPrice = totalPrice;
+            order.OrderStatus = 0;
+            order.Shipper = shipper;
+            order.Notes = message;
+            takaDB.Orders.Add(order);
+            takaDB.SaveChanges();
+            foreach (var idItem in id_cart)
+            {
+                OrderDetail orderDetail = new OrderDetail();
+                Cart cartItem = takaDB.Carts.Where(x => x.ID == idItem).First();
+                orderDetail.idOrder = takaDB.Orders.OrderByDescending(x => x.ID).First().ID;
+                orderDetail.idBook = (int)cartItem.idBook;
+                orderDetail.Quantity = (int)cartItem.Quantity;
+                takaDB.OrderDetails.Add(orderDetail);
+                takaDB.Carts.Remove(cartItem);
+            }
+            takaDB.SaveChanges();
+        }
     }
 }

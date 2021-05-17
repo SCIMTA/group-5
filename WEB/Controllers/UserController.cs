@@ -33,8 +33,10 @@ namespace taka.Controllers
             return View(listItems);
         }
         [HttpPost]
-        public ActionResult CheckOut(int[] id)
+        public ActionResult CheckOut(int[] id_cart, int id_address, int totalPrice, string shipper, string fullName, string phone,string address, string message)
         {
+            User user = (User)Session[C.SESSION.UserInfo];
+            db.CheckOut(id_cart, id_address, totalPrice, shipper, user.ID, fullName, phone, address, message);
             return RedirectToAction("Index", "Home");
         }
         public ActionResult ShoppingCart()
