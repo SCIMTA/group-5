@@ -1,0 +1,31 @@
+﻿@model taka.Models.Enitities.User
+
+@{
+    List<taka.Models.Enitities.Order> processingOrders = ViewBag.ProcessingOrders;
+    List<taka.Models.Enitities.Order> doneOrders = ViewBag.DoneOrders;
+    ViewBag.Title = "Takasa";
+    Layout = "~/Views/User/_LayoutUser.cshtml";
+}
+
+<ul class="list-group">
+
+    <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+        Đơn hàng chưa giao
+        <span class="badge badge-primary badge-pill text-right">@processingOrders.Count</span>
+    </li>
+    <li class="list-group col-lg-4 col-md-4">
+        @foreach (var item in processingOrders)
+        {
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                @item.TotalPrice
+            </li>
+        }
+
+    </li>
+    <li class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+        Đơn hàng đã giao
+        <span class="badge badge-primary badge-pill">@doneOrders.Count</span>
+    </li>
+
+</ul>
+

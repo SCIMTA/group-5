@@ -18,6 +18,13 @@ namespace taka.Controllers
         {
             return View();
         }
+        public ActionResult Purchased()
+        {
+            User user = (User)Session[C.SESSION.UserInfo];
+            ViewBag.ProcessingOrders = db.GetProcessingOrders(user.ID);
+            ViewBag.DoneOrders = db.GetDoneOrders(user.ID);
+            return View(user);
+        }
         public ActionResult AddToCart(int idBook, int quantity)
         {
             User user = (User)Session[C.SESSION.UserInfo];

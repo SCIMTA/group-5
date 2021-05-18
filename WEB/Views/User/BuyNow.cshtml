@@ -166,7 +166,6 @@
         let sum = 0;
         let shipFee = $('.shipFee').text().replace('.', '').replace('VND', '').trim();
         for (let i = 0; i < $('.amount').length; i++) {
-            let id = $('.id_cart')[i].textContent;
             let price = $('.amount')[i].textContent;
             let quantity = $('.quantity')[i].textContent;
             sum += price * quantity;
