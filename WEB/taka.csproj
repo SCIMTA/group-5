@@ -18,7 +18,8 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>44389</IISExpressSSLPort>
+    <IISExpressSSLPort>
+    </IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -150,6 +151,7 @@
     <Compile Include="Models\Enitities\Publisher.cs" />
     <Compile Include="Models\Enitities\Rate.cs" />
     <Compile Include="Models\Enitities\RatingItem.cs" />
+    <Compile Include="Models\Enitities\SuggestBook.cs" />
     <Compile Include="Models\Enitities\TakaDBContext.cs" />
     <Compile Include="Models\Enitities\Type.cs" />
     <Compile Include="Models\Enitities\User.cs" />

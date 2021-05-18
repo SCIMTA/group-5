@@ -34,6 +34,7 @@ namespace taka.Models.Enitities
 
         public int? IDAddress { get; set; }
 
+        [StringLength(100)]
         public string Notes { get; set; }
 
         public virtual User User { get; set; }
