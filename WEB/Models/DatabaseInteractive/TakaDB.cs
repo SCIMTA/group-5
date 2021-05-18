@@ -610,5 +610,16 @@ namespace taka.Models.DatabaseInteractive
             }
             takaDB.SaveChanges();
         }
+
+        public List<Order> GetProcessingOrders(int id)
+        {
+            List<Order> orders = takaDB.Orders.Where(x => x.idUser == id && x.OrderStatus == 0).ToList();
+            return orders;
+        }
+        public List<Order> GetDoneOrders(int id)
+        {
+            List<Order> orders = takaDB.Orders.Where(x => x.idUser == id && x.OrderStatus == 1).ToList();
+            return orders;
+        }
     }
 }
