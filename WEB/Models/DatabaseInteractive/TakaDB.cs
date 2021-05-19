@@ -551,7 +551,7 @@ namespace taka.Models.DatabaseInteractive
 
             foreach (var id in ids)
             {
-                
+
                 BillItem billItem = new BillItem();
                 Cart cart = takaDB.Carts.Where(x => x.ID == id).ToList().First();
                 billItem.id = cart.ID;
@@ -564,11 +564,110 @@ namespace taka.Models.DatabaseInteractive
 
             return billItems;
         }
+
         public List<Address> GetAddresses(int idUser)
         {
             List<Address> addresses = new List<Address>();
             addresses = takaDB.Addresses.Where(x => x.idUser == idUser).ToList();
             return addresses;
         }
+
+        public Address GetAddress(int idAddress)
+        {
+            return takaDB.Addresses.Where(x => x.ID == idAddress).First();
+        }
+
+        public void AddAddress(int idUser, string name, string phone, string address)
+        {
+            Address adr = new Address();
+            adr.idUser = idUser;
+            adr.Name = name;
+            adr.Phone = phone;
+            adr.Address1 = address;
+            takaDB.Addresses.Add(adr);
+            takaDB.SaveChanges();
+        }
+
+        public void EditAddress(int idAddress, int idUser, string name, string phone, string address)
+        {
+            Address adr = takaDB.Addresses.Where(x => x.ID == idAddress).First();
+            if (adr == null)
+                return;
+            adr.Name = name;
+            adr.Phone = phone;
+            adr.Address1 = address;
+            adr.idUser = idUser;
+            takaDB.SaveChanges();
+        }
+
+        public void DeleteAddress(int idAddress)
+        {
+            try
+            {
+                Address address = takaDB.Addresses.Where(x => x.ID == idAddress).First();
+                takaDB.Addresses.Remove(address);
+                takaDB.SaveChanges();
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+
+        public void CheckOut(int[] id_cart, int id_address, int totalPrice, string shipper, int idUser, string fullName, string phone, string address, string message)
+        {
+
+            Order order = new Order();
+            order.CreateDate = DateTime.Now;
+            order.idUser = idUser;
+            if (id_address != -1)
+            {
+                string clientName = takaDB.Addresses.Where(x => x.ID == id_address).First().Name;
+
+                order.IDAddress = id_address;
+                order.ClientName = clientName;
+            }
+            else
+            {
+                Address newAdress = new Address();
+                newAdress.idUser = idUser;
+                newAdress.Name = fullName;
+                newAdress.Phone = phone;
+                newAdress.Address1 = address;
+                takaDB.Addresses.Add(newAdress);
+                takaDB.SaveChanges();
+                order.IDAddress = takaDB.Addresses.Where(x => x.Address1 == address).First().ID;
+                order.ClientName = fullName;
+            }
+            order.TotalPrice = totalPrice;
+            order.OrderStatus = 0;
+            order.Shipper = shipper;
+            order.Notes = message;
+            takaDB.Orders.Add(order);
+            takaDB.SaveChanges();
+            foreach (var idItem in id_cart)
+            {
+                OrderDetail orderDetail = new OrderDetail();
+                Cart cartItem = takaDB.Carts.Where(x => x.ID == idItem).First();
+                orderDetail.idOrder = takaDB.Orders.OrderByDescending(x => x.ID).First().ID;
+                orderDetail.idBook = (int)cartItem.idBook;
+                orderDetail.Quantity = (int)cartItem.Quantity;
+                takaDB.OrderDetails.Add(orderDetail);
+                takaDB.Carts.Remove(cartItem);
+            }
+            takaDB.SaveChanges();
+        }
+
+        public List<Order> GetProcessingOrders(int id)
+        {
+            List<Order> orders = takaDB.Orders.Where(x => x.idUser == id && x.OrderStatus == 0).ToList();
+            return orders;
+        }
+        public List<Order> GetDoneOrders(int id)
+        {
+            List<Order> orders = takaDB.Orders.Where(x => x.idUser == id && x.OrderStatus == 1).ToList();
+            return orders;
+        }
+
     }
 }
