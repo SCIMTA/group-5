@@ -359,22 +359,25 @@ namespace taka.Models.DatabaseInteractive
             return newUser;
         }
 
-        public void AddCart(int idBook, int idUser, int quantity = 1)
+        public Cart AddCart(int idBook, int idUser, int quantity = 1)
         {
+            Cart cart;
             var find_cart = takaDB.Carts.Where(x => x.idBook == idBook && x.idUser == idUser);
             if (find_cart.Count() > 0)
             {
                 find_cart.First().Quantity += quantity;
+                cart = find_cart.First();
             }
             else
             {
-                Cart cart = new Cart();
+                cart = new Cart();
                 cart.idBook = idBook;
                 cart.idUser = idUser;
                 cart.Quantity = quantity;
                 takaDB.Carts.Add(cart);
             }
             takaDB.SaveChanges();
+            return cart;
         }
         public List<Cart> GetListCarts(int idUser)
         {
@@ -548,9 +551,9 @@ namespace taka.Models.DatabaseInteractive
 
             foreach (var id in ids)
             {
-                Cart cart = new Cart();
+                
                 BillItem billItem = new BillItem();
-                cart = takaDB.Carts.Where(x => x.ID == id).First();
+                Cart cart = takaDB.Carts.Where(x => x.ID == id).ToList().First();
                 billItem.id = cart.ID;
                 billItem.price = (int)cart.Book.Price;
                 billItem.quantity = (int)cart.Quantity;

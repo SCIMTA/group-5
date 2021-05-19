@@ -18,8 +18,7 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>
-    </IISExpressSSLPort>
+    <IISExpressSSLPort>44389</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -219,7 +218,7 @@
     <Content Include="Views\Admin\Type.cshtml" />
     <Content Include="Views\Admin\Language.cshtml" />
     <Content Include="Views\Home\List.cshtml" />
-    <Content Include="Views\User\BuyNow.cshtml" />
+    <Content Include="Views\User\Payment.cshtml" />
     <Content Include="Views\User\ShoppingCart.cshtml" />
     <Content Include="Views\User\EditUser.cshtml" />
     <Content Include="Views\User\Infor.cshtml" />

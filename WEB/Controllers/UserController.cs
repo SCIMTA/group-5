@@ -32,9 +32,14 @@ namespace taka.Controllers
             TempData[C.TEMPDATA.Message] = "Thêm vào giỏ hàng thành công";
             return RedirectToAction("Detail", "Home", new { id = idBook });
         }
-        public ActionResult BuyNow(int[] id)
+        public ActionResult BuyNow(int idBook, int quantity)
         {
-            var listItems = db.GetBillItems(id);
+            User user = (User)Session[C.SESSION.UserInfo];
+            return RedirectToAction("Payment", "User",new {idCarts= new int[] { db.AddCart(idBook, user.ID, quantity).ID } });
+        }
+        public ActionResult Payment(int[] idCarts)
+        {
+            var listItems = db.GetBillItems(idCarts);
             User user = (User)Session[C.SESSION.UserInfo];
             ViewBag.addresses = db.GetAddresses(user.ID);
             return View(listItems);
