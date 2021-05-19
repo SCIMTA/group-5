@@ -158,7 +158,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\C.cs" />
     <Compile Include="Utils\HelperFunctions.cs" />
-    <Compile Include="Utils\TakaAuthorizeAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -227,6 +226,7 @@
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Admin\Shared\_Layout.cshtml" />
     <Content Include="Views\User\Purchased.cshtml" />
+    <Content Include="Views\Admin\Book.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

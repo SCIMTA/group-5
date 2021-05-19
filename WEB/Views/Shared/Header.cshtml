@@ -15,28 +15,21 @@
             }
             @if (userInfo != null && userInfo.ID.Equals(taka.Utils.C.ID_ADMIN))
             {
-                <a href="/Admin/Add" class="btn btn-light m-1" style="color:#ee4d2d;">
-                    <b>Thêm đầu sách</b>
-                </a>
-
                 <a href="/Admin/Order" class="btn btn-light m-1" style="color:#ee4d2d;">
                     <b>Quản lý hệ thống</b>
                 </a>
                 <a href="/Home/Logout" class="btn btn-danger m-1" style="border:2px solid #ffffff">
                     <b>Đăng xuất</b>
                 </a>
-
             }
             @if (userInfo != null && !userInfo.ID.Equals(taka.Utils.C.ID_ADMIN))
             {
-
                 <a href="/User/ShoppingCart" style="position:relative">
                     <ion-icon class="btn btn-light m-1" style="height:25px; margin-top:10px; color:#ee4d2d" name="cart-outline"></ion-icon>
                     <b style="position:absolute;top:0%;right:0%;background-color:white;border-radius:30px;width:20px;height:20px;text-align:center;line-height:15px;border:1px solid #ee4d2d;color:#ee4d2d">
                         @Session[taka.Utils.C.SESSION.Cart]
                     </b>
                 </a>
-
                 <button type="button" class="btn btn-light m-1" data-toggle="modal" data-target="#modalUser" style="color:#ee4d2d;">
                     <b>Xin chào @userInfo.Fullname</b>
                 </button>
