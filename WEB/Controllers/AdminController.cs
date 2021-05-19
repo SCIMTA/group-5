@@ -9,13 +9,14 @@ using taka.Utils;
 
 namespace taka.Controllers
 {
-    [Authorize(Users = "admin")]
+    //[Authorize(Users = "admin")]
+    [Authorize(Users = "4")]
     public class AdminController : Controller
     {
 
         TakaDB dB = new TakaDB();
         // GET: Admin
-        public ActionResult Order(int page = 1, string text = "", int cate = 0, int sort = 0, int pageSize = 16, int type = 0, int language = 0, int priceFrom = 0, int priceTo = 0)
+        public ActionResult Book(int page = 1, string text = "", int cate = 0, int sort = 0, int pageSize = 16, int type = 0, int language = 0, int priceFrom = 0, int priceTo = 0)
         {
             ViewBag.ListCate = dB.GetCategories();
             ViewBag.ListType = dB.GetTypes();
@@ -44,6 +45,12 @@ namespace taka.Controllers
             ViewBag.maxPage = listBook.pages;
             ViewBag.TextSearch = text;
             ViewBag.list = listBook.books;
+            return View();
+        }
+
+
+        public ActionResult Order()
+        {
             return View();
         }
 
@@ -130,7 +137,7 @@ namespace taka.Controllers
             catch (Exception)
             {
             }
-            return RedirectToAction("Order", "Admin");
+            return RedirectToAction("Book", "Admin");
         }
 
 

@@ -24,15 +24,22 @@ namespace taka.Models.Enitities
 
         public decimal? TotalPrice { get; set; }
 
-        [StringLength(50)]
-        public string PaymentType { get; set; }
+        public int? OrderStatus { get; set; }
 
         [StringLength(50)]
-        public string PaymentStatus { get; set; }
+        public string ClientName { get; set; }
+
+        [StringLength(50)]
+        public string Shipper { get; set; }
+
+        public int? IDAddress { get; set; }
+
+        [StringLength(100)]
+        public string Notes { get; set; }
+
+        public virtual User User { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
-
-        public virtual User User { get; set; }
     }
 }

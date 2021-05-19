@@ -18,6 +18,13 @@ namespace taka.Controllers
         {
             return View();
         }
+        public ActionResult Purchased()
+        {
+            User user = (User)Session[C.SESSION.UserInfo];
+            ViewBag.ProcessingOrders = db.GetProcessingOrders(user.ID);
+            ViewBag.DoneOrders = db.GetDoneOrders(user.ID);
+            return View(user);
+        }
         public ActionResult AddToCart(int idBook, int quantity)
         {
             User user = (User)Session[C.SESSION.UserInfo];
@@ -25,16 +32,23 @@ namespace taka.Controllers
             TempData[C.TEMPDATA.Message] = "Thêm vào giỏ hàng thành công";
             return RedirectToAction("Detail", "Home", new { id = idBook });
         }
-        public ActionResult BuyNow(int[] id)
+        public ActionResult BuyNow(int idBook, int quantity)
         {
-            var listItems = db.GetBillItems(id);
+            User user = (User)Session[C.SESSION.UserInfo];
+            return RedirectToAction("Payment", "User",new {idCarts= new int[] { db.AddCart(idBook, user.ID, quantity).ID } });
+        }
+        public ActionResult Payment(int[] idCarts)
+        {
+            var listItems = db.GetBillItems(idCarts);
             User user = (User)Session[C.SESSION.UserInfo];
             ViewBag.addresses = db.GetAddresses(user.ID);
             return View(listItems);
         }
         [HttpPost]
-        public ActionResult CheckOut(int[] id)
+        public ActionResult CheckOut(int[] id_cart, int id_address, int totalPrice, string shipper, string fullName, string phone,string address, string message)
         {
+            User user = (User)Session[C.SESSION.UserInfo];
+            db.CheckOut(id_cart, id_address, totalPrice, shipper, user.ID, fullName, phone, address, message);
             return RedirectToAction("Index", "Home");
         }
         public ActionResult ShoppingCart()

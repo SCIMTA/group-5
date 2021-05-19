@@ -41,6 +41,7 @@ namespace taka.Models.Enitities
 
         [StringLength(100)]
         public string KeySearch { get; set; }
+
         [StringLength(256)]
         public string google_id { get; set; }
 

@@ -359,22 +359,25 @@ namespace taka.Models.DatabaseInteractive
             return newUser;
         }
 
-        public void AddCart(int idBook, int idUser, int quantity = 1)
+        public Cart AddCart(int idBook, int idUser, int quantity = 1)
         {
+            Cart cart;
             var find_cart = takaDB.Carts.Where(x => x.idBook == idBook && x.idUser == idUser);
             if (find_cart.Count() > 0)
             {
                 find_cart.First().Quantity += quantity;
+                cart = find_cart.First();
             }
             else
             {
-                Cart cart = new Cart();
+                cart = new Cart();
                 cart.idBook = idBook;
                 cart.idUser = idUser;
                 cart.Quantity = quantity;
                 takaDB.Carts.Add(cart);
             }
             takaDB.SaveChanges();
+            return cart;
         }
         public List<Cart> GetListCarts(int idUser)
         {
@@ -548,9 +551,9 @@ namespace taka.Models.DatabaseInteractive
 
             foreach (var id in ids)
             {
-                Cart cart = new Cart();
+                
                 BillItem billItem = new BillItem();
-                cart = takaDB.Carts.Where(x => x.ID == id).First();
+                Cart cart = takaDB.Carts.Where(x => x.ID == id).ToList().First();
                 billItem.id = cart.ID;
                 billItem.price = (int)cart.Book.Price;
                 billItem.quantity = (int)cart.Quantity;
@@ -566,44 +569,6 @@ namespace taka.Models.DatabaseInteractive
             List<Address> addresses = new List<Address>();
             addresses = takaDB.Addresses.Where(x => x.idUser == idUser).ToList();
             return addresses;
-        }
-        public Address GetAddress(int idAddress)
-        {
-            return takaDB.Addresses.Where(x => x.ID == idAddress).First();
-        }
-        public void AddAddress(int idUser, string name, string phone, string address)
-        {
-            Address adr = new Address();
-            adr.idUser = idUser;
-            adr.Name = name;
-            adr.Phone = phone;
-            adr.Address1 = address;
-            takaDB.Addresses.Add(adr);
-            takaDB.SaveChanges();
-        }
-        public void EditAddress(int idAddress,int idUser, string name, string phone, string address)
-        {
-            Address adr = takaDB.Addresses.Where(x => x.ID == idAddress).First();
-            if (adr == null)
-                return;
-            adr.Name = name;
-            adr.Phone = phone;
-            adr.Address1 = address;
-            adr.idUser = idUser;
-            takaDB.SaveChanges();
-        }
-        public void DeleteAddress(int idAddress)
-        {
-            try
-            {
-                Address address = takaDB.Addresses.Where(x => x.ID == idAddress).First();
-                takaDB.Addresses.Remove(address);
-                takaDB.SaveChanges();
-            }
-            catch (Exception)
-            {
-
-            }
         }
     }
 }
