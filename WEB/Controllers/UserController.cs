@@ -35,7 +35,7 @@ namespace taka.Controllers
         public ActionResult BuyNow(int idBook, int quantity)
         {
             User user = (User)Session[C.SESSION.UserInfo];
-            return RedirectToAction("Payment", "User",new {idCarts= new int[] { db.AddCart(idBook, user.ID, quantity).ID } });
+            return RedirectToAction("Payment", "User", new { idCarts = db.AddCart(idBook, user.ID, quantity).ID });
         }
         public ActionResult Payment(int[] idCarts)
         {
@@ -45,7 +45,7 @@ namespace taka.Controllers
             return View(listItems);
         }
         [HttpPost]
-        public ActionResult CheckOut(int[] id_cart, int id_address, int totalPrice, string shipper, string fullName, string phone,string address, string message)
+        public ActionResult CheckOut(int[] id_cart, int id_address, int totalPrice, string shipper, string fullName, string phone, string address, string message)
         {
             User user = (User)Session[C.SESSION.UserInfo];
             db.CheckOut(id_cart, id_address, totalPrice, shipper, user.ID, fullName, phone, address, message);
