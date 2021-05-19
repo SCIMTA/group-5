@@ -28,12 +28,22 @@ namespace taka.Controllers
             ViewBag.PriceFrom = priceFrom;
             ViewBag.PriceTo = priceTo;
             ViewBag.Language = language;
-            ViewBag.TextSort = "Mới nhất";
             ViewBag.PageSize = 16;
             ViewBag.CurrentPage = page;
-            if (sort != 0)
+            switch (sort)
             {
-                ViewBag.TextSort = sort == 1 ? "Giá thấp nhất" : "Giá cao nhất";
+                case 0:
+                    ViewBag.TextSort = C.DROPDOWN_SORT.NEWEST;
+                    break;
+                case 1:
+                    ViewBag.TextSort = C.DROPDOWN_SORT.OLDEST;
+                    break;
+                case 2:
+                    ViewBag.TextSort = C.DROPDOWN_SORT.LOWEST_PRICE;
+                    break;
+                case 3:
+                    ViewBag.TextSort = C.DROPDOWN_SORT.HIGHEST_PRICE;
+                    break;
             }
             if (pageSize != 16 && pageSize % 16 == 0 && pageSize <= 64)
             {

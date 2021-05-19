@@ -19,6 +19,13 @@ namespace taka.Utils
             public static string RequireLogin = "RequireLogin";
         }
 
+        public class DROPDOWN_SORT
+        {
+            public static string NEWEST = "Mới nhất";
+            public static string OLDEST = "Cũ nhất";
+            public static string HIGHEST_PRICE = "Giá cao nhất";
+            public static string LOWEST_PRICE = "Giá thấp nhất";
+        }
         public static int ID_ADMIN = 4;
     }
 }
