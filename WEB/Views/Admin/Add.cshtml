@@ -5,8 +5,16 @@
     Layout = "~/Views/Admin/Shared/_Layout.cshtml";
 }
 
-<form class="form-horizontal" method="post" action="/Admin/AddBook" enctype="multipart/form-data">
-    <h4>Cập nhật thông tin</h4>
+
+<br />
+<br />
+<form class="form-horizontal ml-2" method="post" action="/Admin/AddBook" enctype="multipart/form-data">
+    <div class="row ml-2">
+        <div onclick="goBack()" style="cursor:pointer">
+            <ion-icon style="font-size:25px;color:#ee4d2d;margin-top:5px;margin-right:10px" name="arrow-back-circle-outline"></ion-icon>
+        </div>
+        <h4>Cập nhật thông tin</h4>
+    </div>
     <hr />
     <p>
         <h5>Ảnh bìa sách</h5>
@@ -113,6 +121,15 @@
 
 </form>
 <script>
+
+    const goBack = () => {
+        if (document.referrer.includes("Edit")) {
+            window.location.href = '/Admin/Order'
+        } else {
+            history.back()
+        }
+    }
+
     let listImg = []
 
     let dt = new DataTransfer()

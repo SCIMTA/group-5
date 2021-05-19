@@ -41,6 +41,12 @@
                             <span style="color:white">Quản trị hệ thống</span>
                         </li>
                         <li class="side-bar-tab">
+                            <a href="/Admin/Book" style="color:#ee4d2d;" class="side-bar-click">
+                                <ion-icon name="book-outline" class="side-bar-icon"></ion-icon>
+                                <b class="side-bar-text">Sách</b>
+                            </a>
+                        </li>
+                        <li class="side-bar-tab">
                             <a href="/Admin/Order" style="color:#ee4d2d;" class="side-bar-click">
                                 <ion-icon name="cube-outline" class="side-bar-icon"></ion-icon>
                                 <b class="side-bar-text">Đơn hàng</b>
@@ -103,7 +109,7 @@
     <script>
         let listATag = $(".side-bar-click")
         for (let i = 0; i < listATag.length; i++) {
-            if (listATag[i].href.split("/")[4] == window.location.href.split("/")[4].split("?")[0])
+            if (window.location.href.includes(listATag[i].href))
                 $(listATag[i]).parent().addClass("active")
         }
     </script>
