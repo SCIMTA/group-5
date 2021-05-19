@@ -20,7 +20,7 @@
                         </tr>
                         <tr>
                             <th>Ngày sinh</th>
-                            <td>@userInfo.Birthday</td>
+                            <td>@DateTime.Parse(@userInfo.Birthday.ToString()).ToString("dd/MM/yyyy")</td>
                         </tr>
                         <tr>
                             <th>Email</th>

@@ -1,8 +1,6 @@
-﻿@model taka.Models.Enitities.User
-
-@{
-    //ViewBag.Title = "_LayoutUser";
+﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
+    taka.Models.Enitities.User userInfo = (taka.Models.Enitities.User)Session[taka.Utils.C.SESSION.UserInfo];
 }
 <!DOCTYPE html>
 
@@ -11,10 +9,11 @@
     <link href="~/Content/style.css" rel="stylesheet" />
 </head>
 <body>
+    
     <div class="container _1QwuCJ">
         <div class="userpage-sidebar">
             <div class="user-page-brief">
-                <a class="user-page-brief__avatar" href="/user/account/profile">
+                <a class="user-page-brief__avatar" href="#">
                     <div class="shopee-avatar">
                         <div class="shopee-avatar__placeholder">
                             <svg enable-background="new 0 0 15 15" viewBox="0 0 15 15" x="0" y="0" class="shopee-svg-icon icon-headshot">
@@ -28,9 +27,9 @@
                     </div>
                 </a>
                 <div class="user-page-brief__right">
-                    <div class="user-page-brief__username">@Model.Fullname</div>
+                    <div class="user-page-brief__username">@userInfo.Fullname</div>
                     <div>
-                        <a class="user-page-brief__edit" href="@Url.Action("EditUser", "User", new { id = Model.ID})">
+                        <a class="user-page-brief__edit" href="@Url.Action("EditUser", "User")">
                             <svg width="12" height="12" viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg" style="margin-right: 4px;">
                                 <path d="M8.54 0L6.987 1.56l3.46 3.48L12 3.48M0 8.52l.073 3.428L3.46 12l6.21-6.18-3.46-3.48" fill="#9B9B9B" fill-rule="evenodd"></path>
                             </svg>Sửa hồ sơ
@@ -41,7 +40,7 @@
             <div class="userpage-sidebar-menu">
                 <div class="stardust-dropdown stardust-dropdown--open">
                     <div class="stardust-dropdown__item-header">
-                        <a class="userpage-sidebar-menu-entry" href="@Url.Action("Infor", "User", new { id = Model.ID})">
+                        <a class="userpage-sidebar-menu-entry" href="@Url.Action("Infor", "User")">
                             <div class="userpage-sidebar-menu-entry__icon" style="background-color: rgb(255, 193, 7);">
                                 <svg enable-background="new 0 0 15 15" viewBox="0 0 15 15" x="0" y="0" class="shopee-svg-icon user-page-sidebar-icon icon-headshot">
                                     <g>
@@ -55,13 +54,13 @@
                     </div>
                     <div class="stardust-dropdown__item-body stardust-dropdown__item-body--open">
                         <div class="userpage-sidebar-menu__subsection">
-                            <a class="_3SsG4j _3SzYTH" href="@Url.Action("Infor", "User", new { id = Model.ID  })">
+                            <a class="_3SsG4j " href="@Url.Action("Infor", "User")">
                                 <span class="_2PrdXX">Hồ sơ</span>
                             </a>
-                            <a class="_3SsG4j" href="/user/account/address">
+                            <a class="_3SsG4j " href="@Url.Action("AddressDetails", "User")">
                                 <span class="_2PrdXX">Địa chỉ</span>
                             </a>
-                            <a class="_3SsG4j" href="/user/account/password">
+                            <a class="_3SsG4j " href="/user/account/password">
                                 <span class="_2PrdXX">Đổi mật khẩu</span>
                             </a>
                         </div>
@@ -90,7 +89,7 @@
         </div>
         <div class="_3D9BVC">
             <div class="h4QDlo" role="main">
-                <div class="my-account-section"  style="vertical-align: auto">
+                <div class="my-account-section" style="vertical-align: auto">
                     @RenderBody()
                 </div>
             </div>

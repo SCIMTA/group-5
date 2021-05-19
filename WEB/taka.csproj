@@ -225,6 +225,10 @@
     <Content Include="Views\User\_LayoutUser.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Admin\Shared\_Layout.cshtml" />
+    <Content Include="Views\User\AddressDetails.cshtml" />
+    <Content Include="Views\User\AddAddress.cshtml" />
+    <Content Include="Views\User\EditAddress.cshtml" />
+    <Content Include="Views\User\ModelDeleteAddress.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

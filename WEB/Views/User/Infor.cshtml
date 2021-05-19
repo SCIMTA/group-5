@@ -1,13 +1,13 @@
 ﻿@model taka.Models.Enitities.User
 
 @{
-    ViewBag.Title = "Hồ sơ";
+    ViewBag.Title = "Takasa";
     Layout = "~/Views/User/_LayoutUser.cshtml";
 }
 
 <body>
     <div class="user-page-brief">
-        <h3> Hồ sơ của tôi</h3>
+        <h3>Hồ Sơ Của Tôi</h3>
     </div>
     <div>
         <table class="table" style="vertical-align:auto">
@@ -16,19 +16,21 @@
                 <td>@Model.Fullname</td>
             </tr>
             <tr>
-                <th>Ngày sinh</th>
-                <td>@Model.Birthday</td>
+                <th>Ngày Sinh</th>
+                <td>
+                    @DateTime.Parse(@Model.Birthday).ToString("dd/MM/yyyy")
+                </td>
             </tr>
             <tr>
                 <th>Email</th>
                 <td>@Model.Email</td>
             </tr>
             <tr>
-                <th>Số điện thoại</th>
+                <th>Số Điện Thoại</th>
                 <td>@Model.Phone</td>
             </tr>
             <tr>
-                <th>Giới tính</th>
+                <th>Giới Tính</th>
                 <td>@Model.Gender</td>
             </tr>
         </table>

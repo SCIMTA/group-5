@@ -68,6 +68,7 @@ namespace taka.Controllers
             User user = (User)Session[C.SESSION.UserInfo];
             return View(user);
         }
+
         public ActionResult EditUser()
         {
             User user = (User)Session[C.SESSION.UserInfo];
@@ -80,6 +81,46 @@ namespace taka.Controllers
             User user = (User)Session[C.SESSION.UserInfo];
             Session[C.SESSION.UserInfo] = db.UpdateUser(user.Phone, email, fullname, gender, birthday);
             return RedirectToAction("Infor", "User", new { id = user.ID });
+        }
+
+        public ActionResult AddressDetails()
+        {
+            User user = (User)Session[C.SESSION.UserInfo];
+            List<Address> listadr = db.GetAddresses(user.ID);
+            return View(listadr);
+        }
+
+        public ActionResult AddAddress()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult AddAddress(string name, string phone, string address)
+        {
+            User user = (User)Session[C.SESSION.UserInfo];
+            db.AddAddress(user.ID, name, phone, address);
+            return RedirectToAction("AddressDetails", "User");
+        }
+
+        public ActionResult EditAddress(int idAddress)
+        {
+            User user = (User)Session[C.SESSION.UserInfo];
+            Address adr = db.GetAddress(idAddress);
+            return View(adr);
+        }
+        [HttpPost]
+        public ActionResult EditAddress(int idAddress, string name, string phone, string address)
+        {
+            User user = (User)Session[C.SESSION.UserInfo];
+            db.EditAddress(idAddress, user.ID, name, phone, address);
+            return RedirectToAction("AddressDetails", "User");
+        }
+        [HttpPost]
+        public ActionResult DeleteAddress(int idAddress)
+        {
+            User user = (User)Session[C.SESSION.UserInfo];
+            db.DeleteAddress(idAddress);
+            return RedirectToAction("AddressDetails", "User");
         }
     }
 }

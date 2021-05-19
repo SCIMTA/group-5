@@ -561,11 +561,49 @@ namespace taka.Models.DatabaseInteractive
 
             return billItems;
         }
-        public List<Address> GetAddresses(int id)
+        public List<Address> GetAddresses(int idUser)
         {
             List<Address> addresses = new List<Address>();
-            addresses = takaDB.Addresses.Where(x => x.idUser == id).ToList();
+            addresses = takaDB.Addresses.Where(x => x.idUser == idUser).ToList();
             return addresses;
+        }
+        public Address GetAddress(int idAddress)
+        {
+            return takaDB.Addresses.Where(x => x.ID == idAddress).First();
+        }
+        public void AddAddress(int idUser, string name, string phone, string address)
+        {
+            Address adr = new Address();
+            adr.idUser = idUser;
+            adr.Name = name;
+            adr.Phone = phone;
+            adr.Address1 = address;
+            takaDB.Addresses.Add(adr);
+            takaDB.SaveChanges();
+        }
+        public void EditAddress(int idAddress,int idUser, string name, string phone, string address)
+        {
+            Address adr = takaDB.Addresses.Where(x => x.ID == idAddress).First();
+            if (adr == null)
+                return;
+            adr.Name = name;
+            adr.Phone = phone;
+            adr.Address1 = address;
+            adr.idUser = idUser;
+            takaDB.SaveChanges();
+        }
+        public void DeleteAddress(int idAddress)
+        {
+            try
+            {
+                Address address = takaDB.Addresses.Where(x => x.ID == idAddress).First();
+                takaDB.Addresses.Remove(address);
+                takaDB.SaveChanges();
+            }
+            catch (Exception)
+            {
+
+            }
         }
     }
 }

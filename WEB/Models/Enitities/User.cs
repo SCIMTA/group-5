@@ -34,7 +34,6 @@ namespace taka.Models.Enitities
 
         [StringLength(10)]
         public string Gender { get; set; }
-
         [StringLength(50)]
         public string Birthday { get; set; }
 
