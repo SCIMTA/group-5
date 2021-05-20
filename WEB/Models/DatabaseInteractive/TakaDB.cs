@@ -57,16 +57,21 @@ namespace taka.Models.DatabaseInteractive
             else if (priceFrom > 0)
                 listItem = listItem.Where(m => m.Price > priceFrom);
 
-
-            if (sort != 0)
+            switch (sort)
             {
-                if (sort == 1)
+                case 0:
+                    listItem = listItem.OrderByDescending(m => m.ID);
+                    break;
+                case 1:
+                    listItem = listItem.OrderBy(m => m.ID);
+                    break;
+                case 2:
                     listItem = listItem.OrderBy(m => m.Price);
-                else
+                    break;
+                case 3:
                     listItem = listItem.OrderByDescending(m => m.Price);
+                    break;
             }
-            else
-                listItem = listItem.OrderByDescending(m => m.ID);
 
             int maxPage = listItem.Count() / pageSize + 1;
             return new ListBook(maxPage, listItem.Skip((page - 1) * pageSize).Take(pageSize).ToList());
