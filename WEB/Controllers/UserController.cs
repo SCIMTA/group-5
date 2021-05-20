@@ -21,6 +21,7 @@ namespace taka.Controllers
         public ActionResult Purchased()
         {
             User user = (User)Session[C.SESSION.UserInfo];
+            ViewBag.Addresses = db.GetAddresses(user.ID);
             ViewBag.ProcessingOrders = db.GetProcessingOrders(user.ID);
             ViewBag.DoneOrders = db.GetDoneOrders(user.ID);
             return View(user);
