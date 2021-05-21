@@ -23,7 +23,7 @@
                     {
                         <div class="row mb-4">
                             <div class="form-check col-md-1 col-lg-1 col-xl-1" style="text-align:center;display: flex; justify-content: center; align-items: center;">
-                                <input name="idCarts" type="checkbox" value="@item.ID" id="flexCheck_@item.ID" style="width:15px; height:15px; background-color:#ee4d2d;" checked>
+                                <input name="idCarts" class="checkbox-input" type="checkbox" value="@item.ID" id="flexCheck_@item.ID" style="width:15px; height:15px; background-color:#ee4d2d;" onclick="buyNowDisable();" checked>
                             </div>
                             <div class="col-md-5 col-lg-3 col-xl-3">
                                 <div class="view zoom overlay z-depth-1 rounded mb-3 mb-md-0">
@@ -116,9 +116,9 @@
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
                             Tổng tạm
-                            <span id="totalAmount" ></span>
-                                
-                            
+                            <span id="totalAmount"></span>
+
+
                         </li>
                         <li class="list-group-item d-flex justify-content-between align-items-center px-0">
                             Phí vận chuyển
@@ -139,7 +139,7 @@
                         </li>
                     </ul>
 
-                    <button type="submit" style="background-color:#ee4d2d;color:white" class="btn btn-light btn-block">Mua ngay</button>
+                    <button type="submit" style="background-color:#ee4d2d;color:white" class="btn btn-light btn-block buy-now">Mua ngay</button>
 
                 </div>
             </div>
@@ -182,7 +182,7 @@
     }
 
     let onChangeTextQuantity = (id) => {
-        let rawStr = $("#inputQuantity_"+id).val()
+        let rawStr = $("#inputQuantity_" + id).val()
         if (rawStr.length == 0)
             $("#inputQuantity_" + id).val(1)
         else {
@@ -197,9 +197,17 @@
             type: "POST",
             url: `/User/ChangeQuantity`,
             data: { idCart, quantity },
-            success: data => {}
+            success: data => { }
         });
     }
-
-    changeTotalAmount()
+    let buyNowDisable = () => {
+        if ($(".checkbox-input:checked").length == 0) {
+            $(".buy-now").attr("disabled", "disabled")
+        }
+        else {
+            $(".buy-now").removeAttr("disabled")
+        }
+    }
+    buyNowDisable()
+    changeTotalAmount();
 </script>
