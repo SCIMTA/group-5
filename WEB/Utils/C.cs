@@ -27,5 +27,10 @@ namespace taka.Utils
             public static string LOWEST_PRICE = "Giá thấp nhất";
         }
         public static int ID_ADMIN = 4;
+        public class DEFAULT_USER_VALUE
+        {
+            public static string GENDER = "Khác";
+            public static string BIRTHDAY = "0000-00-00";
+        }
     }
 }

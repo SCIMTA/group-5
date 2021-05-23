@@ -359,6 +359,9 @@ namespace taka.Models.DatabaseInteractive
             newUser.google_id = gooogleId;
             newUser.Fullname = fullname;
             newUser.Email = email;
+            newUser.Birthday = C.DEFAULT_USER_VALUE.BIRTHDAY;
+            newUser.Gender = C.DEFAULT_USER_VALUE.GENDER;
+            newUser.Phone = email;
             takaDB.Users.Add(newUser);
             takaDB.SaveChanges();
             return newUser;
@@ -570,14 +573,14 @@ namespace taka.Models.DatabaseInteractive
             return billItems;
         }
 
-        public List<Address> GetAddresses(int idUser)
+        public List<Address> GetListAddressByUserId(int idUser)
         {
             List<Address> addresses = new List<Address>();
             addresses = takaDB.Addresses.Where(x => x.idUser == idUser).ToList();
             return addresses;
         }
 
-        public Address GetAddress(int idAddress)
+        public Address GetAddressByIdAddress(int? idAddress)
         {
             return takaDB.Addresses.Where(x => x.ID == idAddress).First();
         }

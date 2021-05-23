@@ -20,16 +20,27 @@
                         </tr>
                         <tr>
                             <th>Ngày sinh</th>
-                            <td>@DateTime.Parse(@userInfo.Birthday.ToString()).ToString("dd/MM/yyyy")</td>
+                            @if (!@userInfo.Birthday.Equals(taka.Utils.C.DEFAULT_USER_VALUE.BIRTHDAY))
+                            {
+                                <td>@DateTime.Parse(@userInfo.Birthday.ToString()).ToString("dd/MM/yyyy")</td>
+                            }
+                            else
+                            {
+                                <td>Chưa cập nhật</td>
+                            }
                         </tr>
                         <tr>
                             <th>Email</th>
                             <td>@userInfo.Email</td>
                         </tr>
-                        <tr>
-                            <th>Số điện thoại</th>
-                            <td>@userInfo.Phone</td>
-                        </tr>
+                        @if (!userInfo.Phone.Equals(userInfo.Email))
+                        {
+                            <tr>
+                                <th>Số điện thoại</th>
+                                <td>@userInfo.Phone</td>
+
+                            </tr>
+                        }
                         <tr>
                             <th>Giới tính</th>
                             <td>@userInfo.Gender</td>

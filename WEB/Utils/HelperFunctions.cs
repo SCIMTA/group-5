@@ -7,6 +7,10 @@ namespace taka.Utils
 {
     public class HelperFunctions
     {
+        public static string formatMoney(object price)
+        {
+            return String.Format(new System.Globalization.CultureInfo("vi-VN"), "{0:N0}", price) + " VND";
+        }
         public static int[] getNumPage(int currentPage, int maxPageSize)
         {
             var list = new int[] { };

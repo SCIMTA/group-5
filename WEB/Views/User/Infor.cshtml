@@ -17,18 +17,27 @@
             </tr>
             <tr>
                 <th>Ngày Sinh</th>
-                <td>
-                    @DateTime.Parse(@Model.Birthday).ToString("dd/MM/yyyy")
-                </td>
+                @if (!Model.Birthday.Equals(taka.Utils.C.DEFAULT_USER_VALUE.BIRTHDAY))
+                {
+                    <td>@DateTime.Parse(Model.Birthday.ToString()).ToString("dd/MM/yyyy")</td>
+                }
+                else
+                {
+                    <td>Chưa cập nhật</td>
+                }
             </tr>
             <tr>
                 <th>Email</th>
                 <td>@Model.Email</td>
             </tr>
-            <tr>
-                <th>Số Điện Thoại</th>
-                <td>@Model.Phone</td>
-            </tr>
+            @if (!Model.Phone.Equals(Model.Email))
+            {
+                <tr>
+                    <th>Số điện thoại</th>
+                    <td>@Model.Phone</td>
+
+                </tr>
+            }
             <tr>
                 <th>Giới Tính</th>
                 <td>@Model.Gender</td>

@@ -21,9 +21,12 @@ namespace taka.Controllers
         public ActionResult Purchased()
         {
             User user = (User)Session[C.SESSION.UserInfo];
-            ViewBag.Addresses = db.GetAddresses(user.ID);
-            ViewBag.ProcessingOrders = db.GetProcessingOrders(user.ID);
-            ViewBag.DoneOrders = db.GetDoneOrders(user.ID);
+            List<Order> processingOrder = db.GetProcessingOrders(user.ID);
+            List<Order> doneOrder = db.GetDoneOrders(user.ID);
+            ViewBag.ProcessingOrders = processingOrder;
+            ViewBag.ProcessingOrdersAddresses = processingOrder.Select(x => db.GetAddressByIdAddress(x.IDAddress)).ToList();
+            ViewBag.DoneOrders = doneOrder;
+            ViewBag.DoneOrdersAddresses = doneOrder.Select(x => db.GetAddressByIdAddress(x.IDAddress)).ToList();
             return View(user);
         }
         public ActionResult AddToCart(int idBook, int quantity)
@@ -42,7 +45,7 @@ namespace taka.Controllers
         {
             var listItems = db.GetBillItems(idCarts);
             User user = (User)Session[C.SESSION.UserInfo];
-            ViewBag.addresses = db.GetAddresses(user.ID);
+            ViewBag.addresses = db.GetListAddressByUserId(user.ID);
             return View(listItems);
         }
         [HttpPost]
@@ -50,7 +53,7 @@ namespace taka.Controllers
         {
             User user = (User)Session[C.SESSION.UserInfo];
             db.CheckOut(id_cart, id_address, totalPrice, shipper, user.ID, fullName, phone, address, message);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Purchased", "User");
         }
         public ActionResult ShoppingCart()
         {
@@ -101,7 +104,7 @@ namespace taka.Controllers
         public ActionResult AddressDetails()
         {
             User user = (User)Session[C.SESSION.UserInfo];
-            List<Address> listadr = db.GetAddresses(user.ID);
+            List<Address> listadr = db.GetListAddressByUserId(user.ID);
             return View(listadr);
         }
 
@@ -120,7 +123,7 @@ namespace taka.Controllers
         public ActionResult EditAddress(int idAddress)
         {
             User user = (User)Session[C.SESSION.UserInfo];
-            Address adr = db.GetAddress(idAddress);
+            Address adr = db.GetAddressByIdAddress(idAddress);
             return View(adr);
         }
         [HttpPost]

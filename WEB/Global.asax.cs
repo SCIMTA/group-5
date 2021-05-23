@@ -34,8 +34,17 @@ namespace taka
         void Application_PreRequestHandlerExecute(object sender, EventArgs e)
         {
             User user = (User)Session[C.SESSION.UserInfo];
+
+
             if (user != null)
                 Session[C.SESSION.Cart] = new Models.DatabaseInteractive.TakaDB().GetListCarts(user.ID).Count;
+            if (user == null)
+            {
+                var AbsolutePath = Request.Url.AbsolutePath;
+                var UrlReferrer = Request.UrlReferrer;
+                if (AbsolutePath.Contains("Admin") || AbsolutePath.Contains("User"))
+                    Response.Redirect("/Home/Login?returnUrl="+UrlReferrer);
+            }
         }
 
 

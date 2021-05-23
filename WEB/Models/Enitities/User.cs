@@ -20,7 +20,7 @@ namespace taka.Models.Enitities
 
         public int ID { get; set; }
 
-        [StringLength(20)]
+        [StringLength(50)]
         public string Phone { get; set; }
 
         [StringLength(280)]
