@@ -18,7 +18,8 @@
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>44389</IISExpressSSLPort>
+    <IISExpressSSLPort>
+    </IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -202,7 +203,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\Header.cshtml" />
-    <Content Include="Views\Shared\ModalDelete.cshtml" />
+    <Content Include="Views\Admin\Shared\ModalDelete.cshtml" />
     <Content Include="Views\Shared\ModalMessage.cshtml" />
     <Content Include="Views\Shared\ModalUserInfo.cshtml" />
     <Content Include="Views\Home\Error.cshtml" />
@@ -226,6 +227,7 @@
     <Content Include="Views\Admin\Shared\_Layout.cshtml" />
     <Content Include="Views\User\Purchased.cshtml" />
     <Content Include="Views\Admin\Book.cshtml" />
+    <Content Include="Views\Admin\Shared\ModalConfirmOrder.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -75,9 +75,9 @@
                             <input class="btn btn-light dropdown-toggle shipper" type="button" id="shipperDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" />
                             <input class="shipper" id="shippingComp" name="shipper" hidden/>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item btn btn-light" onclick="changeShipper('shipper1')">Giao hàng nhanh</a>
-                                <a class="dropdown-item btn btn-light" onclick="changeShipper('shipper2')">Giao hàng tiết kiệm</a>
-                                <a class="dropdown-item btn btn-light" onclick="changeShipper('shipper3')">Viettel Post</a>
+                                <a class="dropdown-item btn btn-light" onclick="changeShipper('shipper1')">Giao hàng nhanh - 40.000đ</a>
+                                <a class="dropdown-item btn btn-light" onclick="changeShipper('shipper2')">Giao hàng tiết kiệm - 15.000đ</a>
+                                <a class="dropdown-item btn btn-light" onclick="changeShipper('shipper3')">Viettel Post - 30.000đ</a>
                             </div>
                             <p class="text-right" id="estimateTime"></p>
                         </div>
@@ -126,10 +126,9 @@
                         </li>
                         <li class="list-group-item d-flex justify-content-between">
                             <strong style="color:#ee4d2d;">Tổng tiền</strong>
-
-                            
                             <input type="text" style="color:#ee4d2d; border:none; background-color:white;" class="totalSum text-right font-weight-bold" disabled="disabled" />
                             <input class="totalPrice" name="totalPrice" hidden/>
+                            <input id="shipFee" name="shipFee" hidden/>
                         </li>
                     </ul>
                     <button type="submit" style="background-color:#ee4d2d;color:white" class="btn btn-light btn-block">Mua ngay</button>
@@ -173,7 +172,7 @@
             sum += price * quantity;
         }
         $('.totalSum').val((parseInt(sum) + parseInt(shipFee)).toLocaleString('it-IT', { style: 'currency', currency: 'VND' }))
-        $('.totalPrice').val(sum);
+        $('.totalPrice').val(parseInt(sum) + parseInt(shipFee));
     }
 
 
@@ -192,6 +191,7 @@
         $('#shippingComp').val(shipper);
         $('.shipper.btn').val(shipper);
         $('.shipFee').text(shipFee.toLocaleString('it-IT', { style: 'currency', currency: 'VND' }))
+        $('#shipFee').val(shipFee)
         changeEstimate(id);
     }
 

@@ -239,6 +239,17 @@ namespace taka.Models.DatabaseInteractive
             }
         }
 
+        public void ConfirmOrder(int id)
+        {
+            Order order = takaDB.Orders.Where(x => x.ID.Equals(id)).First();
+            if (order != null)
+            {
+                order.OrderStatus = 1;
+                order.CreateDate = DateTime.Now;
+                takaDB.SaveChanges();
+            }
+        }
+
         public void UpdatePublisher(int id, string name)
         {
             Publisher pub = takaDB.Publishers.Where(x => x.ID == id).First();
@@ -664,7 +675,7 @@ namespace taka.Models.DatabaseInteractive
             }
         }
 
-        public void CheckOut(int[] id_cart, int id_address, int totalPrice, string shipper, int idUser, string fullName, string phone, string address, string message)
+        public void CheckOut(int[] id_cart, int id_address, int totalPrice, string shipper, int idUser, string fullName, string phone, string address, string message,int shipFee)
         {
 
             Order order = new Order();
@@ -693,6 +704,7 @@ namespace taka.Models.DatabaseInteractive
             order.OrderStatus = 0;
             order.Shipper = shipper;
             order.Notes = message;
+            order.ShipFee = shipFee;
             takaDB.Orders.Add(order);
             takaDB.SaveChanges();
             foreach (var idItem in id_cart)
@@ -713,6 +725,7 @@ namespace taka.Models.DatabaseInteractive
             List<Order> orders = id.Equals(-1) ?
                 takaDB.Orders.Where(x => x.OrderStatus == 0).ToList()
                 : takaDB.Orders.Where(x => x.idUser == id && x.OrderStatus == 0).ToList();
+            orders = orders.OrderByDescending(x => x.CreateDate).ToList();
             return orders;
         }
         public List<Order> GetDoneOrders(int id = -1)
@@ -720,6 +733,7 @@ namespace taka.Models.DatabaseInteractive
             List<Order> orders = id.Equals(-1) ?
                 takaDB.Orders.Where(x => x.OrderStatus == 1).ToList()
                 : takaDB.Orders.Where(x => x.idUser == id && x.OrderStatus == 1).ToList();
+            orders = orders.OrderByDescending(x => x.CreateDate).ToList();
             return orders;
         }
 

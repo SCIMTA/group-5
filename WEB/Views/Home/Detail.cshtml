@@ -5,7 +5,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     taka.Models.Enitities.User userInfo = (taka.Models.Enitities.User)Session[taka.Utils.C.SESSION.UserInfo];
 }
-@RenderPage("~/Views/Shared/ModalDelete.cshtml")
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
@@ -86,16 +85,8 @@
         </div>
 
         <div class="row col">
-            @if (userInfo != null && userInfo.ID.Equals(taka.Utils.C.ID_ADMIN))
-            {
-                <button type="button" onclick="updateBook()" onmousemove="onMouseMoveOutline('outline-btn')" onmouseout="onMouseOutOutline('outline-btn')" id="outline-btn" class="btn col p-3 m-3" style="background-color:white;color:#ee4d2d; border:3; border-color:#ee4d2d">Cập nhật thông tin</button>
-                <button type="button" onclick="showDeleteModal()" onmousemove="onMouseMoveColorFilled('colorfilled-btn')" onmouseout="onMouseOutColorFilled('colorfilled-btn')" id="colorfilled-btn" class="btn col p-3 m-3" style="background-color:#ee4d2d; color:white; border:3; border-color:#ee4d2d">Xoá</button>
-            }
-            else
-            {
-                <button type="button" onclick="addToCart()" onmousemove="onMouseMoveOutline('outline-btn')" onmouseout="onMouseOutOutline('outline-btn')" id="outline-btn" class="btn col p-3 m-3" style="background-color:white;color:#ee4d2d; border:3; border-color:#ee4d2d">Thêm vào giỏ hàng</button>
-                <button type="button" onclick="buyNow()" onmousemove="onMouseMoveColorFilled('colorfilled-btn')" onmouseout="onMouseOutColorFilled('colorfilled-btn')" id="colorfilled-btn" class="btn col p-3 m-3" style="background-color:#ee4d2d; color:white; border:3; border-color:#ee4d2d">Mua ngay</button>
-            }
+            <button type="button" onclick="addToCart()" onmousemove="onMouseMoveOutline('outline-btn')" onmouseout="onMouseOutOutline('outline-btn')" id="outline-btn" class="btn col p-3 m-3" style="background-color:white;color:#ee4d2d; border:3; border-color:#ee4d2d">Thêm vào giỏ hàng</button>
+            <button type="button" onclick="buyNow()" onmousemove="onMouseMoveColorFilled('colorfilled-btn')" onmouseout="onMouseOutColorFilled('colorfilled-btn')" id="colorfilled-btn" class="btn col p-3 m-3" style="background-color:#ee4d2d; color:white; border:3; border-color:#ee4d2d">Mua ngay</button>
         </div>
     </div>
 </div>
@@ -146,17 +137,6 @@
     }
     <br />
 </div>
-@if (userInfo != null && userInfo.ID.Equals(taka.Utils.C.ID_ADMIN))
-{
-    <script>
-    let updateBook = () => {
-            window.location.href = '/Admin/Edit?id=@Model.ID';
-        }
-    let showDeleteModal = () => {
-            $("#modalDelete").modal('show');
-        }
-    </script>
-}
 
 @if (userInfo == null)
 {
@@ -173,9 +153,9 @@
     </script>
 }
 
-@if (userInfo != null && !userInfo.ID.Equals(taka.Utils.C.ID_ADMIN))
+@if (userInfo != null)
 {
-<script>
+    <script>
         let addToCart = () => {
             const quant = $("#quantity-input").val();
             window.location.href = `/User/AddToCart?idBook=@Model.ID&quantity=${quant}`;
@@ -184,7 +164,7 @@
             const quant = $("#quantity-input").val();
             window.location.href = `/User/BuyNow?idBook=@Model.ID&quantity=${quant}`;
         }
-</script>
+    </script>
 }
 <script>
     let selectImgId = -1;

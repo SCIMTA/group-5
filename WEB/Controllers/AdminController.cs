@@ -228,6 +228,14 @@ namespace taka.Controllers
 
         }
 
+
+        [HttpPost]
+        public ActionResult ConfirmOrder(int id)
+        {
+            dB.ConfirmOrder(id);
+            return RedirectToAction("Order", "Admin");
+        }
+
         public ActionResult Add()
         {
             ViewBag.listCategories = dB.GetCategories();

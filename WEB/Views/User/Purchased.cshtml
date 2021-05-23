@@ -63,8 +63,13 @@
                                 Ghi chú: <i>@item.Notes</i>
                             </p>
                         </div>
-                        <div style="display:flex;flex-direction:row;justify-content:flex-end;align-self:center">
-                            <div style="margin-right:10px;margin-top:3px">Tổng số tiền</div> <h4 style="color:#ee4d2d;">@taka.Utils.HelperFunctions.formatMoney(item.TotalPrice)</h4>
+                        <div style=" display: flex; justify-content: center; align-items: center;flex-direction:column">
+                            <div style="margin-bottom:10px">
+                                <i>Phí vận chuyển:</i> <label style="color:#ee4d2d">@taka.Utils.HelperFunctions.formatMoney(item.ShipFee)</label>
+                            </div>
+                            <div style="display:flex;flex-direction:row;align-self:center">
+                                <div style="margin-right:10px;margin-top:3px">Tổng số tiền</div> <h4 style="color:#ee4d2d;">@taka.Utils.HelperFunctions.formatMoney(item.TotalPrice)</h4>
+                            </div>
                         </div>
                     </li>
                     </ul>
@@ -110,8 +115,13 @@
                                     Ghi chú: <i>@item.Notes</i>
                                 </p>
                             </div>
-                            <div style="display:flex;flex-direction:row;justify-content:flex-end;align-self:center">
-                                <div style="margin-right:10px;margin-top:3px">Tổng số tiền</div> <h4 style="color:#ee4d2d;">@taka.Utils.HelperFunctions.formatMoney(item.TotalPrice)</h4>
+                            <div style=" display: flex; justify-content: center; align-items: center;flex-direction:column">
+                                <div style="margin-bottom:10px">
+                                    <i>Phí vận chuyển:</i> <label style="color:#ee4d2d">@taka.Utils.HelperFunctions.formatMoney(item.ShipFee)</label>
+                                </div>
+                                <div style="display:flex;flex-direction:row;align-self:center">
+                                    <div style="margin-right:10px;margin-top:3px">Tổng số tiền</div> <h4 style="color:#ee4d2d;">@taka.Utils.HelperFunctions.formatMoney(item.TotalPrice)</h4>
+                                </div>
                             </div>
                         </li>
                     </ul>
