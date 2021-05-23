@@ -18,11 +18,12 @@ namespace taka.Controllers
         {
             return View();
         }
-        public ActionResult Purchased()
+        public ActionResult Purchased(string tab = "processing")
         {
             User user = (User)Session[C.SESSION.UserInfo];
             List<Order> processingOrder = db.GetProcessingOrders(user.ID);
             List<Order> doneOrder = db.GetDoneOrders(user.ID);
+            ViewBag.Tab = tab;
             ViewBag.ProcessingOrders = processingOrder;
             ViewBag.ProcessingOrdersAddresses = processingOrder.Select(x => db.GetAddressByIdAddress(x.IDAddress)).ToList();
             ViewBag.DoneOrders = doneOrder;
@@ -76,11 +77,11 @@ namespace taka.Controllers
         }
 
         [HttpPost]
-        public ActionResult RateBook(int idBook, string comment,int star)
+        public ActionResult RateBook(int idBook, string comment, int star)
         {
             User user = (User)Session[C.SESSION.UserInfo];
             db.RateBook(idBook, user.ID, comment, star);
-            return RedirectToAction("Purchased", "User");
+            return RedirectToAction("Purchased", "User", new { tab = "deliveried" });
         }
 
         public ActionResult DeleteCartItem(int idBook)
