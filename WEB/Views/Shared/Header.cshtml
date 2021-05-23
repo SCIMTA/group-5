@@ -36,15 +36,27 @@
             }
         </nav>
     </div>
-    <form action="/Home/List" class="input-group container pt-4 pb-4 mt-5">
+    <div class="input-group container pt-4 pb-4 mt-5">
         <a href="/" class="col-2" style="margin-top:-5px;margin-right:35px">
             <img style="width:100%;min-height:40px;max-height:40px;object-fit:contain" src="~/Content/Icon/ic_icon.png" />
         </a>
         <div class="col-9 input-group">
             <input name="text" type="text" class="form-control" placeholder="Đắc nhân tâm" value="@ViewBag.TextSearch" />
-            <button class="btn btn-solid-primary btn-light" style="color:white;background-color:#ee4d2d;" type="submit">
+            <button onclick="getUrl({page:1})" class="btn btn-solid-primary btn-light" style="color:white;background-color:#ee4d2d;" type="submit">
                 <ion-icon style="font-size:15px" name="search"></ion-icon>
             </button>
         </div>
-    </form>
+    </div>
+
 </header>
+<script>
+    let getUrl = () => {
+        let text = $("input.form-control").val()
+        let url = `/Home/List?text=${text}`
+        window.location.href = url
+    }
+    $("input.form-control").on('keydown', (event) => {
+        if (event.keyCode == 13)
+            getUrl({ page: 1 })
+    })
+</script>

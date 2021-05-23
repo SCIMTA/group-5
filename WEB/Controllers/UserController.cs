@@ -74,6 +74,15 @@ namespace taka.Controllers
                 return Json(new { status = 0 });
             }
         }
+
+        [HttpPost]
+        public ActionResult RateBook(int idBook, string comment,int star)
+        {
+            User user = (User)Session[C.SESSION.UserInfo];
+            db.RateBook(idBook, user.ID, comment, star);
+            return RedirectToAction("Purchased", "User");
+        }
+
         public ActionResult DeleteCartItem(int idBook)
         {
             User user = (User)Session[C.SESSION.UserInfo];

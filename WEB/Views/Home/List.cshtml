@@ -98,7 +98,7 @@
         </div>
     </div>
     <div style="background-color:#f5f5f5;width:15px"></div>
-    <div style="flex:4;margin-left:15px">
+    <div style="flex:3;margin-left:15px">
         <div class="row col">
             <div class="mt-1">Sắp xếp theo</div>
             <div class="dropdown ml-3">
@@ -248,7 +248,7 @@
         $('#' + id).css('border', '1px solid white')
     }
 
-     let getUrl = ({ page = '@ViewBag.Page',
+    getUrl = ({ page = '@ViewBag.Page',
         text = $(".form-control")[0].value,
         cate = '@ViewBag.Cate',
         sort = '@ViewBag.Sort',

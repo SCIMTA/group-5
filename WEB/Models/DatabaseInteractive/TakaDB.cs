@@ -97,6 +97,17 @@ namespace taka.Models.DatabaseInteractive
             return takaDB.Categories.ToList();
         }
 
+        public void RateBook(int idBook, int idUser, string comment, int star)
+        {
+            Rate rate = new Rate();
+            rate.idBook = idBook;
+            rate.idUser = idUser;
+            rate.Comment = comment;
+            rate.Rate1 = star;
+            takaDB.Rates.Add(rate);
+            takaDB.SaveChanges();
+        }
+
         public List<Author> GetAuthors()
         {
             return takaDB.Authors.ToList();
@@ -675,7 +686,7 @@ namespace taka.Models.DatabaseInteractive
             }
         }
 
-        public void CheckOut(int[] id_cart, int id_address, int totalPrice, string shipper, int idUser, string fullName, string phone, string address, string message,int shipFee)
+        public void CheckOut(int[] id_cart, int id_address, int totalPrice, string shipper, int idUser, string fullName, string phone, string address, string message, int shipFee)
         {
 
             Order order = new Order();
