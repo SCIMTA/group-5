@@ -163,11 +163,11 @@
                                         @item.Title
                                     </div>
                                     <b style="font-size: 18px; color: #ee4d2d;">
-                                        @String.Format(new System.Globalization.CultureInfo("vi-VN"), "{0:N0}", item.Price) đ
+                                        @taka.Utils.HelperFunctions.formatMoney(item.Price)
                                     </b>
                                     <div>
                                         <i style="font-size:14px;color:dimgray;text-decoration: line-through;">
-                                            @String.Format(new System.Globalization.CultureInfo("vi-VN"), "{0:N0}", (double)item.Price * 1.5)đ
+                                            @taka.Utils.HelperFunctions.formatMoney((double)item.Price * 1.5)
                                         </i>
                                     </div>
                                 </div>

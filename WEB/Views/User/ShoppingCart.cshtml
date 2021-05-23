@@ -69,7 +69,7 @@
                                         <p class="mb-0">
                                             <span>
                                                 <strong id="summary" style="color:#ee4d2d">
-                                                    VND: @String.Format(new System.Globalization.CultureInfo("vi-VN"), "{0:N0}", item.Book.Price)
+                                                    VND: @taka.Utils.HelperFunctions.formatMoney(item.Book.Price, " ")
                                                 </strong>
                                             </span>
                                         </p>

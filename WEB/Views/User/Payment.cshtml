@@ -111,7 +111,9 @@
                                     <h6 class="my-0">@item.bookName</h6>
                                     <small class="text-muted">Số lượng: @item.quantity</small>
                                 </div>
-                                <span class="text-muted">@String.Format(new System.Globalization.CultureInfo("vi-VN"), "{0:N0}", item.price * item.quantity) VND</span>
+                                <span class="text-muted">
+                                    @taka.Utils.HelperFunctions.formatMoney(item.price * item.quantity,"VND")
+                                </span>
                             </li>
                         }
 

@@ -30,7 +30,7 @@
             @Model.Title
         </h2>
         <h1 style="color:#ee4d2d">
-            @String.Format(new System.Globalization.CultureInfo("vi-VN"), "{0:N0}", Model.Price) đ
+            @taka.Utils.HelperFunctions.formatMoney(Model.Price)
         </h1>
         <hr />
         <p>

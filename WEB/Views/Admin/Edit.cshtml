@@ -158,7 +158,6 @@
 
     let onInputValid = id => {
         let value = $("#" + id).val() + ""
-        console.log(value)
         if (value == "") {
             $("#" + id).val($("#" + id).attr("min"))
         }
@@ -217,7 +216,6 @@
         setFileInput()
     }
 </script>
-
 <script>
     let imgCount = @images.Count;
 

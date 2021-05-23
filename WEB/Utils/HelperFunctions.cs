@@ -7,9 +7,9 @@ namespace taka.Utils
 {
     public class HelperFunctions
     {
-        public static string formatMoney(object price)
+        public static string formatMoney(object price, string prefix = "đ")
         {
-            return String.Format(new System.Globalization.CultureInfo("vi-VN"), "{0:N0}", price) + " VND";
+            return String.Format(new System.Globalization.CultureInfo("vi-VN"), "{0:N0}", price) + " " + prefix;
         }
         public static int[] getNumPage(int currentPage, int maxPageSize)
         {

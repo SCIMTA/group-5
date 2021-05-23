@@ -479,6 +479,39 @@ namespace taka.Models.DatabaseInteractive
             return book;
         }
 
+        public Image UploadImage(int idBook, HttpPostedFileBase image)
+        {
+            try
+            {
+                MemoryStream target = new MemoryStream();
+                image.InputStream.CopyTo(target);
+                byte[] data = target.ToArray();
+                var client = new RestClient("http://128.199.108.177:8001/upload_image");
+                var request = new RestRequest(Method.POST);
+                request.AddHeader("Content-Type", "multipart/form-data");
+                request.AlwaysMultipartFormData = true;
+                request.AddFile("book_cover", data, "image.jpeg");
+                IRestResponse response = client.Execute(request);
+                string resJsonRaw = response.Content;
+                JObject json = JObject.Parse(resJsonRaw);
+                Image imgObj = new Image();
+                imgObj.idBook = idBook;
+                imgObj.Url = json.GetValue("url").ToString();
+                takaDB.Images.Add(imgObj);
+                takaDB.SaveChanges();
+                return imgObj;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public void DelteImage(int idImage)
+        {
+            takaDB.Images.Remove(takaDB.Images.Where(x => x.ID.Equals(idImage)).First());
+            takaDB.SaveChanges();
+        }
 
         public Book EditBook(int ID,
             IEnumerable<int> images_delete,
@@ -538,17 +571,18 @@ namespace taka.Models.DatabaseInteractive
                             takaDB.Images.Add(imgObj);
                         }
                     }
-                    catch (Exception e)
+                    catch (Exception)
                     {
 
                     }
                 }
             }
-            for (int i = 0; i < idImage.Length; i++)
-            {
-                var idImg = idImage[i];
-                book.Images.Where(x => x.ID.Equals(idImg)).First().order = indexImage[i];
-            }
+            if (idImage != null && idImage.Length > 0)
+                for (int i = 0; i < idImage.Length; i++)
+                {
+                    var idImg = idImage[i];
+                    book.Images.Where(x => x.ID.Equals(idImg)).First().order = indexImage[i];
+                }
             takaDB.SaveChanges();
             return book;
         }

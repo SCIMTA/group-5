@@ -191,7 +191,7 @@
                         @item.Quantity
                     </div>
                     <i class="price-book">
-                        @String.Format(new System.Globalization.CultureInfo("vi-VN"), "{0:N0}", item.Price) đ
+                        @taka.Utils.HelperFunctions.formatMoney(item.Price)
                     </i>
                     <div class="header-book" style="flex-direction:row">
                         <a href="/Admin/Edit?id=@item.ID">

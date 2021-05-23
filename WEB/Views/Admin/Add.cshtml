@@ -124,7 +124,15 @@
 
 </form>
 <script>
-
+    let dropIndex;
+    $("#images").sortable({
+        update: function (event, ui) {
+            dropIndex = ui.item.index();
+            for (let i = 1; i < $("#images input").length; i = i + 2) {
+                $($("#images input")[i]).val(i)
+            }
+        }
+    });
     let onInputValid = id => {
         let value = $("#" + id).val() + ""
         console.log(value)

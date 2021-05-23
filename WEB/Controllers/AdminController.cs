@@ -121,6 +121,34 @@ namespace taka.Controllers
             }
         }
 
+        [HttpPost]
+        public JsonResult UploadImage(int idBook, HttpPostedFileBase image)
+        {
+            try
+            {
+                Image img = dB.UploadImage(idBook, image);
+                return Json(new { status = 1, url = img.Url });
+            }
+            catch (Exception)
+            {
+                return Json(new { status = 0 });
+            }
+        }
+
+        [HttpPost]
+        public JsonResult DeleteImage(int idImage)
+        {
+            try
+            {
+                dB.DelteImage(idImage);
+                return Json(new { status = 1 });
+            }
+            catch (Exception)
+            {
+                return Json(new { status = 0 });
+            }
+        }
+
 
         [HttpPost]
         public ActionResult EditBook(int ID,
