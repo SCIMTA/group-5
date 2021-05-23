@@ -47,8 +47,9 @@
                        class="form-control"
                        name="Price"
                        id="Price"
+                       min="0"
                        required
-                       oninput="setCustomValidity('')"
+                       oninput="onInputValid('Price')"
                        oninvalid="this.setCustomValidity('@ViewBag.MessageForValid')" />
             </div>
             <div class="form-group">
@@ -87,8 +88,9 @@
                        class="form-control"
                        name="Page"
                        id="Page"
+                       min="0"
                        required
-                       oninput="setCustomValidity('')"
+                       oninput="onInputValid('Page')"
                        oninvalid="this.setCustomValidity('@ViewBag.MessageForValid')" />
             </div>
 
@@ -98,8 +100,9 @@
                        class="form-control"
                        name="Quantity"
                        id="Quantity"
+                       min="0"
                        required
-                       oninput="setCustomValidity('')"
+                       oninput="onInputValid('Quantity')"
                        oninvalid="this.setCustomValidity('@ViewBag.MessageForValid')" />
             </div>
             <div class="form-group">
@@ -121,6 +124,18 @@
 
 </form>
 <script>
+
+    let onInputValid = id => {
+        let value = $("#" + id).val() + ""
+        console.log(value)
+        if (value == "") {
+            $("#" + id).val($("#" + id).attr("min"))
+        }
+        else {
+            $("#" + id).val(parseInt(value))
+            $("#" + id)[0].setCustomValidity('')
+        }
+    }
 
     const goBack = () => {
         if (document.referrer.includes("Edit")) {

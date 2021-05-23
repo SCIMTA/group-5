@@ -15,6 +15,7 @@ namespace taka.Models.Enitities
         public string Url { get; set; }
 
         public int? idBook { get; set; }
+        public int? order { get; set; }
 
         public virtual Book Book { get; set; }
     }

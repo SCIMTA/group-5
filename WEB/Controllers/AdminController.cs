@@ -62,6 +62,12 @@ namespace taka.Controllers
 
         public ActionResult Order()
         {
+            List<Order> processingOrder = dB.GetProcessingOrders();
+            List<Order> doneOrder = dB.GetDoneOrders();
+            ViewBag.ProcessingOrders = processingOrder;
+            ViewBag.ProcessingOrdersAddresses = processingOrder.Select(x => dB.GetAddressByIdAddress(x.IDAddress)).ToList();
+            ViewBag.DoneOrders = doneOrder;
+            ViewBag.DoneOrdersAddresses = doneOrder.Select(x => dB.GetAddressByIdAddress(x.IDAddress)).ToList();
             return View();
         }
 
@@ -130,10 +136,22 @@ namespace taka.Controllers
             string Page,
             string Date,
             int Quantity,
-            string Description)
+            string Description,
+            int[] idImage,
+            int[] indexImage
+            )
         {
-            dB.EditBook(ID, images_delete, Images, Title, Price, idCategory, idAuthor, idPublisher, idLanguage, idType, Page, Date, Quantity, Description);
-            return RedirectToAction("Edit", "Admin", new { id = ID });
+            try
+            {
+                dB.EditBook(ID, images_delete, Images, Title, Price, idCategory, idAuthor, idPublisher, idLanguage, idType, Page, Date, Quantity, Description, idImage, indexImage);
+                TempData[C.TEMPDATA.Message] = "Cập nhật đơn hàng thành công";
+                return RedirectToAction("Book", "Admin");
+            }
+            catch (Exception)
+            {
+                TempData[C.TEMPDATA.Message] = "Cập nhật đơn hàng thật bại, vui lòng thử lại";
+                return RedirectToAction("Edit", "Admin", new { id = ID });
+            }
         }
 
         [HttpPost]
@@ -167,8 +185,19 @@ namespace taka.Controllers
             int Quantity,
             string Description)
         {
-            Book book = dB.AddBook(Images, Title, Price, idCategory, idAuthor, idPublisher, idLanguage, idType, Page, Date, Quantity, Description);
-            return RedirectToAction("Detail", "Home", new { id = book.ID });
+
+            try
+            {
+                Book book = dB.AddBook(Images, Title, Price, idCategory, idAuthor, idPublisher, idLanguage, idType, Page, Date, Quantity, Description);
+                TempData[C.TEMPDATA.Message] = "Tạo đơn hàng thành công";
+                return RedirectToAction("Book", "Admin");
+            }
+            catch (Exception)
+            {
+                TempData[C.TEMPDATA.Message] = "Tạo đơn hàng thật bại, vui lòng thử lại";
+                return RedirectToAction("Add", "Admin");
+            }
+
         }
 
         public ActionResult Add()

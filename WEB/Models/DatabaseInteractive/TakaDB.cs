@@ -493,7 +493,10 @@ namespace taka.Models.DatabaseInteractive
             string Page,
             string Date,
             int Quantity,
-            string Description)
+            string Description,
+            int[] idImage,
+            int[] indexImage
+            )
         {
             if (images_delete != null)
                 takaDB.Images.RemoveRange(takaDB.Images.Where(x => images_delete.Contains(x.ID)));
@@ -540,6 +543,11 @@ namespace taka.Models.DatabaseInteractive
 
                     }
                 }
+            }
+            for (int i = 0; i < idImage.Length; i++)
+            {
+                var idImg = idImage[i];
+                book.Images.Where(x => x.ID.Equals(idImg)).First().order = indexImage[i];
             }
             takaDB.SaveChanges();
             return book;
@@ -666,14 +674,18 @@ namespace taka.Models.DatabaseInteractive
             takaDB.SaveChanges();
         }
 
-        public List<Order> GetProcessingOrders(int id)
+        public List<Order> GetProcessingOrders(int id = -1)
         {
-            List<Order> orders = takaDB.Orders.Where(x => x.idUser == id && x.OrderStatus == 0).ToList();
+            List<Order> orders = id.Equals(-1) ?
+                takaDB.Orders.Where(x => x.OrderStatus == 0).ToList()
+                : takaDB.Orders.Where(x => x.idUser == id && x.OrderStatus == 0).ToList();
             return orders;
         }
-        public List<Order> GetDoneOrders(int id)
+        public List<Order> GetDoneOrders(int id = -1)
         {
-            List<Order> orders = takaDB.Orders.Where(x => x.idUser == id && x.OrderStatus == 1).ToList();
+            List<Order> orders = id.Equals(-1) ?
+                takaDB.Orders.Where(x => x.OrderStatus == 1).ToList()
+                : takaDB.Orders.Where(x => x.idUser == id && x.OrderStatus == 1).ToList();
             return orders;
         }
 

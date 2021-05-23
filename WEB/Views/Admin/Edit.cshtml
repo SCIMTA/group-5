@@ -7,7 +7,7 @@
 
     List<taka.Models.Enitities.Image> images = new List<taka.Models.Enitities.Image>();
 
-    images.AddRange(Model.Images.ToList());
+    images.AddRange(Model.Images.OrderBy(x => x.order).ToList());
 }
 
 
@@ -38,9 +38,12 @@
         <div id="images" style="overflow-x:auto;height:300px;flex-direction:row;display:flex;overflow-y:hidden">
             @for (int i = 0; i < images.Count; i++)
             {
-                <div onclick="deleteImage('@i', '@images[i].ID')" class="m-3" style="position: relative; display: inline-block;" id="divBiaSach_@i" onmouseover="onFocusImg('@i')" onmouseout="onBlurImg()">
-                    <img id="imgBiaSach_@i" src="@images[i].Url" style="height:250px;width:250px;object-fit:contain;text-align:center;" />
-                    <div style="position: absolute; top: 100px; left: 100px; height: 100%; width: 100%; z-index: 2;"><img hidden='hidden' id="icDelete_@i" style="height:50px;width:50px;object-fit:contain;" src="/Content/Icon/ic_delete.png" /></div>
+                var img = images[i];
+                <div class="m-3" style="position: relative; display: inline-block;" id="divBiaSach_@i" onmouseover="onFocusImg('@i')" onmouseout="onBlurImg()">
+                    <input id="idImage" name="idImage" type="number" hidden value="@img.ID" />
+                    <input id="indexImage" name="indexImage" type="number" hidden value="@img.order" />
+                    <img id="imgBiaSach_@i" src="@img.Url" style="height:250px;width:250px;object-fit:contain;text-align:center;" />
+                    <div onclick="deleteImage('@i', '@img.ID')" style="position: absolute; top: 100px; left: 100px; height: 100%; width: 100%; z-index: 2;"><img hidden='hidden' id="icDelete_@i" style="height:50px;width:50px;object-fit:contain;" src="/Content/Icon/ic_delete.png" /></div>
                 </div>
             }
         </div>
@@ -66,8 +69,9 @@
                        name="Price"
                        id="Price"
                        value="@Model.Price"
+                       min="0"
                        required
-                       oninput="setCustomValidity('')"
+                       oninput="onInputValid('Price')"
                        oninvalid="this.setCustomValidity('@ViewBag.MessageForValid')" />
             </div>
             <div class="form-group">
@@ -108,8 +112,9 @@
                        name="Page"
                        id="Page"
                        value="@Model.Page"
+                       min="0"
                        required
-                       oninput="setCustomValidity('')"
+                       oninput="onInputValid('Page')"
                        oninvalid="this.setCustomValidity('@ViewBag.MessageForValid')" />
             </div>
 
@@ -120,8 +125,9 @@
                        name="Quantity"
                        id="Quantity"
                        value="@Model.Quantity"
+                       min="0"
                        required
-                       oninput="setCustomValidity('')"
+                       oninput="onInputValid('Quantity')"
                        oninvalid="this.setCustomValidity('@ViewBag.MessageForValid')" />
             </div>
             <div class="form-group">
@@ -140,6 +146,27 @@
 </form>
 <script>
 
+    let dropIndex;
+    $("#images").sortable({
+        update: function (event, ui) {
+            dropIndex = ui.item.index();
+            for (let i = 1; i < $("#images input").length; i = i + 2) {
+                $($("#images input")[i]).val(i)
+            }
+        }
+    });
+
+    let onInputValid = id => {
+        let value = $("#" + id).val() + ""
+        console.log(value)
+        if (value == "") {
+            $("#" + id).val($("#" + id).attr("min"))
+        }
+        else {
+            $("#" + id).val(parseInt(value))
+            $("#" + id)[0].setCustomValidity('')
+        }
+    }
     const goBack = () => {
         if (document.referrer.includes("Edit")) {
             window.location.href = '/Admin/Book'

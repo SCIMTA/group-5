@@ -19,3 +19,22 @@
         </div>
     </div>
 </div>
+
+<script>
+    const hideMessage = () => {
+        $("#messageModal").modal('hide');
+    }
+    const showMessage = () => {
+        $("#messageModal").modal('show');
+    }
+    if (document
+        .getElementById("message").textContent.trim().length > 0) {
+        console.log("run")
+        setTimeout(() => {
+            showMessage();
+        }, 300);
+    }
+    const goToLoginPage = () => {
+        window.location.href = `/Home/Login?returnUrl=${window.location.href}`
+    }
+</script>

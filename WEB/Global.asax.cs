@@ -41,9 +41,8 @@ namespace taka
             if (user == null)
             {
                 var AbsolutePath = Request.Url.AbsolutePath;
-                var UrlReferrer = Request.UrlReferrer;
                 if (AbsolutePath.Contains("Admin") || AbsolutePath.Contains("User"))
-                    Response.Redirect("/Home/Login?returnUrl="+UrlReferrer);
+                    Response.Redirect("/Home/Login?returnUrl=" + AbsolutePath);
             }
         }
 

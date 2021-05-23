@@ -27,7 +27,7 @@ namespace taka.Controllers
             ViewBag.ProcessingOrdersAddresses = processingOrder.Select(x => db.GetAddressByIdAddress(x.IDAddress)).ToList();
             ViewBag.DoneOrders = doneOrder;
             ViewBag.DoneOrdersAddresses = doneOrder.Select(x => db.GetAddressByIdAddress(x.IDAddress)).ToList();
-            return View(user);
+            return View();
         }
         public ActionResult AddToCart(int idBook, int quantity)
         {
