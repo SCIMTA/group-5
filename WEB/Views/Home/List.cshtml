@@ -157,7 +157,7 @@
                             <a href="/Home/Detail?id=@item.ID" id="root_@item.ID" style="flex:1;min-width:200px; position: relative;margin:5px;padding:5px; text-decoration:none;border: 1px solid white" onmousemove="onMoveMouseItem('root_@item.ID')" onmouseout="onMoveOutMouseOfItem('root_@item.ID')">
                                 <div>
                                     <p>
-                                        <img src="@item.Images.First().Url" style="width:100% ;height:200px;object-fit:contain" />
+                                        <img src="@item.Images.OrderBy(x=>x.order).First().Url" style="width:100% ;height:200px;object-fit:contain" />
                                     </p>
                                     <div style=" overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;height:50px;color:dimgray">
                                         @item.Title

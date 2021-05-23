@@ -18,12 +18,12 @@
 <div class="row">
     <div class="col-7 row">
         <div class="col-3" style="overflow-x:hidden;overflow-y:auto;height:650px;">
-            @foreach (var img in Model.Images.ToList())
+            @foreach (var img in Model.Images.OrderBy(x => x.order).ToList())
             {
                 <img onmouseout="onMoveOutMouseOfImageItem();" onmousemove="onMoveMouseToImageItem('@img.Url','image_item_@img.ID');" id="image_item_@img.ID" src="@img.Url" style="width:100px;height:100px; object-fit:cover;" class="col ml-3 mt-1 zoom" />
             }
         </div>
-        <img class="col-9" src="@Model.Images.First().Url" style="object-fit:contain" id="main_image" />
+        <img class="col-9" src="@Model.Images.OrderBy(x=>x.order).First().Url" style="object-fit:contain" id="main_image" />
     </div>
     <div class="col-5">
         <h2>

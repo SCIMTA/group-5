@@ -75,7 +75,7 @@
                     <a class="col-3" href="/Home/Detail?id=@item.ID" style="max-width:22%; position: relative; display: inline-block; text-decoration:none ">
                         <div>
                             <p>
-                                <img src="@item.Images.First().Url" style="width:100% ;height:200px" />
+                                <img src="@item.Images.OrderBy(x=>x.order).First().Url" style="width:100% ;height:200px" />
                             </p>
                             <div style=" overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;height:50px;color:dimgray">
                                 @item.Title

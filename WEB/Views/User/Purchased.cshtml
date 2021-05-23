@@ -41,7 +41,7 @@
                             <li class="list-group-item list-group-item-action">
                                 <a href="/Home/Detail?id=@book.idBook" style="text-decoration:none;color:#808080;justify-content:space-between; display:flex;flex-direction:row">
                                     <div>
-                                        <img src="@book.Book.Images.First().Url" style="width:80px; height:80px;" />
+                                        <img src="@book.Book.Images.OrderBy(x=>x.order).First().Url" style="width:80px; height:80px;" />
                                         <strong>@book.Book.Title</strong>
                                     </div>
                                     <div>
@@ -88,7 +88,7 @@
                             <li class="list-group-item list-group-item-action">
                                 <a href="/Home/Detail?id=@book.idBook" style="text-decoration:none;color:#808080;justify-content:space-between; display:flex;flex-direction:row">
                                     <div>
-                                        <img src="@book.Book.Images.First().Url" style="width:80px; height:80px;" />
+                                        <img src="@book.Book.Images.OrderBy(x=>x.order).First().Url" style="width:80px; height:80px;" />
                                         <strong>@book.Book.Title</strong>
                                     </div>
                                     <div>
