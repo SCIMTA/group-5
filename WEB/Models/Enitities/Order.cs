@@ -23,7 +23,6 @@ namespace taka.Models.Enitities
         public DateTime? CreateDate { get; set; }
 
         public decimal? TotalPrice { get; set; }
-        public decimal? ShipFee { get; set; }
 
         public int? OrderStatus { get; set; }
 
@@ -37,6 +36,8 @@ namespace taka.Models.Enitities
 
         [StringLength(100)]
         public string Notes { get; set; }
+
+        public decimal? ShipFee { get; set; }
 
         public virtual User User { get; set; }
 

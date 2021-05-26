@@ -24,19 +24,6 @@
         <div class="ml-3">
             <br />
             <h5>
-                Giá
-            </h5>
-            <label>Từ</label>
-            <input type="number" class="form-control price" value="@ViewBag.PriceFrom" />
-            <label>Đến</label>
-            <input type="number" class="form-control price" value="@ViewBag.PriceTo" />
-            <p>
-                <a href="#" onclick="getUrl({ priceFrom: $('.form-control.price')[0].value, priceTo:$('.form-control.price')[1].value })"
-                   class="btn btn-light mt-1" style="background-color:#ee4d2d;color:white">
-                    Xác nhận
-                </a>
-            </p>
-            <h5>
                 THỂ LOẠI
             </h5>
             @foreach (var cate in ViewBag.ListCate)
@@ -55,7 +42,21 @@
                     <a class="list-group-item" style="border:0px;padding:10px;color:dimgray" href="#" onclick="getUrl({ cate: '@cate.ID', page:1 })">@cate.Name</a>
                 }
             }
-            <br />
+            <hr />
+            <h5>
+                Giá
+            </h5>
+            <label>Từ</label>
+            <input type="number" class="form-control price" value="@ViewBag.PriceFrom" style="max-width:150px" />
+            <label>Đến</label>
+            <input type="number" class="form-control price" value="@ViewBag.PriceTo" style="max-width:150px" />
+            <p>
+                <a href="#" onclick="getUrl({ priceFrom: $('.form-control.price')[0].value, priceTo:$('.form-control.price')[1].value })"
+                   class="btn btn-light mt-1" style="background-color:#ee4d2d;color:white">
+                    Xác nhận
+                </a>
+            </p>
+            <hr />
             <h5>
                 HÌNH THỨC
             </h5>

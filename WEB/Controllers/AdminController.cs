@@ -15,6 +15,7 @@ namespace taka.Controllers
     {
 
         TakaDB dB = new TakaDB();
+
         // GET: Admin
         public ActionResult Book(int page = 1, string text = "", int cate = 0, int sort = 0, int pageSize = 16, int type = 0, int language = 0, int priceFrom = 0, int priceTo = 0)
         {
@@ -117,38 +118,9 @@ namespace taka.Controllers
             }
             catch (Exception)
             {
-                return RedirectToAction("Error", "Home");
+                return RedirectToAction("Book", "Admin");
             }
         }
-
-        [HttpPost]
-        public JsonResult UploadImage(int idBook, HttpPostedFileBase image)
-        {
-            try
-            {
-                Image img = dB.UploadImage(idBook, image);
-                return Json(new { status = 1, url = img.Url });
-            }
-            catch (Exception)
-            {
-                return Json(new { status = 0 });
-            }
-        }
-
-        [HttpPost]
-        public JsonResult DeleteImage(int idImage)
-        {
-            try
-            {
-                dB.DelteImage(idImage);
-                return Json(new { status = 1 });
-            }
-            catch (Exception)
-            {
-                return Json(new { status = 0 });
-            }
-        }
-
 
         [HttpPost]
         public ActionResult EditBook(int ID,
@@ -166,12 +138,27 @@ namespace taka.Controllers
             int Quantity,
             string Description,
             int[] idImage,
-            int[] indexImage
-            )
+            int[] indexImage)
         {
             try
             {
-                dB.EditBook(ID, images_delete, Images, Title, Price, idCategory, idAuthor, idPublisher, idLanguage, idType, Page, Date, Quantity, Description, idImage, indexImage);
+                dB.EditBook(ID,
+                    images_delete,
+                    Images,
+                    Title,
+                    Price,
+                    idCategory,
+                    idAuthor,
+                    idPublisher,
+                    idLanguage,
+                    idType,
+                    Page,
+                    Date,
+                    Quantity,
+                    Description,
+                    idImage,
+                    indexImage,
+                    Server);
                 TempData[C.TEMPDATA.Message] = "Cập nhật đơn hàng thành công";
                 return RedirectToAction("Book", "Admin");
             }
@@ -189,7 +176,7 @@ namespace taka.Controllers
             {
                 if (id == -1)
                     throw new Exception("Not found");
-                dB.DeleteBook(id, false);
+                dB.DeleteBook(id, true);
             }
             catch (Exception)
             {
@@ -216,7 +203,7 @@ namespace taka.Controllers
 
             try
             {
-                Book book = dB.AddBook(Images, Title, Price, idCategory, idAuthor, idPublisher, idLanguage, idType, Page, Date, Quantity, Description);
+                Book book = dB.AddBook(Images, Title, Price, idCategory, idAuthor, idPublisher, idLanguage, idType, Page, Date, Quantity, Description, Server);
                 TempData[C.TEMPDATA.Message] = "Tạo đơn hàng thành công";
                 return RedirectToAction("Book", "Admin");
             }

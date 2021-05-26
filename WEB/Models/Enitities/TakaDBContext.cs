@@ -8,7 +8,7 @@ namespace taka.Models.Enitities
     public partial class TakaDBContext : DbContext
     {
         public TakaDBContext()
-            : base("name=TakaDBConnect")
+            : base("name=TakaDBContext")
         {
         }
 
@@ -92,6 +92,10 @@ namespace taka.Models.Enitities
 
             modelBuilder.Entity<Order>()
                 .Property(e => e.TotalPrice)
+                .HasPrecision(18, 0);
+
+            modelBuilder.Entity<Order>()
+                .Property(e => e.ShipFee)
                 .HasPrecision(18, 0);
 
             modelBuilder.Entity<Order>()
