@@ -409,9 +409,11 @@ namespace taka.Models.DatabaseInteractive
             takaDB.SaveChanges();
             return cart;
         }
-        public List<Cart> GetListCarts(int idUser)
+        public List<Cart> GetListCarts(int idUser, int take = -1)
         {
             var listCarts = takaDB.Carts.Where(x => x.idUser == idUser).ToList();
+            if (!take.Equals(-1))
+                listCarts = listCarts.Take(take).ToList();
             return listCarts;
         }
         public void DeleteCartItem(int idUser, int idBook)

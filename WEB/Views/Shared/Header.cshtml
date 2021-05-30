@@ -1,5 +1,6 @@
 ﻿@{
     taka.Models.Enitities.User userInfo = (taka.Models.Enitities.User)Session["UserInfo"];
+    List<taka.Models.Enitities.Cart> carts = (List<taka.Models.Enitities.Cart>)Session[taka.Utils.C.SESSION.Cart];
 }
 
 <header style="background-color:#ee4d2d" role="banner">
@@ -24,10 +25,16 @@
             }
             @if (userInfo != null && !userInfo.ID.Equals(taka.Utils.C.ID_ADMIN))
             {
-
-                <button type="button" class="btn btn-light m-1" data-toggle="modal" data-target="#modalUser" style="color:#ee4d2d;">
-                    <b>Xin chào @userInfo.Fullname</b>
+                <button type="button" onmousemove="showUserMenu()" class="btn btn-light m-1" style="color:#ee4d2d;">
+                    <b>@userInfo.Fullname</b>
                 </button>
+                <div class="dropdown" onmousemove="showUserMenu()" onmouseout="hideUserMenu()" style="position:absolute;margin-top:38px;">
+                    <div class="dropdown-menu" id="user-info" onmousemove="showUserMenu()">
+                        <a href="/User/Purchased" class="dropdown-item">Đơn hàng</a>
+                        <a href="/User/Infor" class="dropdown-item">Quản lý thông tin</a>
+                        <a href="/Home/Logout" class="dropdown-item" style="color:red">Đăng xuất</a>
+                    </div>
+                </div>
             }
         </nav>
     </div>
@@ -41,18 +48,43 @@
                 <ion-icon style="font-size:15px" name="search"></ion-icon>
             </button>
         </div>
-        <a href="/User/ShoppingCart" style="position:relative">
+        <a href="/User/ShoppingCart" style="position:relative;display: inline-block;" onmousemove="showPreviewCart()">
             <ion-icon class="m-1" style="font-size:30px; color:white" name="cart-outline"></ion-icon>
-            @if (Session[taka.Utils.C.SESSION.Cart] != null)
+            @if (carts != null)
             {
-                if (Session[taka.Utils.C.SESSION.Cart].Equals("0"))
+                if (!carts.Count.Equals("0"))
                 {
                     <b style="position:absolute;top:0%;right:0%;background-color:white;border-radius:30px;width:20px;height:20px;text-align:center;line-height:15px;border:1px solid #ee4d2d;color:#ee4d2d">
-                        @Session[taka.Utils.C.SESSION.Cart]
+                        @carts.Count
                     </b>
                 }
+
+
             }
         </a>
+        @if (carts != null)
+        {
+            <div class="dropdown" onmouseout="hidePreviewCart()" onmousemove="showPreviewCart()" style="display:inline-block;margin: 0;position:absolute;width:500px;right:-80px;top:160px;z-index:99">
+                <div class="dropdown-menu" id="previewCart" >
+                    @foreach (var cart in carts)
+                    {
+                        <a href="/Home/Detail?id=@cart.Book.ID" style="display:flex;flex-direction:row;padding:10px;text-decoration:none;color:#808080;align-items:center;justify-content:space-between">
+                            <div style="display:flex;flex-direction:row;align-items:center;margin-right:20px;max-width:300px">
+                                <img src="@cart.Book.Images.First().Url" style="width:80px;object-fit:contain;height:80px" />
+                                <div>
+                                    @cart.Book.Title
+                                </div>
+                            </div>
+                            <div style="display:flex;text-align:end;">
+                                @taka.Utils.HelperFunctions.formatMoney(cart.Book.Price)
+                            </div>
+                        </a>
+                    }
+                </div>
+            </div>
+        }
+
+
     </div>
 
 </header>
@@ -66,4 +98,21 @@
         if (event.keyCode == 13)
             getUrl({ page: 1 })
     })
+
+    let showUserMenu = () => {
+        $('#user-info').show()
+    }
+
+    let hideUserMenu = () => {
+        $('#user-info').hide()
+    }
+
+    let showPreviewCart = () => {
+        $('#previewCart').show()
+    }
+
+    let hidePreviewCart = () => {
+        $('#previewCart').hide()
+    }
+
 </script>

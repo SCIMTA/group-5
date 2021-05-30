@@ -34,10 +34,8 @@ namespace taka
         void Application_PreRequestHandlerExecute(object sender, EventArgs e)
         {
             User user = (User)Session[C.SESSION.UserInfo];
-
-
             if (user != null)
-                Session[C.SESSION.Cart] = new Models.DatabaseInteractive.TakaDB().GetListCarts(user.ID).Count;
+                Session[C.SESSION.Cart] = new Models.DatabaseInteractive.TakaDB().GetListCarts(user.ID, 5);
             if (user == null)
             {
                 var AbsolutePath = Request.Url.AbsolutePath;
