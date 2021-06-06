@@ -28,9 +28,9 @@
                 Giá
             </h5>
             <label>Từ</label>
-            <input type="number" class="form-control price" value="@ViewBag.PriceFrom" />
+            <input type="number" class="form-control price price-from" value="@ViewBag.PriceFrom" />
             <label>Đến</label>
-            <input type="number" class="form-control price" value="@ViewBag.PriceTo" />
+            <input type="number" class="form-control price price-to" value="@ViewBag.PriceTo" />
             <p>
                 <a href="#" onclick="getUrl({ priceFrom: $('.form-control.price')[0].value, priceTo:$('.form-control.price')[1].value })"
                    class="btn btn-light mt-1" style="background-color:#ee4d2d;color:white">
@@ -147,7 +147,6 @@
             <p class="mt-3">
                 Trang @ViewBag.CurrentPage/@ViewBag.maxPage
             </p>
-
             <div style="margin:10px; flex:1;flex-direction:row;display:flex; border: 1px solid white;padding:10px;text-decoration:none">
                 <div style="width:100px ;object-fit:contain"></div>
                 <b class="title-book">
@@ -255,6 +254,19 @@
 </div>
 
 <script>
+
+    $(".form-control.price").on("change paste keyup", function () {
+        let value = $(this).val() + ""
+        let minValue = 0
+        if (value == "") {
+            $(this).val(minValue)
+        }
+        else {
+            $(this).val(Math.max(minValue, parseInt(value)))
+            $(this)[0].setCustomValidity('')
+        }
+    });
+
     const onMoveMouseItem = (id) => {
         $('#' + id).css('border', '1px solid #ee4d2d')
     }

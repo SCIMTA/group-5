@@ -71,7 +71,6 @@
                        value="@Model.Price"
                        min="0"
                        required
-                       oninput="onInputValid('Price')"
                        oninvalid="this.setCustomValidity('@ViewBag.MessageForValid')" />
             </div>
             <div class="form-group">
@@ -114,7 +113,6 @@
                        value="@Model.Page"
                        min="0"
                        required
-                       oninput="onInputValid('Page')"
                        oninvalid="this.setCustomValidity('@ViewBag.MessageForValid')" />
             </div>
 
@@ -127,7 +125,6 @@
                        value="@Model.Quantity"
                        min="0"
                        required
-                       oninput="onInputValid('Quantity')"
                        oninvalid="this.setCustomValidity('@ViewBag.MessageForValid')" />
             </div>
             <div class="form-group">
@@ -145,6 +142,18 @@
     </div>
 </form>
 <script>
+
+    $("input.form-control[type='number']").on("change paste keyup", function () {
+        let value = $(this).val() + ""
+        console.log(value)
+        if (value == "") {
+            $(this).val(0)
+        }
+        else {
+            $(this).val(Math.max(0, parseInt(value)))
+            $(this)[0].setCustomValidity('')
+        }
+    });
 
     let dropIndex;
     $("#images").sortable({
