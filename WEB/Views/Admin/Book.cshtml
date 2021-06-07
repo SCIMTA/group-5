@@ -1,5 +1,13 @@
 ﻿@{
     IEnumerable<taka.Models.Enitities.Book> Model = ViewBag.list;
+    IEnumerable<taka.Models.Enitities.Category> listCate = ViewBag.ListCate;
+    var cateCurrent = listCate.Where(x => x.ID.Equals(ViewBag.Cate)).FirstOrDefault();
+
+    IEnumerable<taka.Models.Enitities.Type> listType = ViewBag.ListType;
+    var typeCurrent = listType.Where(x => x.ID.Equals(ViewBag.Type)).FirstOrDefault();
+
+    IEnumerable<taka.Models.Enitities.Language> listLanguage = ViewBag.ListLanguage;
+    var languageCurrent = listLanguage.Where(x => x.ID.Equals(ViewBag.Language)).FirstOrDefault();
     Layout = "~/Views/Admin/Shared/_Layout.cshtml";
 }
 
@@ -21,85 +29,7 @@
 </form>
 <hr />
 <div style="display:flex;flex-direction:row;">
-    <div style="flex:1;min-width:160px">
-        <div class="ml-3">
-            <br />
-            <h5>
-                Giá
-            </h5>
-            <label>Từ</label>
-            <input type="number" class="form-control price price-from" value="@ViewBag.PriceFrom" />
-            <label>Đến</label>
-            <input type="number" class="form-control price price-to" value="@ViewBag.PriceTo" />
-            <p>
-                <a href="#" onclick="getUrl({ priceFrom: $('.form-control.price')[0].value, priceTo:$('.form-control.price')[1].value })"
-                   class="btn btn-light mt-1" style="background-color:#ee4d2d;color:white">
-                    Xác nhận
-                </a>
-            </p>
-            <h5>
-                THỂ LOẠI
-            </h5>
-            @foreach (var cate in ViewBag.ListCate)
-            {
-                if (cate.ID == ViewBag.cate)
-                {
-                    <div class="list-group-item" style="border:0px;padding:10px">
-                        <b style="color:#ee4d2d">@cate.Name</b>
-                        <a href="#" onclick="getUrl({ page: 1, cate:0 })" class="btn">
-                            <ion-icon style="font-size:25px;text-align:center" name="close-circle-outline"></ion-icon>
-                        </a>
-                    </div>
-                }
-                else
-                {
-                    <a class="list-group-item" style="border:0px;padding:10px;color:dimgray" href="#" onclick="getUrl({ cate: '@cate.ID', page:1 })">@cate.Name</a>
-                }
-            }
-            <br />
-            <h5>
-                HÌNH THỨC
-            </h5>
-            @foreach (var e in ViewBag.ListType)
-            {
-                if (e.ID == ViewBag.Type)
-                {
-                    <div class="list-group-item" style="border:0px;padding:10px">
-                        <b style="color:#ee4d2d">@e.Name</b>
-                        <a href="#" onclick="getUrl({ page: 1, type:0 })" class="btn">
-                            <ion-icon style="font-size:25px;text-align:center" name="close-circle-outline"></ion-icon>
-                        </a>
-                    </div>
-                }
-                else
-                {
-                    <a class="list-group-item" style="border:0px;padding:10px;color:dimgray" href="#" onclick="getUrl({  page: 1, type:@e.ID })">@e.Name</a>
-                }
-            }
-            <br />
-            <h5>
-                Ngôn ngữ
-            </h5>
-            @foreach (var e in ViewBag.ListLanguage)
-            {
-                if (e.ID == ViewBag.Language)
-                {
-                    <div class="list-group-item" style="border:0px;padding:10px">
-                        <b style="color:#ee4d2d">@e.Name</b>
-                        <a href="#" onclick="getUrl({ page: 1, language: 0 })" class="btn">
-                            <ion-icon style="font-size:25px;text-align:center" name="close-circle-outline"></ion-icon>
-                        </a>
-                    </div>
-                }
-                else
-                {
-                    <a class="list-group-item" style="border:0px;padding:10px;color:dimgray" href="#" onclick="getUrl({ page: 1, language: @e.ID})">@e.Name</a>
-                }
-            }
-        </div>
-    </div>
-    <div style="background-color:#f5f5f5;width:15px"></div>
-    <div style="flex:4;margin-left:15px">
+    <div style="flex:1">
         <div class="row col">
             <div class="mt-1">Sắp xếp theo</div>
             <div class="dropdown ml-3">
@@ -124,6 +54,74 @@
                     <a class="dropdown-item" href="#" onclick="getUrl({ page: 1, pageSize: 64 })">64 sản phẩm</a>
                 </div>
             </div>
+            <div class="dropdown ml-3">
+                <button class="btn dropdown-toggle" type="button" id="dropdownPageSize" data-toggle="dropdown">
+                    @if (cateCurrent != null)
+                    {
+                        <span>@cateCurrent.Name</span>
+                    }
+                    else
+                    {
+                        <span>Thể loại</span>
+                    }
+                </button>
+                <div class="dropdown-menu">
+                    @if (cateCurrent != null)
+                    {
+                        <a class="dropdown-item" href="#" onclick="getUrl({ cate: 0, page:1 })">Tất cả thể loại</a>
+                    }
+
+                    @foreach (var cate in listCate)
+                    {
+                        <a class="dropdown-item" href="#" onclick="getUrl({ cate: '@cate.ID', page:1 })">@cate.Name</a>
+                    }
+                </div>
+            </div>
+
+            <div class="dropdown ml-3">
+                <button class="btn dropdown-toggle" type="button" id="dropdownPageSize" data-toggle="dropdown">
+                    @if (typeCurrent != null)
+                    {
+                        <span>@typeCurrent.Name</span>
+                    }
+                    else
+                    {
+                        <span>Hình thức</span>
+                    }
+                </button>
+                <div class="dropdown-menu">
+                    @if (typeCurrent != null)
+                    {
+                        <a class="dropdown-item" href="#" onclick="getUrl({ type: 0, page: 1 })">Tất cả hình thức</a>
+                    }
+                    @foreach (var type in listType)
+                    {
+                        <a class="dropdown-item" href="#" onclick="getUrl({  page: 1, type:@type.ID })">@type.Name</a>
+                    }
+                </div>
+            </div>
+            <div class="dropdown ml-3">
+                <button class="btn dropdown-toggle" type="button" id="dropdownPageSize" data-toggle="dropdown">
+                    @if (languageCurrent != null)
+                    {
+                        <span>@languageCurrent.Name</span>
+                    }
+                    else
+                    {
+                        <span>Ngôn ngữ</span>
+                    }
+                </button>
+                <div class="dropdown-menu">
+                    @if (languageCurrent != null)
+                    {
+                        <a class="dropdown-item" href="#" onclick="getUrl({ language: 0, page: 1 })">Tất cả ngôn ngữ</a>
+                    }
+                    @foreach (var lang in listLanguage)
+                    {
+                        <a class="dropdown-item" href="#" onclick="getUrl({ page: 1, language: @lang.ID})">@lang.Name</a>
+                    }
+                </div>
+            </div>
 
             @if (ViewBag.Sort != 0)
             {
@@ -131,7 +129,17 @@
                     <ion-icon style="font-size:25px;text-align:center" name="close-circle-outline"></ion-icon>
                 </a>
             }
-
+            <div style="display:flex;flex-direction:row;margin-top:15px;">
+                <b style="width:180px;display:flex;align-items:center">Giá từ</b>
+                <input type="text" class="form-control price price-from" value="@taka.Utils.HelperFunctions.formatMoney(ViewBag.PriceFrom,"")" />
+                <b style="width:100px;display:flex;align-items:center;padding:10px">Đến</b>
+                <input type="text" class="form-control price price-to" value="@taka.Utils.HelperFunctions.formatMoney(ViewBag.PriceTo,"")" />
+                <a href="#"
+                   onclick="getUrl({ priceFrom: $('.form-control.price')[0].value.split('.').join(''), priceTo: $('.form-control.price')[1].value.split('.').join('') })"
+                   class="btn btn-light ml-2" style="background-color:#ee4d2d;color:white;">
+                    Xác nhận
+                </a>
+            </div>
 
         </div>
 
@@ -256,15 +264,16 @@
 <script>
 
     $(".form-control.price").on("change paste keyup", function () {
-        let value = $(this).val() + ""
+        let value = $(this).val().split(".").join('')
         let minValue = 0
         if (value == "") {
-            $(this).val(minValue)
+            value = minValue
         }
         else {
-            $(this).val(Math.max(minValue, parseInt(value)))
+            value = Math.max(minValue, parseInt(value))
             $(this)[0].setCustomValidity('')
         }
+        $(this).val(value.toLocaleString('it-IT', { style: 'currency', currency: 'VND' }).replace("VND", "").trim())
     });
 
     const onMoveMouseItem = (id) => {

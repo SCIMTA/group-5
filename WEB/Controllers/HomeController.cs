@@ -139,6 +139,7 @@ namespace taka.Controllers
         public ActionResult Logout()
         {
             Session[C.SESSION.UserInfo] = null;
+            Session[C.SESSION.Cart] = null;
             FormsAuthentication.SignOut();
             return RedirectToAction("Index", "Home");
         }

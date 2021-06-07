@@ -1,5 +1,5 @@
 ﻿@{
-    taka.Models.Enitities.User userInfo = (taka.Models.Enitities.User)Session["UserInfo"];
+    taka.Models.Enitities.User userInfo = (taka.Models.Enitities.User)Session[taka.Utils.C.SESSION.UserInfo];
     List<taka.Models.Enitities.Cart> carts = (List<taka.Models.Enitities.Cart>)Session[taka.Utils.C.SESSION.Cart];
 }
 
@@ -52,33 +52,34 @@
             <ion-icon class="m-1" style="font-size:30px; color:white" name="cart-outline"></ion-icon>
             @if (carts != null)
             {
-                if (!carts.Count.Equals("0"))
+                if (!carts.Count.ToString().Trim().Equals("0"))
                 {
                     <b style="position:absolute;top:0%;right:0%;background-color:white;border-radius:30px;width:20px;height:20px;text-align:center;line-height:15px;border:1px solid #ee4d2d;color:#ee4d2d">
                         @carts.Count
                     </b>
                 }
-
-
             }
         </a>
         @if (carts != null)
         {
             <div class="dropdown" onmouseout="hidePreviewCart()" onmousemove="showPreviewCart()" style="display:inline-block;margin: 0;position:absolute;width:500px;right:-80px;top:160px;z-index:99">
-                <div class="dropdown-menu" id="previewCart" >
+                <div class="dropdown-menu" id="previewCart">
                     @foreach (var cart in carts)
                     {
-                        <a href="/Home/Detail?id=@cart.Book.ID" style="display:flex;flex-direction:row;padding:10px;text-decoration:none;color:#808080;align-items:center;justify-content:space-between">
-                            <div style="display:flex;flex-direction:row;align-items:center;margin-right:20px;max-width:300px">
-                                <img src="@cart.Book.Images.First().Url" style="width:80px;object-fit:contain;height:80px" />
-                                <div>
-                                    @cart.Book.Title
-                                </div>
+                    <a href="/Home/Detail?id=@cart.Book.ID" style="display:flex;flex-direction:row;padding:10px;text-decoration:none;color:#808080;align-items:center;justify-content:space-between">
+                        <div style="display:flex;flex-direction:row;align-items:center;margin-right:20px;max-width:200px">
+                            <img src="@cart.Book.Images.First().Url" style="width:80px;object-fit:contain;height:80px" />
+                            <div>
+                                @cart.Book.Title
                             </div>
-                            <div style="display:flex;text-align:end;">
-                                @taka.Utils.HelperFunctions.formatMoney(cart.Book.Price)
-                            </div>
-                        </a>
+                        </div>
+                        <div style="display:flex;text-align:end;color:#ee4d2d">
+                            @taka.Utils.HelperFunctions.formatMoney(cart.Book.Price)
+                        </div>
+                        <i style="margin-left:10px">
+                            x @cart.Quantity
+                        </i>
+                    </a>
                     }
                 </div>
             </div>
@@ -108,7 +109,8 @@
     }
 
     let showPreviewCart = () => {
-        $('#previewCart').show()
+        if ($("a b").text().trim())
+            $('#previewCart').show()
     }
 
     let hidePreviewCart = () => {

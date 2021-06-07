@@ -127,7 +127,7 @@ namespace taka.Controllers
              IEnumerable<HttpPostedFileBase> Images,
              IEnumerable<int> images_delete,
             string Title,
-            int Price,
+            string Price,
             int idCategory,
             int idAuthor,
             int idPublisher,

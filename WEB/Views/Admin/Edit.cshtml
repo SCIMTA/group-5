@@ -64,11 +64,11 @@
             </div>
             <div class="form-group">
                 <label>Giá tiền</label>
-                <input type="number"
+                <input type="text"
                        class="form-control"
                        name="Price"
                        id="Price"
-                       value="@Model.Price"
+                       value="@taka.Utils.HelperFunctions.formatMoney(Model.Price,"")"
                        min="0"
                        required
                        oninvalid="this.setCustomValidity('@ViewBag.MessageForValid')" />
@@ -144,16 +144,31 @@
 <script>
 
     $("input.form-control[type='number']").on("change paste keyup", function () {
-        let value = $(this).val() + ""
-        console.log(value)
+        let value = $(this).val()
+        let minValue = 0
         if (value == "") {
-            $(this).val(0)
+            value = minValue
         }
         else {
-            $(this).val(Math.max(0, parseInt(value)))
+            value = Math.max(minValue, parseInt(value))
             $(this)[0].setCustomValidity('')
         }
+        $(this).val(value)
     });
+
+    $("input.form-control#Price").on("change paste keyup", function () {
+        let value = $(this).val().split(".").join('')
+        let minValue = 0
+        if (value == "") {
+            value = minValue
+        }
+        else {
+            value = Math.max(minValue, parseInt(value))
+            $(this)[0].setCustomValidity('')
+        }
+        $(this).val(value.toLocaleString('it-IT', { style: 'currency', currency: 'VND' }).replace("VND", "").trim())
+    });
+
 
     let dropIndex;
     $("#images").sortable({

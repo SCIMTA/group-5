@@ -523,7 +523,7 @@ namespace taka.Models.DatabaseInteractive
             IEnumerable<int> images_delete,
             IEnumerable<HttpPostedFileBase> Images,
             string Title,
-            int Price,
+            string Price,
             int idCategory,
             int idAuthor,
             int idPublisher,
@@ -542,7 +542,7 @@ namespace taka.Models.DatabaseInteractive
                 takaDB.Images.RemoveRange(takaDB.Images.Where(x => images_delete.Contains(x.ID)));
             Book book = takaDB.Books.Where(x => x.ID == ID).First();
             book.Title = Title;
-            book.Price = Price;
+            book.Price = int.Parse(string.Join("", Price.Split('.').ToArray()));
             book.idCategory = idCategory;
             book.idAuthor = idAuthor;
             book.idPublisher = idPublisher;
