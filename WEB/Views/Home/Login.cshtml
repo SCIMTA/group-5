@@ -1,5 +1,6 @@
 ﻿@{
     ViewBag.Title = "Đăng nhập";
+    ViewBag.MessageForValid = "Vui lòng nhập đủ thông tin";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="g-signin2" data-onsuccess="onSignIn" hidden></div>
@@ -24,10 +25,14 @@
                         <input name="tab" hidden value="login" />
                         <input name="returnUrl" hidden value="@ViewBag.returnUrl" />
                         <div class="form-group">
-                            <input name="phone" type="text" class="form-control" placeholder="Số điện thoại*" value="@ViewBag.phone" />
+                            <input name="phone" type="text" class="form-control" placeholder="Số điện thoại*" value="@ViewBag.phone" required
+                                   oninput="setCustomValidity('')"
+                                   oninvalid="this.setCustomValidity('@ViewBag.MessageForValid')" />
                         </div>
                         <div class="form-group">
-                            <input name="password" type="password" class="form-control" placeholder="Mật khẩu *" value="" />
+                            <input name="password" type="password" class="form-control" placeholder="Mật khẩu *" value="" required
+                                   oninput="setCustomValidity('')"
+                                   oninvalid="this.setCustomValidity('@ViewBag.MessageForValid')" />
                         </div>
                         <div class="form-group">
                             <input type="submit" class="col btn btn-light p-3" style="background-color:#ee4d2d;color:white;width:100%;" value="Đăng nhập" />
@@ -46,19 +51,28 @@
                         <input name="returnUrl" hidden value="@ViewBag.returnUrl" />
                         <input name="tab" hidden value="register" />
                         <div class="form-group">
-                            <input name="phone" type="number" class="form-control" placeholder="Số điện thoại *" value="@ViewBag.phone" required />
+                            <input name="phone" type="number" class="form-control" placeholder="Số điện thoại *" value="@ViewBag.phone" required
+                                   oninput="setCustomValidity('')"
+                                   oninvalid="this.setCustomValidity('@ViewBag.MessageForValid')" />
                         </div>
                         <div class="form-group">
-                            <input name="password" type="password" class="form-control" placeholder="Mật khẩu *" value="" required />
+                            <input name="password" type="password" class="form-control" placeholder="Mật khẩu *" value="" required
+                                   oninput="setCustomValidity('')"
+                                   oninvalid="this.setCustomValidity('@ViewBag.MessageForValid')" />
                         </div>
                         <div class="form-group">
-                            <input name="repassword" type="password" class="form-control" placeholder="Nhập lại mật khẩu *" value="" required />
+                            <input name="repassword" type="password" class="form-control" placeholder="Nhập lại mật khẩu *" value="" required
+                                   oninput="setCustomValidity('')"
+                                   oninvalid="this.setCustomValidity('@ViewBag.MessageForValid')" />
                         </div>
                         <div class="form-group">
                             <input name="email" id="email" type="email" class="form-control" placeholder="Email " value="@ViewBag.email" />
                         </div>
                         <div class="form-group">
-                            <input name="fullname" id="fullname" type="text" class="form-control" placeholder="Họ và tên " value="@ViewBag.fullname" />
+                            <input name="fullname" id="fullname" type="text" class="form-control" placeholder="Họ và tên (*)" value="@ViewBag.fullname"
+                                   required
+                                   oninput="setCustomValidity('')"
+                                   oninvalid="this.setCustomValidity('@ViewBag.MessageForValid')" />
                         </div>
                         <div class="form-group">
                             <label>Giới tính</label>
@@ -69,7 +83,10 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <input name="birthday" type="date" class="form-control" placeholder="Ngày sinh " value="@ViewBag.birthday" />
+                            <input name="birthday" type="date" class="form-control" placeholder="Ngày sinh " value="@ViewBag.birthday"
+                                   required
+                                   oninput="setCustomValidity('')"
+                                   oninvalid="this.setCustomValidity('@ViewBag.MessageForValid')" />
                         </div>
                         <div class="form-group">
                             <input type="submit" class="btn btn-light p-3" style="background-color:#ee4d2d;color:white;width:100%" value="Đăng ký" />
@@ -103,9 +120,12 @@ else
         $('#tab_register').addClass('active')
     </script>
 }
-
+<script src="https://apis.google.com/js/platform.js" async defer></script>
 
 <script>
+
+
+
     let signIn = () => {
         signOut(() => {
             let auth2 = gapi.auth2.getAuthInstance();

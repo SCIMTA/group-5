@@ -157,12 +157,6 @@ namespace taka.Models.DatabaseInteractive
             return user;
         }
 
-        public User GetUserDetail(int id)
-        {
-            var user = takaDB.Users.Where(x => x.ID == id).First();
-            return user;
-        }
-
         public User UpdateUser(string phone, string email, string fullname, string gender, string birthday)
         {
             User user = takaDB.Users.Where(x => x.Phone == phone).First();
@@ -584,6 +578,24 @@ namespace taka.Models.DatabaseInteractive
         {
             takaDB.Carts.Where(x => x.ID == idCart).First().Quantity = quantity;
             takaDB.SaveChanges();
+        }
+
+
+        public int ChangePassword(int idUser, string oldPassword, string password, string rePassword)
+        {
+            User user = takaDB.Users.Where(x => x.ID.Equals(idUser)).First();
+            if (!HelperFunctions.sha256(oldPassword).Equals(user.Password))
+            {
+                return -1;
+            }
+
+            if (!password.Equals(rePassword))
+            {
+                return -2;
+            }
+            user.Password = HelperFunctions.sha256(password);
+            takaDB.SaveChanges();
+            return 1;
         }
 
         public List<BillItem> GetBillItems(int[] ids)

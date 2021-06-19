@@ -9,7 +9,7 @@
     <link href="~/Content/style.css" rel="stylesheet" />
 </head>
 <body>
-    
+
     <div class="container _1QwuCJ">
         <div class="userpage-sidebar">
             <div class="user-page-brief">
@@ -66,9 +66,12 @@
                             <a class="_3SsG4j " href="@Url.Action("AddressDetails", "User")">
                                 <span class="_2PrdXX">Địa chỉ</span>
                             </a>
-                            <a class="_3SsG4j " href="/user/account/password">
-                                <span class="_2PrdXX">Đổi mật khẩu</span>
-                            </a>
+                            @if (userInfo.google_id.Trim().Length.Equals(0))
+                            {
+                                <a class="_3SsG4j " href="/User/ChangePassword">
+                                    <span class="_2PrdXX">Đổi mật khẩu</span>
+                                </a>
+                            }
                         </div>
                     </div>
                 </div>

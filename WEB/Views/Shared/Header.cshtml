@@ -66,20 +66,20 @@
                 <div class="dropdown-menu" id="previewCart">
                     @foreach (var cart in carts)
                     {
-                    <a href="/Home/Detail?id=@cart.Book.ID" style="display:flex;flex-direction:row;padding:10px;text-decoration:none;color:#808080;align-items:center;justify-content:space-between">
-                        <div style="display:flex;flex-direction:row;align-items:center;margin-right:20px;max-width:200px">
-                            <img src="@cart.Book.Images.First().Url" style="width:80px;object-fit:contain;height:80px" />
-                            <div>
-                                @cart.Book.Title
+                        <a href="/Home/Detail?id=@cart.Book.ID" style="display:flex;flex-direction:row;padding:10px;text-decoration:none;color:#808080;align-items:center;justify-content:space-between">
+                            <div style="display:flex;flex-direction:row;align-items:center;margin-right:20px;max-width:200px">
+                                <img src="@cart.Book.Images.First().Url" style="width:80px;object-fit:contain;height:80px" />
+                                <div>
+                                    @cart.Book.Title
+                                </div>
                             </div>
-                        </div>
-                        <div style="display:flex;text-align:end;color:#ee4d2d">
-                            @taka.Utils.HelperFunctions.formatMoney(cart.Book.Price)
-                        </div>
-                        <i style="margin-left:10px">
-                            x @cart.Quantity
-                        </i>
-                    </a>
+                            <div style="display:flex;text-align:end;color:#ee4d2d">
+                                @taka.Utils.HelperFunctions.formatMoney(cart.Book.Price)
+                            </div>
+                            <i style="margin-left:10px">
+                                x @cart.Quantity
+                            </i>
+                        </a>
                     }
                 </div>
             </div>
@@ -109,8 +109,8 @@
     }
 
     let showPreviewCart = () => {
-        if ($("a b").text().trim())
-            $('#previewCart').show()
+        //if ($("a b").text().trim())
+        //    $('#previewCart').show()
     }
 
     let hidePreviewCart = () => {

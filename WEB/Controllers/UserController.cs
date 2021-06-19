@@ -108,7 +108,8 @@ namespace taka.Controllers
         {
             User user = (User)Session[C.SESSION.UserInfo];
             Session[C.SESSION.UserInfo] = db.UpdateUser(user.Phone, email, fullname, gender, birthday);
-            return RedirectToAction("Infor", "User", new { id = user.ID });
+            TempData[C.TEMPDATA.Message] = "Cập nhật thành công";
+            return RedirectToAction("Infor", "User");
         }
 
         public ActionResult AddressDetails()
@@ -116,6 +117,32 @@ namespace taka.Controllers
             User user = (User)Session[C.SESSION.UserInfo];
             List<Address> listadr = db.GetListAddressByUserId(user.ID);
             return View(listadr);
+        }
+
+
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult ChangePassword(string oldPassword, string password, string rePassword)
+        {
+            User user = (User)Session[C.SESSION.UserInfo];
+            int status = db.ChangePassword(user.ID, oldPassword, password, rePassword);
+            switch (status)
+            {
+                case -1:
+                    TempData[C.TEMPDATA.Message] = "Mật khẩu cũ không chính xác";
+                    break;
+                case -2:
+                    TempData[C.TEMPDATA.Message] = "Mật khẩu không trùng khớp";
+                    break;
+                case 1:
+                    TempData[C.TEMPDATA.Message] = "Đổi mật khẩu thành công";
+                    break;
+            }
+            return RedirectToAction("Index", "Home");
         }
 
         public ActionResult AddAddress()
@@ -141,6 +168,7 @@ namespace taka.Controllers
         {
             User user = (User)Session[C.SESSION.UserInfo];
             db.EditAddress(idAddress, user.ID, name, phone, address);
+            TempData[C.TEMPDATA.Message] = "Cập nhật thành công";
             return RedirectToAction("AddressDetails", "User");
         }
         [HttpPost]

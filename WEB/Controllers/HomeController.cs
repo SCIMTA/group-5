@@ -116,13 +116,20 @@ namespace taka.Controllers
 
 
         [HttpPost]
-        public ActionResult Register(string phone, string password, string email, string gender, string fullname, string birthday, string returnUrl, string tab)
+        public ActionResult Register(string phone, string password, string repassword, string email, string gender, string fullname, string birthday, string returnUrl, string tab)
         {
+            if (!password.Equals(repassword))
+            {
+                TempData[C.TEMPDATA.Message] = "Mật khẩu không trùng khớp";
+                return RedirectToAction("Login", "Home", new { returnUrl, phone, email, fullname, gender, birthday, tab });
+            }    
+
             User user = dB.Register(phone, password, email, gender, fullname, birthday);
 
             if (user != null)
             {
                 Session[C.SESSION.UserInfo] = user;
+                FormsAuthentication.SetAuthCookie("" + user.ID, true);
             }
             else
             {
