@@ -66,7 +66,7 @@
                             <a class="_3SsG4j " href="@Url.Action("AddressDetails", "User")">
                                 <span class="_2PrdXX">Địa chỉ</span>
                             </a>
-                            @if (userInfo.google_id.Trim().Length.Equals(0))
+                            @if (userInfo.google_id==null)
                             {
                                 <a class="_3SsG4j " href="/User/ChangePassword">
                                     <span class="_2PrdXX">Đổi mật khẩu</span>
