@@ -452,7 +452,7 @@ namespace taka.Models.DatabaseInteractive
 
 
         public Book AddBook(IEnumerable<HttpPostedFileBase> Images, string Title,
-            int Price,
+            string Price,
             int idCategory,
             int idAuthor,
             int idPublisher,
@@ -467,7 +467,7 @@ namespace taka.Models.DatabaseInteractive
         {
             Book book = new Book();
             book.Title = Title;
-            book.Price = Price;
+            book.Price = int.Parse(string.Join("", Price.Split('.').ToArray()));
             book.idCategory = idCategory;
             book.idAuthor = idAuthor;
             book.idPublisher = idPublisher;

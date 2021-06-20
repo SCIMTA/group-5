@@ -159,12 +159,12 @@ namespace taka.Controllers
                     idImage,
                     indexImage,
                     Server);
-                TempData[C.TEMPDATA.Message] = "Cập nhật đơn hàng thành công";
+                TempData[C.TEMPDATA.Message] = "Cập nhật sách thành công";
                 return RedirectToAction("Book", "Admin");
             }
             catch (Exception)
             {
-                TempData[C.TEMPDATA.Message] = "Cập nhật đơn hàng thật bại, vui lòng thử lại";
+                TempData[C.TEMPDATA.Message] = "Cập nhật sách thất bại, vui lòng thử lại";
                 return RedirectToAction("Edit", "Admin", new { id = ID });
             }
         }
@@ -177,9 +177,11 @@ namespace taka.Controllers
                 if (id == -1)
                     throw new Exception("Not found");
                 dB.DeleteBook(id, true);
+                TempData[C.TEMPDATA.Message] = "Đã xoá sách thành công";
             }
             catch (Exception)
             {
+                TempData[C.TEMPDATA.Message] = "Xoá sách thất bại, vui lòng thử lại";
             }
             return RedirectToAction("Book", "Admin");
         }
@@ -189,7 +191,7 @@ namespace taka.Controllers
         public ActionResult AddBook(
             IEnumerable<HttpPostedFileBase> Images,
             string Title,
-            int Price,
+            string Price,
             int idCategory,
             int idAuthor,
             int idPublisher,
@@ -204,12 +206,12 @@ namespace taka.Controllers
             try
             {
                 Book book = dB.AddBook(Images, Title, Price, idCategory, idAuthor, idPublisher, idLanguage, idType, Page, Date, Quantity, Description, Server);
-                TempData[C.TEMPDATA.Message] = "Tạo đơn hàng thành công";
+                TempData[C.TEMPDATA.Message] = "Tạo sách thành công";
                 return RedirectToAction("Book", "Admin");
             }
             catch (Exception)
             {
-                TempData[C.TEMPDATA.Message] = "Tạo đơn hàng thật bại, vui lòng thử lại";
+                TempData[C.TEMPDATA.Message] = "Tạo sách thất bại, vui lòng thử lại";
                 return RedirectToAction("Add", "Admin");
             }
 
