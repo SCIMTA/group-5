@@ -122,7 +122,7 @@ namespace taka.Controllers
             {
                 TempData[C.TEMPDATA.Message] = "Mật khẩu không trùng khớp";
                 return RedirectToAction("Login", "Home", new { returnUrl, phone, email, fullname, gender, birthday, tab });
-            }    
+            }
 
             User user = dB.Register(phone, password, email, gender, fullname, birthday);
 
@@ -153,17 +153,19 @@ namespace taka.Controllers
 
         public ActionResult Detail(int id = -1)
         {
-            try
-            {
+            //try
+            //{
                 if (id == -1)
                     throw new Exception("Not found");
                 var item = dB.GetBookDetail(id);
+                var suggestItem = dB.GetSuggestBook(id);
+                ViewBag.suggestItem = suggestItem;
                 return View(item);
-            }
-            catch (Exception)
-            {
-                return RedirectToAction("Error", "Home");
-            }
+            //}
+            //catch (Exception)
+            //{
+            //    return RedirectToAction("Error", "Home");
+            //}
 
         }
         public ActionResult Error()

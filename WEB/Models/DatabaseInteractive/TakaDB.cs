@@ -91,6 +91,18 @@ namespace taka.Models.DatabaseInteractive
             return list;
         }
 
+        public List<Book> GetSuggestBook(int idBook)
+        {
+            int numIteme = 10;
+            var book = takaDB.Books.Where(x => x.isHidden != 1 && x.ID.Equals(idBook)).First();
+            Random r = new Random();
+            var listByCate = takaDB.Books.Where(x => x.idCategory == book.idCategory);
+            int rInt = r.Next(0, listByCate.Count() - 11);
+            List<Book> list = listByCate.OrderBy(m => m.ID).Skip(rInt).Take(numIteme).ToList();
+            return list;
+        }
+
+
 
         public List<Category> GetCategories()
         {
