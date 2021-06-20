@@ -31,9 +31,10 @@
 
                     <!-- Address Chosing -->
                     <div class="d-flex flex-wrap card md-form md-outline mb-0 mb-lg-4">
+                   
                         <div class="dropdown card-body">
+                            <p><b>Địa chỉ</b></p>
                             <input class="btn btn-light dropdown-toggle addressPicker" type="button" name="addressPicker" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" />
-
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 @foreach (var item in listAddress)
                                 {
@@ -72,8 +73,9 @@
                     <!-- Shipper -->
                     <div class="d-flex flex-wrap card md-form md-outline mb-0 mb-lg-4">
                         <div class="dropdown card-body">
+                            <p><b>Đơn vị vận chuyển</b></p>
                             <input class="btn btn-light dropdown-toggle shipper" type="button" id="shipperDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" />
-                            <input class="shipper" id="shippingComp" name="shipper" hidden/>
+                            <input class="shipper" id="shippingComp" name="shipper" hidden />
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <a class="dropdown-item btn btn-light" onclick="changeShipper('shipper1')">Giao hàng nhanh - 40.000đ</a>
                                 <a class="dropdown-item btn btn-light" onclick="changeShipper('shipper2')">Giao hàng tiết kiệm - 15.000đ</a>
