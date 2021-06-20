@@ -47,11 +47,11 @@
                 Giá
             </h5>
             <label>Từ</label>
-            <input type="number" class="form-control price" value="@ViewBag.PriceFrom" style="max-width:150px" />
+            <input type="text" class="form-control price" value="@taka.Utils.HelperFunctions.formatMoney(ViewBag.PriceFrom,"")" style="max-width:150px" />
             <label>Đến</label>
-            <input type="number" class="form-control price" value="@ViewBag.PriceTo" style="max-width:150px" />
+            <input type="text" class="form-control price" value="@taka.Utils.HelperFunctions.formatMoney(ViewBag.PriceTo,"")" style="max-width:150px" />
             <p>
-                <a href="#" onclick="getUrl({ priceFrom: $('.form-control.price')[0].value, priceTo:$('.form-control.price')[1].value })"
+                <a href="#" onclick="getUrl({ priceFrom: $('.form-control.price')[0].value.split('.').join(''), priceTo: $('.form-control.price')[1].value.split('.').join('') })"
                    class="btn btn-light mt-1" style="background-color:#ee4d2d;color:white">
                     Xác nhận
                 </a>
@@ -242,6 +242,20 @@
 </div>
 
 <script>
+
+
+    $(".form-control.price").on("change paste keyup", function () {
+        let value = $(this).val().split(".").join('')
+        let minValue = 0
+        if (value == "") {
+            value = minValue
+        }
+        else {
+            value = Math.max(minValue, parseInt(value))
+            $(this)[0].setCustomValidity('')
+        }
+        $(this).val(value.toLocaleString('it-IT', { style: 'currency', currency: 'VND' }).replace("VND", "").trim())
+    });
     const onMoveMouseItem = (id) => {
         $('#' + id).css('border', '1px solid #ee4d2d')
     }
