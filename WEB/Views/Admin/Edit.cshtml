@@ -35,7 +35,7 @@
             <input id="file-input" name="Images" type="file" hidden multiple accept="image/*" onchange="OnAddImage();" />
         </div>
         <div id="images_delete" hidden></div>
-        <div id="images" style="overflow-x:auto;height:300px;flex-direction:row;display:flex;overflow-y:hidden">
+        <div id="images" style="overflow-x:auto;height:300px;flex-direction:row;display:flex;overflow-y:hidden;margin-left:35px;margin-right:35px">
             @for (int i = 0; i < images.Count; i++)
             {
                 var img = images[i];
