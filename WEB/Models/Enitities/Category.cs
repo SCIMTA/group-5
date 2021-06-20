@@ -13,7 +13,6 @@ namespace taka.Models.Enitities
         public Category()
         {
             Books = new HashSet<Book>();
-            SuggestBooks = new HashSet<SuggestBook>();
         }
 
         public int ID { get; set; }
@@ -27,7 +26,5 @@ namespace taka.Models.Enitities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Book> Books { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<SuggestBook> SuggestBooks { get; set; }
     }
 }

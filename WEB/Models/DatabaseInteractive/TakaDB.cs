@@ -510,7 +510,7 @@ namespace taka.Models.DatabaseInteractive
                 imgObj.idBook = idBook;
                 imgObj.Url = "/UploadedFiles/" + fn;
                 takaDB.Images.Add(imgObj);
-                //takaDB.SaveChanges();
+                takaDB.SaveChanges();
                 return imgObj;
             }
             catch (Exception)

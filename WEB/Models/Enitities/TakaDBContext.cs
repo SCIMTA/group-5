@@ -23,8 +23,6 @@ namespace taka.Models.Enitities
         public virtual DbSet<OrderDetail> OrderDetails { get; set; }
         public virtual DbSet<Publisher> Publishers { get; set; }
         public virtual DbSet<Rate> Rates { get; set; }
-        public virtual DbSet<RatingItem> RatingItems { get; set; }
-        public virtual DbSet<SuggestBook> SuggestBooks { get; set; }
         public virtual DbSet<Type> Types { get; set; }
         public virtual DbSet<User> Users { get; set; }
 
@@ -64,22 +62,10 @@ namespace taka.Models.Enitities
                 .HasForeignKey(e => e.idBook)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<Book>()
-                .HasMany(e => e.SuggestBooks)
-                .WithRequired(e => e.Book)
-                .HasForeignKey(e => e.idBook)
-                .WillCascadeOnDelete(false);
-
             modelBuilder.Entity<Category>()
                 .HasMany(e => e.Books)
                 .WithOptional(e => e.Category)
                 .HasForeignKey(e => e.idCategory);
-
-            modelBuilder.Entity<Category>()
-                .HasMany(e => e.SuggestBooks)
-                .WithRequired(e => e.Category)
-                .HasForeignKey(e => e.idCategory)
-                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Image>()
                 .Property(e => e.Url)
