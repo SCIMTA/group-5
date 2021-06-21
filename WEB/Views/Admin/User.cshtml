@@ -7,7 +7,14 @@
     <div class="col-6">
         <h4>Danh sách</h4>
         <hr />
-        <input type="text" class="form-control" id="search_user" placeholder="Tìm kiếm người dùng ( Tên, số điện thoại )" oninput="onInputSearch('body_user','search_user')" />
+        <form action="?">
+            <div class="input-group">
+                <input name="text" type="text" class="form-control" placeholder="Tìm kiếm người dùng (Tên, SĐT)" value="@ViewBag.TextSearch"  oninput="onInputSearch('body_user','search_user')" />
+                <button class="btn btn-solid-primary btn-light" style="color:white;background-color:#ee4d2d;" type="submit">
+                    <ion-icon style="font-size:15px" name="search"></ion-icon>
+                </button>
+            </div>
+        </form>
         <div style="overflow-y:auto;height:800px">
             <table class="table">
                 <tbody id="body_user">

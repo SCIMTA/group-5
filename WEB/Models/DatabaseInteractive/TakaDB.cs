@@ -120,13 +120,17 @@ namespace taka.Models.DatabaseInteractive
             takaDB.SaveChanges();
         }
 
-        public List<Author> GetAuthors()
+        public List<Author> GetAuthors(string text = "")
         {
-            return takaDB.Authors.ToList();
+            var removeUnicode = HelperFunctions.RemoveUnicode(text);
+            var listAuthor = takaDB.Authors.Where(x => x.KeySearch.Contains(removeUnicode)).ToList();
+            return listAuthor;
         }
-        public List<Publisher> GetPublishers()
+        public List<Publisher> GetPublishers(string text = "")
         {
-            return takaDB.Publishers.ToList();
+            var removeUnicode = HelperFunctions.RemoveUnicode(text);
+            var list = takaDB.Publishers.Where(x => x.KeySearch.Contains(removeUnicode)).ToList();
+            return list;
         }
         public List<Language> GetLanguages()
         {
@@ -138,9 +142,12 @@ namespace taka.Models.DatabaseInteractive
             return takaDB.Types.ToList();
         }
 
-        public List<User> GetUsers()
+        public List<User> GetUsers(string text = "")
         {
-            return takaDB.Users.Where(x => !x.ID.Equals(C.ID_ADMIN)).ToList();
+            var removeUnicode = HelperFunctions.RemoveUnicode(text);
+            var list = takaDB.Users.Where(x => (!x.ID.Equals(C.ID_ADMIN) && x.KeySearch.Contains(removeUnicode))).ToList();
+            //return takaDB.Users.Where(x => !x.ID.Equals(C.ID_ADMIN)).ToList();
+            return list;
         }
 
         public string findTextCategory(int id)

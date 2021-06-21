@@ -7,7 +7,14 @@
     <div class="col-6">
         <h4>Danh sách</h4>
         <hr />
-        <input type="text" class="form-control" placeholder="Tìm tác giả" id="search_author" oninput="onInputSearch('body_author','search_author')" />
+        <form action="?">
+            <div class="input-group">
+                <input type="text" name="text" class="form-control" placeholder="Tìm tác giả"  value="@ViewBag.TextSearch" id="search_author" oninput="onInputSearch('body_author','search_author')" />
+                <button class="btn btn-solid-primary btn-light" style="color:white;background-color:#ee4d2d;" type="submit">
+                    <ion-icon style="font-size:15px" name="search"></ion-icon>
+                </button>
+            </div>
+        </form>
         <div style="overflow-y:auto;height:800px">
             <table class="table">
                 <tbody id="body_author">

@@ -72,9 +72,10 @@ namespace taka.Controllers
             return View();
         }
 
-        public ActionResult User()
+        public ActionResult User(string text = "")
         {
-            ViewBag.list = dB.GetUsers();
+            ViewBag.list = dB.GetUsers(text);
+            ViewBag.TextSearch = text;
             return View();
         }
         public ActionResult Category()
@@ -82,14 +83,16 @@ namespace taka.Controllers
             ViewBag.list = dB.GetCategories();
             return View();
         }
-        public ActionResult Publisher()
+        public ActionResult Publisher(string text = "")
         {
-            ViewBag.list = dB.GetPublishers();
+            ViewBag.list = dB.GetPublishers(text);
+            ViewBag.TextSearch = text;
             return View();
         }
-        public ActionResult Author()
+        public ActionResult Author(string text = "")
         {
-            ViewBag.list = dB.GetAuthors();
+            ViewBag.list = dB.GetAuthors(text);
+            ViewBag.TextSearch = text;
             return View();
         }
         public ActionResult Type()

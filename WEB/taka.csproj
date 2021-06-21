@@ -246,7 +246,7 @@
     <Content Include="Views\User\AddAddress.cshtml" />
     <Content Include="Views\User\AddressDetails.cshtml" />
     <Content Include="Views\User\EditAddress.cshtml" />
-    <Content Include="Views\User\ModelDeleteAddress.cshtml" />
+    <Content Include="Views\User\ModalDeleteAddress.cshtml" />
     <Content Include="Views\User\ChangePassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
