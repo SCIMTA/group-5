@@ -23,7 +23,7 @@
                     {
                         <div class="row mb-4">
                             <div class="form-check col-md-1 col-lg-1 col-xl-1" style="text-align:center;display: flex; justify-content: center; align-items: center;">
-                                <input name="idCarts" class="checkbox-input" type="checkbox" value="@item.ID" id="flexCheck_@item.ID" style="width:15px; height:15px; background-color:#ee4d2d;" onclick="buyNowDisable();" checked>
+                                <input name="idCarts" onchange="changeTotalAmount()" class="checkbox-input" type="checkbox" value="@item.ID" id="flexCheck_@item.ID" style="width:15px; height:15px; background-color:#ee4d2d;" onclick="buyNowDisable();" checked>
                             </div>
                             <div class="col-md-5 col-lg-3 col-xl-3">
                                 <div class="view zoom overlay z-depth-1 rounded mb-3 mb-md-0">
@@ -35,7 +35,7 @@
                                 <div>
                                     <div class="d-flex justify-content-between">
                                         <div class="col-8">
-                                            <a style="color:#ee4d2d;text-decoration:none" href="/Home/Detail?id=@item.idBook" ><h4>@item.Book.Title</h4></a>
+                                            <a style="color:#ee4d2d;text-decoration:none" href="/Home/Detail?id=@item.idBook"><h4>@item.Book.Title</h4></a>
                                             <p class="mb-3 text-muted text-uppercase small">Tác giả: @item.Book.Author.Name</p>
                                             <p class="mb-3 text-muted text-uppercase small">Nhà Xuất Bản: @item.Book.Publisher.Name</p>
                                         </div>
@@ -120,9 +120,12 @@
     let changeTotalAmount = () => {
         let sum = 0
         for (let i = 0; i < $('div .amount').length; i += 2) {
-            let price = $('div .amount')[i + 1].textContent;
-            let quantity = $('div .amount')[i].value;
-            sum += price * quantity;
+            let check = $(".checkbox-input")[i/2].checked
+            if (check) {
+                let price = $('div .amount')[i + 1].textContent;
+                let quantity = $('div .amount')[i].value;
+                sum += price * quantity;
+            }
         }
         $('#totalSumVAT').text((sum).toLocaleString('it-IT', { style: 'currency', currency: 'VND' }))
     }
